@@ -1,0 +1,58 @@
+const DummyData = [
+    {
+        id: 1,
+        firstName: 'Bagas',
+        lastName: 'Dimas',
+        gender: 'M',
+        dob: new Date(1990,10,7),
+        nationality: 'Indonesia',
+        maritalStatus: 'M',
+        phone: '1234567890',
+        subDivision: 'Java Bootcamp',
+        status: 'P',
+        suspendDate: new Object,
+        hireDate: new Date(2013,10,18),
+        grade: 'SE - PG',
+        division: 'CDC Asterx',
+        email: 'Bagas.Dimas@mitrais.com',
+        office: 'JOG'
+    },
+    {
+        id: 2,
+        firstName: 'Test',
+        lastName: 'Coba',
+        gender: 'F',
+        dob: new Date(1990,11,17),
+        nationality: 'Indonesia',
+        maritalStatus: 'S',
+        phone: '1234567890',
+        subDivision: '.Net Bootcamp',
+        status: 'C',
+        suspendDate: new Object,
+        hireDate: new Date(2012,10,18),
+        grade: 'SE - JP',
+        division: 'CDC',
+        email: 'Test.Coba@mitrais.com',
+        office: 'Bali'
+    },
+    {
+        id: 3,
+        firstName: 'Data',
+        lastName: 'Dummy',
+        gender: 'M',
+        dob: new Date(1990,11,27),
+        nationality: 'Indonesia',
+        maritalStatus: 'S',
+        phone: '1234567890',
+        subDivision: 'PHP Bootcamp',
+        status: 'C',
+        suspendDate: new Object,
+        hireDate: new Date(2012,10,18),
+        grade: 'SE - AP',
+        division: 'CDC Asterx',
+        email: 'Test.Coba@mitrais.com',
+        office: 'Bali'
+    },
+];
+
+export default DummyData;
