@@ -25,7 +25,7 @@ class EmployeeDetails extends Component {
         return(
             <div>
                 <Header/>
-                <EmployeeToolbar employees={this.state.employees} setEmployees={this.setEmployees.bind(this)}/>
+                <EmployeeToolbar currentEmployee={this.state.currentEmployee}/>
                 <EmployeeList employees={this.state.employees} setEmployees={this.setEmployees.bind(this)}/>
             </div>
         )

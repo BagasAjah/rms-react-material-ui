@@ -10,11 +10,8 @@ import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 
 class EmployeeTabDetails extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            value: "M"
-        }
+    constructor(props) {
+        super(props);
         this.handleGenderChange = this.handleGenderChange.bind(this);
     }
 
@@ -29,60 +26,74 @@ class EmployeeTabDetails extends Component {
                 <input type="hidden" id="employeeId"/>
                 <TextField
                     floatingLabelText="First Name"
+                    value={this.props.currentEmployee.firstName}
                 /><br />
                 <TextField
                     floatingLabelText="Last Name"
+                    value={this.props.currentEmployee.lastName}
                 /><br />
                 <SelectField
                     floatingLabelText="Gender"
-                    value={this.state.value}
+                    value={this.props.currentEmployee.gender}
                     onChange={this.handleGenderChange}>
                     <MenuItem value={"M"} primaryText="Male" />
                     <MenuItem value={"F"} primaryText="Female" />
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Date of Birth"
+                    value={this.props.currentEmployee.dob}
+                    autoOk={true}
                 />
                 <TextField
                     floatingLabelText="Nationality"
+                    value={this.props.currentEmployee.nationality}
                 /><br />
                 <SelectField
-                    floatingLabelText="Marital Status">
+                    floatingLabelText="Marital Status"
+                    value={this.props.currentEmployee.maritalStatus}>
                     <MenuItem value={"S"} primaryText="Single" />
                     <MenuItem value={"M"} primaryText="Married" />
                 </SelectField><br />
                 <TextField
                     floatingLabelText="Phone"
+                    value={this.props.currentEmployee.phone}
                 /><br />
             </div>
             <div className="content">
                 <TextField
                     floatingLabelText="Sub Division"
+                    value={this.props.currentEmployee.subDivision}
                 /><br />
                 <SelectField
-                    floatingLabelText="Status" >
+                    floatingLabelText="Status"
+                    value={this.props.currentEmployee.status}>
                     <MenuItem value={"C"} primaryText="Contract" />
                     <MenuItem value={"P"} primaryText="Permanent" />
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Suspend Date"
+                    value={this.props.currentEmployee.suspendDate}
                 />
                 <DatePicker
                     floatingLabelText="Hire Date"
+                    value={this.props.currentEmployee.hireDate}
                 />
                 <SelectField
-                    floatingLabelText="Grade">
+                    floatingLabelText="Grade"
+                    value={this.props.currentEmployee.grade}>
                 </SelectField><br />
                 <SelectField
-                    floatingLabelText="Division">
+                    floatingLabelText="Division"
+                    value={this.props.currentEmployee.division}>
                 </SelectField><br />
                 <TextField
                     floatingLabelText="Email"
+                    value={this.props.currentEmployee.email}
                 /><br />
             </div>
             <div className="content">
                 <Avatar
-
+                  src={require("../../images/BagasDimas.jpg")}
                   size={100}
                 />
             </div>

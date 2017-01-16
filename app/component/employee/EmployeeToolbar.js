@@ -20,7 +20,7 @@ class EmployeeToolbar extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
           <Toolbar style={Constants.toolBarColor}>
             <EmployeeSearch/>
-            <EmployeeTab/>
+            <EmployeeTab currentEmployee={this.props.currentEmployee}/>
           </Toolbar>
         </MuiThemeProvider>
     );

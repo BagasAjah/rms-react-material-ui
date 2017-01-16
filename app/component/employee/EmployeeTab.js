@@ -12,12 +12,17 @@ import NotificationWc from 'material-ui/svg-icons/notification/wc';
 import EmployeeTabDetails from "./EmployeeTabDetails"
 
 class EmployeeTab extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
                 <Tabs
                     className="menu-tab">
                         <Tab icon={<ActionAccountBox />} value="details">
-                            <EmployeeTabDetails />
+                            <EmployeeTabDetails currentEmployee={this.props.currentEmployee}/>
                         </Tab>
                         <Tab icon={<ActionHistory />} value="history">
                             {this.props.children}
