@@ -12,9 +12,22 @@ class EmployeeDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            allEmployee: DummyData,
             employees : DummyData,
-            currentEmployee: DummyData[0]
+            currentEmployee: DummyData[0],
+            filteredEmployees: [],
+            filterMode: false
         };
+    }
+
+    setFilteringProps(filteredEmployees, filterMode) {
+        this.setState({filteredEmployees: filteredEmployees});
+        this.setState({filterMode: filterMode});
+        if (this.state.filterMode) {
+            this.setState({employees: this.state.filteredEmployees});
+        } else {
+            this.setState({employees: this.state.allEmployee});
+        }
     }
 
     setEmployees(employeesData) {
@@ -25,7 +38,10 @@ class EmployeeDetails extends Component {
         return(
             <div>
                 <Header/>
-                <EmployeeToolbar currentEmployee={this.state.currentEmployee}/>
+                <EmployeeToolbar
+                    employees={this.state.employees}
+                    currentEmployee={this.state.currentEmployee}
+                    setFilteringProps={this.setFilteringProps.bind(this)}/>
                 <EmployeeList employees={this.state.employees} setEmployees={this.setEmployees.bind(this)}/>
             </div>
         )

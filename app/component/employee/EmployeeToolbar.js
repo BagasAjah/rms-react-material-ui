@@ -19,7 +19,9 @@ class EmployeeToolbar extends Component {
     return(
         <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
           <Toolbar style={Constants.toolBarColor}>
-            <EmployeeSearch/>
+            <EmployeeSearch
+                employees={this.props.employees}
+                setFilteringProps={this.props.setFilteringProps.bind(this)}/>
             <EmployeeTab currentEmployee={this.props.currentEmployee}/>
           </Toolbar>
         </MuiThemeProvider>
