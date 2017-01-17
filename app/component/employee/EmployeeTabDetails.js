@@ -8,10 +8,19 @@ import TextField from 'material-ui/TextField';
 
 import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 
+import lookupData from "../../dummy_data/lookupData"
+
 class EmployeeTabDetails extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            lookupGender : lookupData.gender,
+            lookupMaritalStatus : lookupData.statusMarital,
+            lookupStatus : lookupData.status,
+            lookupGrade : lookupData.grade,
+            lookupDivision : lookupData.division
+        }
         this.handleGenderChange = this.handleGenderChange.bind(this);
     }
 
@@ -20,6 +29,21 @@ class EmployeeTabDetails extends Component {
     }
 
     render(){
+        var lookupGenderMenuItem = this.state.lookupGender.map(lookupGender =>
+            <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
+        );
+        var lookupMaritalStatusMenuItem = this.state.lookupMaritalStatus.map(lookupMaritalStatus =>
+            <MenuItem key= {lookupMaritalStatus.lookupCode} value={lookupMaritalStatus.lookupCode} primaryText={lookupMaritalStatus.lookupValue} />
+        );
+        var lookupStatusMenuItem = this.state.lookupStatus.map(lookupStatus =>
+            <MenuItem key= {lookupStatus.lookupCode} value={lookupStatus.lookupCode} primaryText={lookupStatus.lookupValue} />
+        );
+        var lookupGradeMenuItem = this.state.lookupGrade.map(lookupGrade =>
+            <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
+        );
+        var lookupDivisionMenuItem = this.state.lookupDivision.map(lookupDivision =>
+            <MenuItem key= {lookupDivision.lookupCode} value={lookupDivision.lookupCode} primaryText={lookupDivision.lookupValue} />
+        );
         return(
         <div className="menu-content">
             <div className="content">
@@ -36,8 +60,7 @@ class EmployeeTabDetails extends Component {
                     floatingLabelText="Gender"
                     value={this.props.currentEmployee.gender}
                     onChange={this.handleGenderChange}>
-                    <MenuItem value={"M"} primaryText="Male" />
-                    <MenuItem value={"F"} primaryText="Female" />
+                    {lookupGenderMenuItem}
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Date of Birth"
@@ -51,8 +74,7 @@ class EmployeeTabDetails extends Component {
                 <SelectField
                     floatingLabelText="Marital Status"
                     value={this.props.currentEmployee.maritalStatus}>
-                    <MenuItem value={"S"} primaryText="Single" />
-                    <MenuItem value={"M"} primaryText="Married" />
+                    {lookupMaritalStatusMenuItem}
                 </SelectField><br />
                 <TextField
                     floatingLabelText="Phone"
@@ -67,8 +89,7 @@ class EmployeeTabDetails extends Component {
                 <SelectField
                     floatingLabelText="Status"
                     value={this.props.currentEmployee.status}>
-                    <MenuItem value={"C"} primaryText="Contract" />
-                    <MenuItem value={"P"} primaryText="Permanent" />
+                    {lookupStatusMenuItem}
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Suspend Date"
@@ -81,10 +102,12 @@ class EmployeeTabDetails extends Component {
                 <SelectField
                     floatingLabelText="Grade"
                     value={this.props.currentEmployee.grade}>
+                    {lookupGradeMenuItem}
                 </SelectField><br />
                 <SelectField
                     floatingLabelText="Division"
                     value={this.props.currentEmployee.division}>
+                    {lookupDivisionMenuItem}
                 </SelectField><br />
                 <TextField
                     floatingLabelText="Email"

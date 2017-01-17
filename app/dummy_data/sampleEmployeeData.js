@@ -12,8 +12,8 @@ const DummyData = [
         status: 'P',
         suspendDate: new Object,
         hireDate: new Date(2013,10,18),
-        grade: 'SE - PG',
-        division: 'CDC Asterx',
+        grade: 'SE2',
+        division: 'CDC1',
         email: 'Bagas.Dimas@mitrais.com',
         office: 'JOG'
     },
@@ -30,8 +30,8 @@ const DummyData = [
         status: 'C',
         suspendDate: new Object,
         hireDate: new Date(2012,10,18),
-        grade: 'SE - JP',
-        division: 'CDC',
+        grade: 'SQ2',
+        division: 'RED',
         email: 'Test.Coba@mitrais.com',
         office: 'Bali'
     },
@@ -48,8 +48,8 @@ const DummyData = [
         status: 'C',
         suspendDate: new Object,
         hireDate: new Date(2012,10,18),
-        grade: 'SE - AP',
-        division: 'CDC Asterx',
+        grade: 'SM',
+        division: 'CDC',
         email: 'Test.Coba@mitrais.com',
         office: 'Bali'
     },

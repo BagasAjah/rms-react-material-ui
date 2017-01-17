@@ -20,24 +20,14 @@ class EmployeeList extends Component {
 
     render() {
         var employee = this.props.employees;
-        let employeeListDetail = [];
-        employee.forEach(function(employee) {
-          employeeListDetail.push(
+
+        var employeeListDetail = employee.map( employee =>
             <EmployeeListDetail
                 key={employee.id}
                 employee={employee}
                 setCurrentEmployee={this.props.setEmployees.bind(this)}
                 />
-          );
-        }, this);
-
-//        var employeeListDetail = employee.map( employee =>
-//            <EmployeeListDetail
-//                key={employee.id}
-//                employee={employee}
-//                setCurrentEmployee={this.props.setEmployees.bind(this)}
-//                />
-//        );
+        );
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
                 <div>
