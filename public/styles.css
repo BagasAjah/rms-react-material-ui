@@ -34,10 +34,18 @@ body {
     height: 50px;
     overflowY: 'auto';
 }
+.no-record{
+    height: 70px;
+    line-height: 70px;
+    padding-left: 70px;
+    vertical-align: middle;
+    font-style: italic;
+    color: #aaaaaa;
+}
 .add-button-position{
     position: absolute;
     left: 400px;
-    bottom: 100px;
+    bottom: 200px;
 }
 .paper-pull-right{
     position: absolute;
@@ -58,4 +66,18 @@ body {
     float: left;
     min-width: 300px;
     margin: 10px 25px 10px 25px;
+}
+.footer-content{
+    width: 100%;
+    background: #5c6bc0;
+    clear: both;
+    position: relative;
+    z-index: -999;
+    height: 3em;
+    margin-top: -3em;
+    top: 50px;
+}
+.footer-button{
+    float: right;
+    margin: 5px;
 }

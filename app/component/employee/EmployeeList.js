@@ -31,9 +31,15 @@ class EmployeeList extends Component {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
                 <div>
-                    <List className="employee-list-group">
-                        {employeeListDetail}
-                    </List>
+                    {(employeeListDetail.length > 0) ?
+                    (<List className="employee-list-group">
+                            {employeeListDetail}
+                    </List>)
+                    :
+                        (<div className="no-record">
+                            <span>We couldn't find what you were looking for</span>
+                        </div>)
+                    }
 
                     <FloatingActionButton className="add-button-position" secondary={true}>
                       <ContentAdd />
