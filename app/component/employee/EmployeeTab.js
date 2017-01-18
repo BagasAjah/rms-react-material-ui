@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import update from 'react-addons-update';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {ToolbarGroup} from 'material-ui/Toolbar';
 
@@ -17,13 +16,14 @@ class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             viewMode: true,
             employee: this.props.currentEmployee
         };
+        this.updateButtonClick = this.updateButtonClick.bind(this);
         this.editButtonClick = this.editButtonClick.bind(this);
         this.cancelButtonClick = this.cancelButtonClick.bind(this);
+        this.deleteButtonClick = this.deleteButtonClick.bind(this);
         this.setSavedEmployee = this.setSavedEmployee.bind(this);
     }
 
@@ -31,9 +31,25 @@ class EmployeeTab extends Component {
         this.setState({employee: nextProps.currentEmployee});
     }
 
+    updateButtonClick(){
+        this.setState({viewMode: true});
+        this.props.updateCurrentEmployee(this.state.employee);
+    }
+
     editButtonClick(){
         this.setState({viewMode: false});
         this.setSavedEmployee(this.props.currentEmployee);
+    }
+
+    deleteButtonClick(){
+        this.setState({
+            employee: {
+                id: '',
+                firstName: ''
+            },
+            viewMode: true
+            });
+        this.props.deleteCurrentEmployee(this.state.employee);
     }
 
     cancelButtonClick(){
@@ -100,14 +116,16 @@ class EmployeeTab extends Component {
                                 label={"Delete"}
                                 secondary={true}
                                 className="footer-button"
+                                onClick={this.deleteButtonClick}
                             />
 
                         </div> ):(
                         <div>
                             <RaisedButton
-                                label={"Save"}
+                                label={"Update"}
                                 secondary={true}
                                 className="footer-button"
+                                onClick={this.updateButtonClick}
                             />
                             <RaisedButton
                                 label={"Cancel"}
