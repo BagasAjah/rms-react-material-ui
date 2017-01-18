@@ -22,7 +22,8 @@ class EmployeeToolbar extends Component {
             <EmployeeSearch
                 employees={this.props.employees}
                 setFilteringProps={this.props.setFilteringProps.bind(this)}/>
-            <EmployeeTab currentEmployee={this.props.currentEmployee}/>
+            <EmployeeTab
+                currentEmployee={this.props.currentEmployee}/>
           </Toolbar>
         </MuiThemeProvider>
     );
