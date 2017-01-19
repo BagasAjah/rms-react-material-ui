@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {ToolbarGroup} from 'material-ui/Toolbar';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import CommunicationLocationOn from 'material-ui/svg-icons/communication/location-on';
 import MapsLayers from 'material-ui/svg-icons/maps/layers';
-import RaisedButton from 'material-ui/RaisedButton';
 import NotificationWc from 'material-ui/svg-icons/notification/wc';
 
 import EmployeeTabDetails from "./EmployeeTabDetails"
+import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
 
 class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
+        this.props.currentEmployee.gradeHistory.reverse();
         this.state = {
             viewMode: true,
             employee: this.props.currentEmployee
@@ -54,7 +56,7 @@ class EmployeeTab extends Component {
 
     cancelButtonClick(){
         this.setState({viewMode: true});
-        this.setSavedEmployee({});
+        this.setSavedEmployee(this.props.currentEmployee);
     }
 
     setSavedEmployee(employee){
@@ -74,14 +76,14 @@ class EmployeeTab extends Component {
                     <Tab icon={<ActionHistory />} value="history">
                         {this.props.children}
                         <div className="menu-content">
-                            Test history
+                            Test History
                         </div>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade">
-                        {this.props.children}
-                        <div className="menu-content">
-                            Test grade
-                        </div>
+                        <EmployeeTabGradeHistory
+                            viewMode={this.state.viewMode}
+                            currentEmployee={this.state.employee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family">
                         {this.props.children}

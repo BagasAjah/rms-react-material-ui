@@ -15,7 +15,19 @@ const DummyData = [
         grade: 'SE2',
         division: 'CDC1',
         email: 'Bagas.Dimas@mitrais.com',
-        office: 'JOG'
+        office: 'JOG',
+        gradeHistory: [{
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,12,18),
+            endDate: new Object
+        },
+        {
+            ds: 5,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
+        }]
     },
     {
         id: 2,
@@ -33,7 +45,19 @@ const DummyData = [
         grade: 'SQ2',
         division: 'RED',
         email: 'Test.Coba@mitrais.com',
-        office: 'Bali'
+        office: 'Bali',
+        gradeHistory: [{
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
+        },
+        {
+            ds: 5,
+            grade: "SE2",
+            startDate: new Date(2013,12,18),
+            endDate: new Object
+        }]
     },
     {
         id: 3,
@@ -51,7 +75,19 @@ const DummyData = [
         grade: 'SM',
         division: 'CDC',
         email: 'Test.Coba@mitrais.com',
-        office: 'Bali'
+        office: 'Bali',
+        gradeHistory: [{
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
+        },
+        {
+            ds: 5,
+            grade: "SE2",
+            startDate: new Date(2013,12,18),
+            endDate: new Object
+        }]
     },
 ];
 
