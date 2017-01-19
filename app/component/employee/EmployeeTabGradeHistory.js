@@ -190,6 +190,7 @@ class EmployeeTabGradeHistory extends Component {
         );
         return(
             <div className="menu-content">
+                <h2>Employee Grade History</h2>
                 <Table>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
                         <TableRow>
@@ -204,7 +205,7 @@ class EmployeeTabGradeHistory extends Component {
                         {gradeHistoryListDetail}
                     </TableBody>
                 </Table>
-                <FloatingActionButton className="btn-grade-history-position"
+                <FloatingActionButton className="btn-add-tab-position"
                     backgroundColor={grey500}
                     onClick={this.openDialogClick}
                     disabled={this.props.viewMode}>

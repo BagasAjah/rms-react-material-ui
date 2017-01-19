@@ -66,7 +66,7 @@ body {
     min-width: 300px;
     margin: 10px 25px 10px 25px;
 }
-.btn-grade-history-position{
+.btn-add-tab-position{
     position: absolute;
     right: 100px;
     bottom: 100px;
@@ -74,6 +74,12 @@ body {
 .grade-history-width{
     float:left;
     margin:10px;
+}
+.table-header-font{
+    color: #000000;
+}
+.family-member-header-tab{
+    width: 10%;
 }
 .footer-content{
     width: 100%;

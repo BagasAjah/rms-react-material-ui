@@ -12,6 +12,7 @@ import NotificationWc from 'material-ui/svg-icons/notification/wc';
 
 import EmployeeTabDetails from "./EmployeeTabDetails"
 import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
+import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
 
 class EmployeeTab extends Component {
 
@@ -76,7 +77,7 @@ class EmployeeTab extends Component {
                     <Tab icon={<ActionHistory />} value="history">
                         {this.props.children}
                         <div className="menu-content">
-                            Test History
+                            <h2>Employee History</h2>
                         </div>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade">
@@ -86,21 +87,21 @@ class EmployeeTab extends Component {
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family">
-                        {this.props.children}
-                        <div className="menu-content">
-                            Test family
-                        </div>
+                        <EmployeeTabFamilyMember
+                            viewMode={this.state.viewMode}
+                            currentEmployee={this.state.employee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address">
                         {this.props.children}
                         <div className="menu-content">
-                            Test address
+                            <h2>Employee Address Details</h2>
                         </div>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location">
                         {this.props.children}
                         <div className="menu-content">
-                            Test location
+                            <h2>Employee Location Details</h2>
                         </div>
                     </Tab>
 

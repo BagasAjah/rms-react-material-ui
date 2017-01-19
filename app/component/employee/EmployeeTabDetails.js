@@ -136,6 +136,7 @@ class EmployeeTabDetails extends Component {
         );
         return(
         <div className="menu-content">
+            <h2>Employee Details</h2>
             <div className="content">
                 <input type="hidden" id="employeeId"/>
                 <TextField
