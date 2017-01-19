@@ -32,6 +32,8 @@ const styles = {
 
 };
 
+const validationErrorMessage = "This field is required!";
+
 class EmployeeTabGradeHistory extends Component {
 
     constructor(props) {
@@ -43,7 +45,8 @@ class EmployeeTabGradeHistory extends Component {
             endDate: new Object,
             showCheckboxes: false,
             openDialog: false,
-            lookupGrade: lookupData.grade
+            lookupGrade: lookupData.grade,
+            openValidationMessage: false
         }
         this.addGradeHistoryClick = this.addGradeHistoryClick.bind(this);
         this.openDialogClick = this.openDialogClick.bind(this);
@@ -61,28 +64,34 @@ class EmployeeTabGradeHistory extends Component {
             grade: '',
             startDate: new Object,
             endDate: new Object,
-            openDialog: true
+            openDialog: true,
+            openValidationMessage: false
         });
     }
 
     closeDialogClick(){
         this.setState({openDialog: false});
+        this.setState({openValidationMessage: false});
     }
 
     addGradeHistoryClick(){
-        var currentEmployee = this.props.currentEmployee;
-        currentEmployee.gradeHistory.reverse();
-        var updatedEmployee = update(currentEmployee, {'gradeHistory': {
-            $push: [{
-                ds: this.state.ds,
-                grade: this.state.grade,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate
-            }]
-        }});
-        updatedEmployee.gradeHistory.reverse();
-        this.props.setSavedEmployee(updatedEmployee);
-        this.closeDialogClick();
+        if(this.state.ds == '' || this.state.grade =='' || this.state.startDate == new Object) {
+            this.setState({openValidationMessage: true});
+        } else {
+            var currentEmployee = this.props.currentEmployee;
+            currentEmployee.gradeHistory.reverse();
+            var updatedEmployee = update(currentEmployee, {'gradeHistory': {
+                $push: [{
+                    ds: this.state.ds,
+                    grade: this.state.grade,
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate
+                }]
+            }});
+            updatedEmployee.gradeHistory.reverse();
+            this.props.setSavedEmployee(updatedEmployee);
+            this.closeDialogClick();
+        }
     }
 
     deleteClick(){
@@ -114,7 +123,6 @@ class EmployeeTabGradeHistory extends Component {
             <FlatButton
                 label="Add"
                 primary={true}
-                keyboardFocused={true}
                 onTouchTap={this.addGradeHistoryClick}
             />
         ];
@@ -215,6 +223,7 @@ class EmployeeTabGradeHistory extends Component {
                         floatingLabelText="DS"
                         maxHeight={200}
                         value={this.state.ds}
+                        errorText={this.state.openValidationMessage?validationErrorMessage:""}
                         onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
                         {lookupDS}
                     </SelectField>
@@ -224,6 +233,7 @@ class EmployeeTabGradeHistory extends Component {
                         floatingLabelText="Grade"
                         maxHeight={200}
                         value={this.state.grade}
+                        errorText={this.state.openValidationMessage?validationErrorMessage:""}
                         onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
                         {lookupGradeMenuItem}
                     </SelectField>
@@ -232,6 +242,7 @@ class EmployeeTabGradeHistory extends Component {
                         style={styles.customWidthDate}
                         floatingLabelText="Start Date"
                         value={this.state.startDate}
+                        errorText={this.state.openValidationMessage?validationErrorMessage:""}
                         onChange={(e, value) => this.handleStartDateChange(e, value)}
                         autoOk={true} />
                     <DatePicker
