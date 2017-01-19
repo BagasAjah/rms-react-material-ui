@@ -1,29 +1,31 @@
 import React, {Component} from 'react';
-import update from 'react-addons-update';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {ToolbarGroup} from 'material-ui/Toolbar';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import CommunicationLocationOn from 'material-ui/svg-icons/communication/location-on';
 import MapsLayers from 'material-ui/svg-icons/maps/layers';
-import RaisedButton from 'material-ui/RaisedButton';
 import NotificationWc from 'material-ui/svg-icons/notification/wc';
 
 import EmployeeTabDetails from "./EmployeeTabDetails"
+import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
 
 class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
-
+        this.props.currentEmployee.gradeHistory.reverse();
         this.state = {
             viewMode: true,
             employee: this.props.currentEmployee
         };
+        this.updateButtonClick = this.updateButtonClick.bind(this);
         this.editButtonClick = this.editButtonClick.bind(this);
         this.cancelButtonClick = this.cancelButtonClick.bind(this);
+        this.deleteButtonClick = this.deleteButtonClick.bind(this);
         this.setSavedEmployee = this.setSavedEmployee.bind(this);
     }
 
@@ -31,14 +33,30 @@ class EmployeeTab extends Component {
         this.setState({employee: nextProps.currentEmployee});
     }
 
+    updateButtonClick(){
+        this.setState({viewMode: true});
+        this.props.updateCurrentEmployee(this.state.employee);
+    }
+
     editButtonClick(){
         this.setState({viewMode: false});
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
+    deleteButtonClick(){
+        this.setState({
+            employee: {
+                id: '',
+                firstName: ''
+            },
+            viewMode: true
+            });
+        this.props.deleteCurrentEmployee(this.state.employee);
+    }
+
     cancelButtonClick(){
         this.setState({viewMode: true});
-        this.setSavedEmployee({});
+        this.setSavedEmployee(this.props.currentEmployee);
     }
 
     setSavedEmployee(employee){
@@ -58,14 +76,14 @@ class EmployeeTab extends Component {
                     <Tab icon={<ActionHistory />} value="history">
                         {this.props.children}
                         <div className="menu-content">
-                            Test history
+                            Test History
                         </div>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade">
-                        {this.props.children}
-                        <div className="menu-content">
-                            Test grade
-                        </div>
+                        <EmployeeTabGradeHistory
+                            viewMode={this.state.viewMode}
+                            currentEmployee={this.state.employee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family">
                         {this.props.children}
@@ -100,14 +118,16 @@ class EmployeeTab extends Component {
                                 label={"Delete"}
                                 secondary={true}
                                 className="footer-button"
+                                onClick={this.deleteButtonClick}
                             />
 
                         </div> ):(
                         <div>
                             <RaisedButton
-                                label={"Save"}
+                                label={"Update"}
                                 secondary={true}
                                 className="footer-button"
+                                onClick={this.updateButtonClick}
                             />
                             <RaisedButton
                                 label={"Cancel"}

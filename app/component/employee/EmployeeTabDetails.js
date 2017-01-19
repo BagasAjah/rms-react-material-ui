@@ -219,6 +219,7 @@ class EmployeeTabDetails extends Component {
                 />
                 <SelectField
                     floatingLabelText="Grade"
+                    maxHeight={200}
                     value={this.props.currentEmployee.grade}
                     onChange={(e, i, value) => this.handleGradeChange(e, i, value)}
                     disabled={this.props.viewMode}>
