@@ -103,6 +103,28 @@ const lookupData = {
             lookupType: 'division',
             lookupValue: 'SWD Blue'
         }
+    ],
+    familyType: [
+        {
+            lookupCode: 'H',
+            lookupType: 'familyType',
+            lookupValue: 'Husband'
+        },
+        {
+            lookupCode: 'W',
+            lookupType: 'familyType',
+            lookupValue: 'Wife'
+        },
+        {
+            lookupCode: 'S',
+            lookupType: 'familyType',
+            lookupValue: 'Son'
+        },
+        {
+            lookupCode: 'D',
+            lookupType: 'familyType',
+            lookupValue: 'Daughter'
+        }
     ]
 }
 

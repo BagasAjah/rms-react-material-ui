@@ -18,6 +18,7 @@ class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
+        this.props.currentEmployee.gradeHistory.sort();
         this.props.currentEmployee.gradeHistory.reverse();
         this.state = {
             viewMode: true,

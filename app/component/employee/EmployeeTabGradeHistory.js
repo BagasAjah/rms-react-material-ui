@@ -62,7 +62,7 @@ class EmployeeTabGradeHistory extends Component {
         this.setState({
             ds: '',
             grade: '',
-            startDate: new Object,
+            startDate: '',
             endDate: new Object,
             openDialog: true,
             openValidationMessage: false
@@ -224,7 +224,7 @@ class EmployeeTabGradeHistory extends Component {
                         floatingLabelText="DS"
                         maxHeight={200}
                         value={this.state.ds}
-                        errorText={this.state.openValidationMessage?validationErrorMessage:""}
+                        errorText={this.state.openValidationMessage && (this.state.ds=='')?validationErrorMessage:""}
                         onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
                         {lookupDS}
                     </SelectField>
@@ -234,7 +234,7 @@ class EmployeeTabGradeHistory extends Component {
                         floatingLabelText="Grade"
                         maxHeight={200}
                         value={this.state.grade}
-                        errorText={this.state.openValidationMessage?validationErrorMessage:""}
+                        errorText={this.state.openValidationMessage && (this.state.grade=='')?validationErrorMessage:""}
                         onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
                         {lookupGradeMenuItem}
                     </SelectField>
@@ -243,7 +243,7 @@ class EmployeeTabGradeHistory extends Component {
                         style={styles.customWidthDate}
                         floatingLabelText="Start Date"
                         value={this.state.startDate}
-                        errorText={this.state.openValidationMessage?validationErrorMessage:""}
+                        errorText={this.state.openValidationMessage && (this.state.startDate=='')?validationErrorMessage:""}
                         onChange={(e, value) => this.handleStartDateChange(e, value)}
                         autoOk={true} />
                     <DatePicker

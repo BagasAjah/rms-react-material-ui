@@ -81,6 +81,9 @@ body {
 .family-member-header-tab{
     width: 10%;
 }
+.pen-icon-margin{
+    margin-right: 15px;
+}
 .footer-content{
     width: 100%;
     background: #5c6bc0;

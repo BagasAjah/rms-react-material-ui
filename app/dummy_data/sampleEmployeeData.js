@@ -29,7 +29,6 @@ const DummyData = [
             endDate: new Date(2013,12,18)
         }],
         familyMember: [{
-            familyId: 1,
             familyName: "Susana Ngatinah",
             familyGender: "F",
             familyDob: new Date(1985,10,18),
@@ -37,7 +36,6 @@ const DummyData = [
             isActive: true
         },
         {
-            familyId: 2,
             familyName: "Ngatimin Sutinah",
             familyGender: "F",
             familyDob: new Date(1999,10,18),
@@ -63,16 +61,16 @@ const DummyData = [
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
         gradeHistory: [{
-            ds: 4,
-            grade: "SE2",
-            startDate: new Date(2013,10,18),
-            endDate: new Date(2013,12,18)
-        },
-        {
             ds: 5,
             grade: "SE2",
             startDate: new Date(2013,12,18),
             endDate: new Object
+        },
+        {
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
         }],
         familyMember: []
     },
@@ -94,16 +92,16 @@ const DummyData = [
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
         gradeHistory: [{
-            ds: 4,
-            grade: "SE2",
-            startDate: new Date(2013,10,18),
-            endDate: new Date(2013,12,18)
-        },
-        {
             ds: 5,
             grade: "SE2",
             startDate: new Date(2013,12,18),
             endDate: new Object
+        },
+        {
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
         }],
         familyMember: []
     },
