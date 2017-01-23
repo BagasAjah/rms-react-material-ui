@@ -103,6 +103,45 @@ const lookupData = {
             lookupType: 'division',
             lookupValue: 'SWD Blue'
         }
+    ],
+    familyType: [
+        {
+            lookupCode: 'H',
+            lookupType: 'familyType',
+            lookupValue: 'Husband'
+        },
+        {
+            lookupCode: 'W',
+            lookupType: 'familyType',
+            lookupValue: 'Wife'
+        },
+        {
+            lookupCode: 'S',
+            lookupType: 'familyType',
+            lookupValue: 'Son'
+        },
+        {
+            lookupCode: 'D',
+            lookupType: 'familyType',
+            lookupValue: 'Daughter'
+        }
+    ],
+    location: [
+        {
+            lookupCode: 'JOG',
+            lookupType: 'location',
+            lookupValue: 'Jogja Office'
+        },
+        {
+            lookupCode: 'BAL',
+            lookupType: 'location',
+            lookupValue: 'Bali Office'
+        },
+        {
+            lookupCode: 'BAN',
+            lookupType: 'location',
+            lookupValue: 'Bandung Office'
+        }
     ]
 }
 

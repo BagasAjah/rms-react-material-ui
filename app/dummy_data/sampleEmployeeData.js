@@ -27,6 +27,38 @@ const DummyData = [
             grade: "SE2",
             startDate: new Date(2013,10,18),
             endDate: new Date(2013,12,18)
+        }],
+        familyMember: [{
+            familyName: "Susana Ngatinah",
+            familyGender: "F",
+            familyDob: new Date(1985,10,18),
+            familyType: "W",
+            isActive: true
+        },
+        {
+            familyName: "Ngatimin Sutinah",
+            familyGender: "F",
+            familyDob: new Date(1999,10,18),
+            familyType: "D",
+            isActive: false
+        }],
+        location: [{
+            officeStartDate: new Date(1999,10,18),
+            officeEndDate: new Date(1999,12,18),
+            officeLocation: "JOG",
+            officeAddress: "Test"
+        },
+        {
+            officeStartDate: new Date(1999,1,18),
+            officeEndDate: new Date(1999,10,18),
+            officeLocation: "BAL",
+            officeAddress: "Yeye yaya"
+        },
+        {
+            officeStartDate: new Date(1998,11,18),
+            officeEndDate: new Date(1999,1,18),
+            officeLocation: "BAN",
+            officeAddress: "OKEEEE"
         }]
     },
     {
@@ -47,17 +79,19 @@ const DummyData = [
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
         gradeHistory: [{
-            ds: 4,
-            grade: "SE2",
-            startDate: new Date(2013,10,18),
-            endDate: new Date(2013,12,18)
-        },
-        {
             ds: 5,
             grade: "SE2",
             startDate: new Date(2013,12,18),
             endDate: new Object
-        }]
+        },
+        {
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
+        }],
+        familyMember: [],
+        location: []
     },
     {
         id: 3,
@@ -77,17 +111,19 @@ const DummyData = [
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
         gradeHistory: [{
-            ds: 4,
-            grade: "SE2",
-            startDate: new Date(2013,10,18),
-            endDate: new Date(2013,12,18)
-        },
-        {
             ds: 5,
             grade: "SE2",
             startDate: new Date(2013,12,18),
             endDate: new Object
-        }]
+        },
+        {
+            ds: 4,
+            grade: "SE2",
+            startDate: new Date(2013,10,18),
+            endDate: new Date(2013,12,18)
+        }],
+        familyMember: [],
+        location: []
     },
 ];
 

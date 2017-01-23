@@ -1,4 +1,4 @@
-import {indigo500, indigo400, grey50, white} from 'material-ui/styles/colors';
+import {indigo500, indigo400, grey50, white, grey600} from 'material-ui/styles/colors';
 
 export default {
     themeIndigo500:{
@@ -8,7 +8,7 @@ export default {
         },
 		appBar: {
 			height: 50,
-		}
+		},
     },
     themeIndigo400:{
         palette: {
@@ -16,6 +16,9 @@ export default {
         },
         datePicker: {
             selectColor: indigo400,
+        },
+		tableHeaderColumn: {
+            textColor: grey600,
         },
     },
     toolBarColor:{
