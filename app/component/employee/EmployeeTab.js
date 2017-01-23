@@ -13,6 +13,7 @@ import NotificationWc from 'material-ui/svg-icons/notification/wc';
 import EmployeeTabDetails from "./EmployeeTabDetails"
 import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
 import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
+import EmployeeTabLocation from "./EmployeeTabLocation"
 
 class EmployeeTab extends Component {
 
@@ -100,10 +101,10 @@ class EmployeeTab extends Component {
                         </div>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location">
-                        {this.props.children}
-                        <div className="menu-content">
-                            <h2>Employee Location Details</h2>
-                        </div>
+                        <EmployeeTabLocation
+                            viewMode={this.state.viewMode}
+                            currentEmployee={this.state.employee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
 
                 </Tabs>

@@ -41,6 +41,24 @@ const DummyData = [
             familyDob: new Date(1999,10,18),
             familyType: "D",
             isActive: false
+        }],
+        location: [{
+            officeStartDate: new Date(1999,10,18),
+            officeEndDate: new Date(1999,12,18),
+            officeLocation: "JOG",
+            officeAddress: "Test"
+        },
+        {
+            officeStartDate: new Date(1999,1,18),
+            officeEndDate: new Date(1999,10,18),
+            officeLocation: "BAL",
+            officeAddress: "Yeye yaya"
+        },
+        {
+            officeStartDate: new Date(1998,11,18),
+            officeEndDate: new Date(1999,1,18),
+            officeLocation: "BAN",
+            officeAddress: "OKEEEE"
         }]
     },
     {
@@ -72,7 +90,8 @@ const DummyData = [
             startDate: new Date(2013,10,18),
             endDate: new Date(2013,12,18)
         }],
-        familyMember: []
+        familyMember: [],
+        location: []
     },
     {
         id: 3,
@@ -103,7 +122,8 @@ const DummyData = [
             startDate: new Date(2013,10,18),
             endDate: new Date(2013,12,18)
         }],
-        familyMember: []
+        familyMember: [],
+        location: []
     },
 ];
 

@@ -125,6 +125,23 @@ const lookupData = {
             lookupType: 'familyType',
             lookupValue: 'Daughter'
         }
+    ],
+    location: [
+        {
+            lookupCode: 'JOG',
+            lookupType: 'location',
+            lookupValue: 'Jogja Office'
+        },
+        {
+            lookupCode: 'BAL',
+            lookupType: 'location',
+            lookupValue: 'Bali Office'
+        },
+        {
+            lookupCode: 'BAN',
+            lookupType: 'location',
+            lookupValue: 'Bandung Office'
+        }
     ]
 }
 
