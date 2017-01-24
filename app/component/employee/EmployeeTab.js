@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link,browserHistory } from 'react-router'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {ToolbarGroup} from 'material-ui/Toolbar';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -30,10 +31,15 @@ class EmployeeTab extends Component {
         this.cancelButtonClick = this.cancelButtonClick.bind(this);
         this.deleteButtonClick = this.deleteButtonClick.bind(this);
         this.setSavedEmployee = this.setSavedEmployee.bind(this);
+        this.employeeDetailClick = this.employeeDetailClick.bind(this);
+        this.employeeFamilyClick = this.employeeFamilyClick.bind(this);
+        this.employeeHistoryClick = this.employeeHistoryClick.bind(this);
+        this.employeeGradeClick = this.employeeGradeClick.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({employee: nextProps.currentEmployee});
+        this.setState({viewMode: true});
     }
 
     updateButtonClick(){
@@ -66,29 +72,45 @@ class EmployeeTab extends Component {
         this.setState({employee: employee});
     }
 
+    employeeDetailClick(){
+        browserHistory.push('#/employee/details');
+    }
+
+    employeeHistoryClick(){
+        browserHistory.push('#/employee/history');
+    }
+
+    employeeGradeClick(){
+        browserHistory.push('#/employee/grade');
+    }
+
+    employeeFamilyClick(){
+        browserHistory.push('#/employee/family');
+    }
+
     render() {
         return (
             <div className="menu-tab">
                 <Tabs>
-                    <Tab icon={<ActionAccountBox />} value="details">
+                    <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeDetailClick}>
                         <EmployeeTabDetails
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<ActionHistory />} value="history">
+                    <Tab icon={<ActionHistory />} value="history" onActive={this.employeeHistoryClick}>
                         {this.props.children}
                         <div className="menu-content">
                             <h2>Employee History</h2>
                         </div>
                     </Tab>
-                    <Tab icon={<MapsLayers />} value="grade">
+                    <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeGradeClick}>
                         <EmployeeTabGradeHistory
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<NotificationWc />} value="family">
+                    <Tab icon={<NotificationWc />} value="family" onActive={this.employeeFamilyClick}>
                         <EmployeeTabFamilyMember
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
