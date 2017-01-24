@@ -212,47 +212,47 @@ class EmployeeTabGradeHistory extends Component {
                     <ContentAdd />
                 </FloatingActionButton>
                 <Dialog
-                  title="New Grade History"
-                  contentStyle={styles.customWidthDialog}
-                  actions={actionsButton}
-                  modal={false}
-                  open={this.state.openDialog}
-                  onRequestClose={this.closeDialogClick}>
-                    <SelectField
-                        className="grade-history-width"
-                        style={styles.customWidthField}
-                        floatingLabelText="DS"
-                        maxHeight={200}
-                        value={this.state.ds}
-                        errorText={this.state.openValidationMessage && (this.state.ds=='')?validationErrorMessage:""}
-                        onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
-                        {lookupDS}
-                    </SelectField>
-                    <SelectField
-                        className="grade-history-width"
-                        style={styles.customWidthField}
-                        floatingLabelText="Grade"
-                        maxHeight={200}
-                        value={this.state.grade}
-                        errorText={this.state.openValidationMessage && (this.state.grade=='')?validationErrorMessage:""}
-                        onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
-                        {lookupGradeMenuItem}
-                    </SelectField>
-                    <DatePicker
-                        className="grade-history-width"
-                        style={styles.customWidthDate}
-                        floatingLabelText="Start Date"
-                        value={this.state.startDate}
-                        errorText={this.state.openValidationMessage && (this.state.startDate=='')?validationErrorMessage:""}
-                        onChange={(e, value) => this.handleStartDateChange(e, value)}
-                        autoOk={true} />
-                    <DatePicker
-                        className="grade-history-width"
-                        style={styles.customWidthDate}
-                        floatingLabelText="End Date"
-                        value={this.state.endDate}
-                        onChange={(e, value) => this.handleEndDateChange(e, value)}
-                        autoOk={true} />
+                    title="New Grade History"
+                    contentStyle={styles.customWidthDialog}
+                    actions={actionsButton}
+                    modal={false}
+                    open={this.state.openDialog}
+                    onRequestClose={this.closeDialogClick}>
+                        <SelectField
+                            className="grade-history-width"
+                            style={styles.customWidthField}
+                            floatingLabelText="DS"
+                            maxHeight={200}
+                            value={this.state.ds}
+                            errorText={this.state.openValidationMessage && (this.state.ds=='')?validationErrorMessage:""}
+                            onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
+                            {lookupDS}
+                        </SelectField>
+                        <SelectField
+                            className="grade-history-width"
+                            style={styles.customWidthField}
+                            floatingLabelText="Grade"
+                            maxHeight={200}
+                            value={this.state.grade}
+                            errorText={this.state.openValidationMessage && (this.state.grade=='')?validationErrorMessage:""}
+                            onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
+                            {lookupGradeMenuItem}
+                        </SelectField>
+                        <DatePicker
+                            className="grade-history-width"
+                            style={styles.customWidthDate}
+                            floatingLabelText="Start Date"
+                            value={this.state.startDate}
+                            errorText={this.state.openValidationMessage && (this.state.startDate=='')?validationErrorMessage:""}
+                            onChange={(e, value) => this.handleStartDateChange(e, value)}
+                            autoOk={true} />
+                        <DatePicker
+                            className="grade-history-width"
+                            style={styles.customWidthDate}
+                            floatingLabelText="End Date"
+                            value={this.state.endDate}
+                            onChange={(e, value) => this.handleEndDateChange(e, value)}
+                            autoOk={true} />
                 </Dialog>
             </div>
         )
