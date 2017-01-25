@@ -8,6 +8,10 @@ import EmployeeToolbar from "./component/employee/EmployeeToolbar"
 import EmployeeTab from "./component/employee/EmployeeTab"
 import EmployeeTabDetails from "./component/employee/EmployeeTabDetails"
 import EmployeeTabFamilyMember from "./component/employee/EmployeeTabFamilyMember"
+import EmployeeTabGradeHistory from "./component/employee/EmployeeTabGradeHistory"
+import EmployeeTabHistory from "./component/employee/EmployeeTabHistory"
+import EmployeeTabAddress from "./component/employee/EmployeeTabAddress"
+import EmployeeTabLocation from "./component/employee/EmployeeTabLocation"
 
 injectTapEventPlugin();
 
@@ -27,7 +31,11 @@ render((
                 <Route components={EmployeeTab}>
                     <IndexRoute component={EmployeeTabDetails}/>
                     <Route path='/employee/details' components={EmployeeTabDetails} />
+                    <Route path='/employee/history' components={EmployeeTabHistory} />
+                    <Route path='/employee/grade' components={EmployeeTabGradeHistory} />
                     <Route path='/employee/family' components={EmployeeTabFamilyMember} />
+                    <Route path='/employee/address' components={EmployeeTabAddress} />
+                    <Route path='/employee/location' components={EmployeeTabLocation} />
                 </Route>
         </Route>
     </Router>

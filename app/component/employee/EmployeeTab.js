@@ -14,6 +14,8 @@ import NotificationWc from 'material-ui/svg-icons/notification/wc';
 import EmployeeTabDetails from "./EmployeeTabDetails"
 import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
 import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
+import EmployeeTabHistory from "./EmployeeTabHistory"
+import EmployeeTabAddress from "./EmployeeTabAddress"
 import EmployeeTabLocation from "./EmployeeTabLocation"
 
 class EmployeeTab extends Component {
@@ -24,17 +26,23 @@ class EmployeeTab extends Component {
         this.props.currentEmployee.gradeHistory.reverse();
         this.state = {
             viewMode: true,
-            employee: this.props.currentEmployee
+            employee: this.props.currentEmployee,
+            currentTabLocation: ''
         };
         this.updateButtonClick = this.updateButtonClick.bind(this);
         this.editButtonClick = this.editButtonClick.bind(this);
         this.cancelButtonClick = this.cancelButtonClick.bind(this);
         this.deleteButtonClick = this.deleteButtonClick.bind(this);
         this.setSavedEmployee = this.setSavedEmployee.bind(this);
-        this.employeeDetailClick = this.employeeDetailClick.bind(this);
-        this.employeeFamilyClick = this.employeeFamilyClick.bind(this);
-        this.employeeHistoryClick = this.employeeHistoryClick.bind(this);
-        this.employeeGradeClick = this.employeeGradeClick.bind(this);
+        this.employeeTabClick = this.employeeTabClick.bind(this);
+    }
+
+    componentWillMount(){
+        var currentTabLocationHash = browserHistory.getCurrentLocation().hash;
+        var lastslashindex = currentTabLocationHash.lastIndexOf('/');
+        var currentTabLocation = currentTabLocationHash.substring(lastslashindex  + 1);
+        (currentTabLocation == 'employee') ? currentTabLocation = 'details' : currentTabLocation;
+        this.setState({currentTabLocation: currentTabLocation});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -72,57 +80,46 @@ class EmployeeTab extends Component {
         this.setState({employee: employee});
     }
 
-    employeeDetailClick(){
-        browserHistory.push('#/employee/details');
-    }
-
-    employeeHistoryClick(){
-        browserHistory.push('#/employee/history');
-    }
-
-    employeeGradeClick(){
-        browserHistory.push('#/employee/grade');
-    }
-
-    employeeFamilyClick(){
-        browserHistory.push('#/employee/family');
+    employeeTabClick(e){
+        this.setState({currentTabLocation: e.props.value});
+        browserHistory.push('#/employee/' + e.props.value);
     }
 
     render() {
         return (
             <div className="menu-tab">
-                <Tabs>
-                    <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeDetailClick}>
+                <Tabs value={this.state.currentTabLocation}>
+                    <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeTabClick}>
                         <EmployeeTabDetails
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<ActionHistory />} value="history" onActive={this.employeeHistoryClick}>
-                        {this.props.children}
-                        <div className="menu-content">
-                            <h2>Employee History</h2>
-                        </div>
+                    <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
+                        <EmployeeTabHistory
+                                viewMode={this.state.viewMode}
+                                currentEmployee={this.state.employee}
+                                setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeGradeClick}>
+                    <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<NotificationWc />} value="family" onActive={this.employeeFamilyClick}>
+                    <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<ActionHome />} value="address">
-                        {this.props.children}
-                        <div className="menu-content">
-                            <h2>Employee Address Details</h2>
-                        </div>
+                    <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
+                        <EmployeeTabAddress
+                            viewMode={this.state.viewMode}
+                            currentEmployee={this.state.employee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
-                    <Tab icon={<CommunicationLocationOn />} value="location">
+                    <Tab icon={<CommunicationLocationOn />} value="location" onActive={this.employeeTabClick}>
                         <EmployeeTabLocation
                             viewMode={this.state.viewMode}
                             currentEmployee={this.state.employee}
