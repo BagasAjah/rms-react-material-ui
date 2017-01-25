@@ -16,6 +16,27 @@ const DummyData = [
         division: 'CDC1',
         email: 'Bagas.Dimas@mitrais.com',
         office: 'JOG',
+        history:[{
+            historyStartDate: new Date(2012,12,18),
+            historyEndDate: new Date(2013,12,18),
+            company: "PT Mitrais",
+            position: "Java Developer",
+            jobDesc:[
+                "adasd",
+                "qweqwe",
+                "zxcxzc"
+            ]
+        },
+        {
+            historyStartDate: new Date(2011,12,18),
+            historyEndDate: new Date(2012,12,18),
+            company: "PT Abal - Abal",
+            position: "Kang Sapu",
+            jobDesc:[
+                "ihik",
+                "uhuhk"
+            ]
+        }],
         gradeHistory: [{
             ds: 4,
             grade: "SE2",
@@ -78,6 +99,7 @@ const DummyData = [
         division: 'RED',
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
+        history:[],
         gradeHistory: [{
             ds: 5,
             grade: "SE2",
@@ -110,6 +132,7 @@ const DummyData = [
         division: 'CDC',
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
+        history:[],
         gradeHistory: [{
             ds: 5,
             grade: "SE2",

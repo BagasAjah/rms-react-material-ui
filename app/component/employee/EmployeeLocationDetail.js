@@ -53,7 +53,7 @@ class EmployeeLocationDetail extends Component {
             officeEndYear = 'PRESENT';
         }
         return (
-            <div className="location-content">
+            <div className="detail-content">
                 <div className="location-divider-vertical"/>
                 <div className="location-date-content">
                     <div style={{color: indigo900}}>

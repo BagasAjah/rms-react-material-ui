@@ -3,7 +3,6 @@ import update from 'react-addons-update';
 
 import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
-import EmployeeLocationDetail from "./EmployeeLocationDetail"
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {List} from 'material-ui/List';
@@ -13,6 +12,7 @@ import TextField from 'material-ui/TextField';
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import EmployeeLocationDetail from "./EmployeeLocationDetail"
 import lookupData from "../../dummy_data/lookupData"
 
 const validationErrorMessage = "This field is required!";
@@ -143,7 +143,7 @@ class EmployeeTabLocation extends Component {
             <div className="menu-content">
                 <h2>Employee Location Details</h2>
                 {(employeeLocationDetail.length == 0) ?
-                    <div style={{textAlign: 'center'}}>Location Details Found</div>
+                    <div style={{textAlign: 'center'}}>Location Details Not Found</div>
                 :
                     (<List >
                             {employeeLocationDetail}
