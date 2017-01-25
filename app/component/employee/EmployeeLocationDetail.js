@@ -20,6 +20,24 @@ class EmployeeLocationDetail extends Component {
         this.state ={
             lookupLocation : lookupData.location
         };
+        this.handleOfficeLocationChange = this.handleOfficeLocationChange.bind(this);
+        this.handleOfficeAddressChange = this.handleOfficeAddressChange.bind(this);
+    }
+
+    handleOfficeLocationChange(e, index, value, locationIndex){
+        this.props.handleDataChange(locationIndex, value, 'officeLocation');
+    }
+
+    handleOfficeAddressChange(e, value, index){
+        this.props.handleDataChange(index, value, 'officeAddress');
+    }
+
+    updateClick(index){
+        this.props.updateClick(index);
+    }
+
+    deleteClick(index){
+        this.props.deleteClick(index);
     }
 
     render() {
@@ -30,6 +48,10 @@ class EmployeeLocationDetail extends Component {
         var officeStartYear = moment(this.props.location.officeStartDate).format("YYYY").toString();
         var officeEndMonth = moment(this.props.location.officeEndDate).format("MMMM").toString();
         var officeEndYear = moment(this.props.location.officeEndDate).format("YYYY").toString();
+        if (this.props.location.officeEndDate == null){
+            officeEndMonth = '';
+            officeEndYear = 'PRESENT';
+        }
         return (
             <div className="location-content">
                 <div className="location-divider-vertical"/>
@@ -38,10 +60,10 @@ class EmployeeLocationDetail extends Component {
                         <span style={{marginLeft:30}}>{officeStartMonth}</span>
                         <span style={{marginRight:30, float: "right"}}>{officeEndMonth}</span>
                     </div>
-                    <div style={{fontSize:'200%', color: indigo900}}>
+                    <div style={{fontSize:'150%', color: indigo900}}>
                         <span style={{marginLeft:30}}>{officeStartYear}</span>
                         <span style={{marginLeft:75}}> - </span>
-                        <span style={{marginRight:20, float: "right"}}>{officeEndYear}</span>
+                        <span style={{marginRight:40, float: "right"}}>{officeEndYear}</span>
                     </div>
                 </div>
                 <div className="location-detail-content">
@@ -49,26 +71,26 @@ class EmployeeLocationDetail extends Component {
                         id={"location-id-"+this.props.index}
                         maxHeight={200}
                         value={this.props.location.officeLocation}
-                        disabled={this.props.viewMode}
+                        onChange={(e, i, value) => this.handleOfficeLocationChange(e, i, value, this.props.index)}
+                        disabled={this.props.index==this.props.selectedIndex?false:true}
                         underlineShow={false}>
                         {lookupLocationMenuItem}
                     </SelectField>
                     {(!this.props.viewMode) ?
                         (<span>
-                            <ContentUpdate />
-                            <ActionDelete />
+                            <ContentUpdate onClick={this.updateClick.bind(this,this.props.index)}/>
+                            <ActionDelete onClick={this.deleteClick.bind(this,this.props.index)}/>
                         </span>) : ''
                     }<br />
                     <TextField
                         floatingLabelText="Address"
                         value={this.props.location.officeAddress}
+                        onChange={(e, value) => this.handleOfficeAddressChange(e, value, this.props.index)}
                         multiLine={true}
                         rows={2}
                         rowsMax={2}
-                        disabled={this.props.viewMode}
+                        disabled={this.props.index==this.props.selectedIndex?false:true}
                         underlineShow={false}/><br />
-                </div>
-                <div className="location-action-content">
                 </div><br /><br />
 
             </div>

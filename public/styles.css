@@ -89,7 +89,7 @@ body {
 }
 .location-content{
     min-width:500px;
-    min-height:200px;
+    min-height:150px;
     height:auto;
     border-bottom-width: thin;
     border-bottom-style: solid;
@@ -105,7 +105,7 @@ body {
     border-left-width: thin;
     border-left-style: solid;
     border-left-color: #D3D3D3;
-    min-height:200px;
+    min-height:150px;
     position:absolute;
     left : 400px;
 }
@@ -114,6 +114,11 @@ body {
     width: 60%;
     height:auto;
     padding-left: 60px;
+}
+.location-detail-dialog{
+    float: left;
+    padding-left: 10px;
+    padding-top: 10px;
 }
 .footer-content{
     width: 100%;

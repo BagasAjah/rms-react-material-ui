@@ -44,7 +44,7 @@ const DummyData = [
         }],
         location: [{
             officeStartDate: new Date(1999,10,18),
-            officeEndDate: new Date(1999,12,18),
+            officeEndDate: null,
             officeLocation: "JOG",
             officeAddress: "Test"
         },

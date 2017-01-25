@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import EmployeeDetails from "./layout/EmployeeDetails"
+import EmployeeToolbar from "./component/employee/EmployeeToolbar"
+import EmployeeTab from "./component/employee/EmployeeTab"
+import EmployeeTabDetails from "./component/employee/EmployeeTabDetails"
+import EmployeeTabFamilyMember from "./component/employee/EmployeeTabFamilyMember"
+import EmployeeTabGradeHistory from "./component/employee/EmployeeTabGradeHistory"
+import EmployeeTabHistory from "./component/employee/EmployeeTabHistory"
+import EmployeeTabAddress from "./component/employee/EmployeeTabAddress"
+import EmployeeTabLocation from "./component/employee/EmployeeTabLocation"
 
 injectTapEventPlugin();
 
@@ -15,4 +24,19 @@ injectTapEventPlugin();
 }*/
 
 // Render the main app react component into the app div.
-render(<EmployeeDetails />, document.getElementById('root'));
+render((
+    <Router history={hashHistory}>
+        <Route path='/employee' component={EmployeeDetails}>
+            <IndexRoute component={EmployeeToolbar}/>
+                <Route components={EmployeeTab}>
+                    <IndexRoute component={EmployeeTabDetails}/>
+                    <Route path='/employee/details' components={EmployeeTabDetails} />
+                    <Route path='/employee/history' components={EmployeeTabHistory} />
+                    <Route path='/employee/grade' components={EmployeeTabGradeHistory} />
+                    <Route path='/employee/family' components={EmployeeTabFamilyMember} />
+                    <Route path='/employee/address' components={EmployeeTabAddress} />
+                    <Route path='/employee/location' components={EmployeeTabLocation} />
+                </Route>
+        </Route>
+    </Router>
+), document.getElementById('root'))
