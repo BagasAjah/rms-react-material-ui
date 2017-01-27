@@ -43,6 +43,10 @@ class EmployeeTabLocation extends Component {
         this.deleteClick = this.deleteClick.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({selectedIndex: null});
+    }
+
     handleDataChange(index, value, type){
         var updatedEmployee = update(this.props.currentEmployee, {
             'location': {
