@@ -50,7 +50,9 @@ class EmployeeTabFamilyMember extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({selectedIndex: null});
+        if (nextProps.currentEmployee.id != this.props.currentEmployee.id) {
+            this.setState({selectedIndex: null});
+        }
     }
 
     handleFamilyNameChanged(e, value, familyIndex){
