@@ -95,7 +95,9 @@ class EmployeeHistoryDetail extends Component {
                 <div className="detail-content-right">
                     <div style={{width:'100%'}}>
                         <div style={{float:"left", paddingRight:20,fontSize:'110%'}}>Job Description</div>
-                        <div style={{float:"left"}}><ActionAdd onClick={this.addNewJobDesc}/></div>
+                        <div style={{float:"left"}}>
+                            {(!this.props.viewMode) ? <ActionAdd onClick={this.addNewJobDesc}/> : ''}
+                        </div>
                     </div>
                     <div>
                         {jobDesc}
