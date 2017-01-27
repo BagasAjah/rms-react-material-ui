@@ -44,7 +44,7 @@ class EmployeeTabLocation extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.currentEmployee.id != this.props.currentEmployee.id) {
+        if (nextProps.currentEmployee.id != this.props.currentEmployee.id || nextProps.viewMode) {
             this.setState({selectedIndex: null});
         }
     }

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 
-import Divider from 'material-ui/Divider';
-import {ListItem} from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
@@ -54,8 +52,8 @@ class EmployeeLocationDetail extends Component {
         }
         return (
             <div className="detail-content">
-                <div className="location-divider-vertical"/>
-                <div className="location-date-content">
+                <div className="detail-content-divider-vertical"/>
+                <div className="detail-content-left">
                     <div style={{color: indigo900}}>
                         <span style={{marginLeft:30}}>{officeStartMonth}</span>
                         <span style={{marginRight:30, float: "right"}}>{officeEndMonth}</span>
@@ -66,7 +64,7 @@ class EmployeeLocationDetail extends Component {
                         <span style={{marginRight:40, float: "right"}}>{officeEndYear}</span>
                     </div>
                 </div>
-                <div className="location-detail-content">
+                <div className="detail-content-right">
                     <SelectField
                         id={"location-id-"+this.props.index}
                         maxHeight={200}
