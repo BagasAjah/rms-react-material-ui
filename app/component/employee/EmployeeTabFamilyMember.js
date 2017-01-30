@@ -49,6 +49,12 @@ class EmployeeTabFamilyMember extends Component {
         this.addFamilyMemberClick = this.addFamilyMemberClick.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentEmployee.id != this.props.currentEmployee.id || nextProps.viewMode) {
+            this.setState({selectedIndex: null});
+        }
+    }
+
     handleFamilyNameChanged(e, value, familyIndex){
         var updatedEmployee = update(this.props.currentEmployee, {
             'familyMember': {

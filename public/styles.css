@@ -31,8 +31,8 @@ body {
 }
 .employee-list-group{
     width: 29%;
-    height: 50px;
-    overflowY: 'auto';
+    height: auto;
+    overflow-y: auto;
 }
 .no-record{
     height: 70px;
@@ -87,35 +87,60 @@ body {
 .list-content{
     height:500px;
 }
-.location-content{
+.detail-content{
     min-width:500px;
     min-height:150px;
-    height:auto;
+    height: initial;
     border-bottom-width: thin;
     border-bottom-style: solid;
     border-bottom-color: #D3D3D3;
+    overflow:auto;
 }
-.location-date-content {
+.detail-content-left {
     padding-top: 10px;
     float: left;
     width: 30%;
     height:auto;
 }
-.location-divider-vertical{
+.detail-content-border-right{
+    float: right;
+    width: 45%;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    border-bottom-color: #D3D3D3;
+    border-left-width: thin;
+    border-left-style: solid;
+    border-left-color: #D3D3D3;
+}
+.detail-content-divider-vertical{
     border-left-width: thin;
     border-left-style: solid;
     border-left-color: #D3D3D3;
     min-height:150px;
     position:absolute;
     left : 400px;
+    overflow-y:auto;
 }
-.location-detail-content {
+.detail-content-right {
     float: left;
     width: 60%;
     height:auto;
     padding-left: 60px;
+    padding-top: 10px;
 }
-.location-detail-dialog{
+.detail-content-pull-right{
+    float: right;
+    padding-right: 30px;
+    padding-top: 20px;
+}
+.detail-content-pull-right div{
+    float: right;
+}
+.detail-content-jobdesc{
+    width: 100%;
+    float: left;
+}
+.detail-dialog{
     float: left;
     padding-left: 10px;
     padding-top: 10px;
