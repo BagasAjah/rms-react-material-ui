@@ -24,7 +24,7 @@ class EmployeeListDetail extends Component {
         var employee = this.props.employee;
         var hireDateStr = moment(this.props.employee.hireDate).format("DD MMM YYYY").toString();
         return(
-            <Paper key={employee.id} className="employee-list-container" zDepth={1}>
+            <Paper key={this.props.index} className="employee-list-container" zDepth={1}>
                 <ListItem
                     primaryText={
                         <span>

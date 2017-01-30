@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import update from 'react-addons-update';
+
 import {render} from 'react-dom';
 
 import Header from "../component/common/Header"
@@ -18,6 +20,7 @@ class EmployeeDetails extends Component {
             filteredEmployees: [],
             filterMode: false
         };
+        this.addEmployeeList = this.addEmployeeList.bind(this);
         this.updateEmployeeList = this.updateEmployeeList.bind(this);
         this.deleteCurrentEmployee = this.deleteCurrentEmployee.bind(this);
     }
@@ -36,6 +39,14 @@ class EmployeeDetails extends Component {
         this.setState({currentEmployee: employeesData});
     }
 
+    addCurrentEmployee(newEmployee){
+        this.setState({
+            allEmployee: this.addEmployeeList(newEmployee, this.state.allEmployee),
+            employees: this.addEmployeeList(newEmployee, this.state.employees),
+            currentEmployee: newEmployee
+        });
+    }
+
     updateCurrentEmployee(updatedEmployee){
         this.setState({
             allEmployee: this.updateEmployeeList(updatedEmployee, this.state.allEmployee),
@@ -50,6 +61,11 @@ class EmployeeDetails extends Component {
             employees: this.deleteEmployeeOnList(deletedEmployee, this.state.employees),
             currentEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee)[0]
         });
+    }
+
+    addEmployeeList(employee, employees){
+        var newEmployee = update(employees, {$push:[employee]});
+        return newEmployee;
     }
 
     updateEmployeeList(employee, employees){
@@ -84,7 +100,10 @@ class EmployeeDetails extends Component {
                     setFilteringProps={this.setFilteringProps.bind(this)}
                     updateCurrentEmployee={this.updateCurrentEmployee.bind(this)}
                     deleteCurrentEmployee={this.deleteCurrentEmployee.bind(this)}/>
-                <EmployeeList employees={this.state.employees} setEmployees={this.setEmployees.bind(this)}/>
+                <EmployeeList
+                    employees={this.state.employees}
+                    setEmployees={this.setEmployees.bind(this)}
+                    addCurrentEmployee={this.addCurrentEmployee.bind(this)}/>
             </div>
         )
     }
