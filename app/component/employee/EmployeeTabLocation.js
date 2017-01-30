@@ -169,7 +169,7 @@ class EmployeeTabLocation extends Component {
                     open={this.state.openDialog}
                     onRequestClose={this.closeDialogClick}>
                         <DatePicker
-                            className='location-detail-dialog'
+                            className='detail-dialog'
                             floatingLabelText="Office Start Date"
                             name="Office Start Date"
                             ref="a"
@@ -178,14 +178,14 @@ class EmployeeTabLocation extends Component {
                             onChange={(e, value) => this.handleStartDateChanged(e, value)}
                             autoOk={true} />
                         <DatePicker
-                            className='location-detail-dialog'
+                            className='detail-dialog'
                             floatingLabelText="Office End Date"
                             value={this.state.officeEndDate}
                             onChange={(e, value) => this.handleEndDateChanged(e, value)}
                             autoOk={true} />
                         <br />
                         <SelectField
-                            className='location-detail-dialog'
+                            className='detail-dialog'
                             floatingLabelText="Office Location"
                             maxHeight={200}
                             value={this.state.officeLocation}
@@ -194,7 +194,7 @@ class EmployeeTabLocation extends Component {
                             {lookupLocationMenuItem}
                         </SelectField>
                         <TextField
-                            className='location-detail-dialog'
+                            className='detail-dialog'
                             floatingLabelText="Office Address"
                             value={this.state.officeAddress}
                             errorText={this.state.openValidationMessage && (this.state.officeAddress=='')?validationErrorMessage:""}

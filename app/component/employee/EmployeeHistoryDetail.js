@@ -53,7 +53,7 @@ class EmployeeHistoryDetail extends Component {
                         id={"history-jobDesc-" + this.props.index + "-" + jobDescIndex}
                         style={{float: "left",paddingRight: 20}}
                         value={jobDesc}
-                        underlineShow={false}
+                        underlineShow={true}
                         onChange={(e, jobDescValue) => this.handleJobDescChanged(jobDescValue, jobDescIndex)}/> :
                     <div style={{width:256, height:48, float: "left",paddingRight: 20}}>{jobDesc}</div>
                 }
@@ -94,7 +94,7 @@ class EmployeeHistoryDetail extends Component {
                 <div className="detail-content-divider-vertical"/>
                 <div className="detail-content-right">
                     <div style={{width:'100%'}}>
-                        <div style={{float:"left", paddingRight:20,fontSize:'110%'}}>Job Description</div>
+                        <div style={{float:"left", paddingRight:20, paddingBottom:10, fontSize:'110%'}}>Job Description</div>
                         <div style={{float:"left"}}>
                             {(!this.props.viewMode) ? <ActionAdd onClick={this.addNewJobDesc}/> : ''}
                         </div>

@@ -1,9 +1,9 @@
 {
-  "name": "react-app-boilerplate",
+  "name": "rms-react-app",
   "version": "0.1.4",
-  "description": "React application boilerplate",
-  "author": "Cássio Zen",
-  "license": "ISC",
+  "description": "Resource Management System React Application",
+  "author": "Bagas Dimas",
+  "license": "",
   "scripts": {
     "prestart": "webpack",
     "start": "webpack-dev-server --progress --port 3002 --host 0.0.0.0",
