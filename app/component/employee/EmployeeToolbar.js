@@ -25,8 +25,12 @@ class EmployeeToolbar extends Component {
                 setFilteringProps={this.props.setFilteringProps.bind(this)}/>
             <EmployeeTab
                 currentEmployee={this.props.currentEmployee}
+                currentTabLocation={this.props.currentTabLocation}
+                editedEmployee={this.props.editedEmployee}
+                viewMode={this.props.viewMode}
                 updateCurrentEmployee={this.props.updateCurrentEmployee.bind(this)}
-                deleteCurrentEmployee={this.props.deleteCurrentEmployee.bind(this)}/>
+                deleteCurrentEmployee={this.props.deleteCurrentEmployee.bind(this)}
+                handleStateChanged={this.props.handleStateChanged.bind(this)}/>
           </Toolbar>
         </MuiThemeProvider>
     );

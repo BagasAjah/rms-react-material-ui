@@ -22,13 +22,8 @@ class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
-        this.props.currentEmployee.gradeHistory.sort();
-        this.props.currentEmployee.gradeHistory.reverse();
-        this.state = {
-            viewMode: true,
-            employee: this.props.currentEmployee,
-            currentTabLocation: ''
-        };
+        this.props.editedEmployee.gradeHistory.sort();
+        this.props.editedEmployee.gradeHistory.reverse();
         this.updateButtonClick = this.updateButtonClick.bind(this);
         this.editButtonClick = this.editButtonClick.bind(this);
         this.cancelButtonClick = this.cancelButtonClick.bind(this);
@@ -42,93 +37,82 @@ class EmployeeTab extends Component {
         var lastslashindex = currentTabLocationHash.lastIndexOf('/');
         var currentTabLocation = currentTabLocationHash.substring(lastslashindex  + 1);
         (currentTabLocation == 'employee') ? currentTabLocation = 'details' : currentTabLocation;
-        this.setState({currentTabLocation: currentTabLocation});
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({employee: nextProps.currentEmployee});
-        this.setState({viewMode: true});
+        this.props.handleStateChanged('currentTabLocation', currentTabLocation);
     }
 
     updateButtonClick(){
-        this.setState({viewMode: true});
+        this.props.handleStateChanged('viewMode', true);
         this.props.updateCurrentEmployee(this.state.employee);
     }
 
     editButtonClick(){
-        this.setState({viewMode: false});
+        this.props.handleStateChanged('viewMode', false);
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
     deleteButtonClick(){
-        this.setState({
-            employee: {
-                id: '',
-                firstName: ''
-            },
-            viewMode: true
-            });
+        this.props.handleStateChanged('viewMode', true);
         this.props.deleteCurrentEmployee(this.state.employee);
     }
 
     cancelButtonClick(){
-        this.setState({viewMode: true});
+        this.props.handleStateChanged('viewMode', true);
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
     setSavedEmployee(employee){
-        this.setState({employee: employee});
+        this.props.handleStateChanged('editedEmployee', employee);
     }
 
     employeeTabClick(e){
-        this.setState({currentTabLocation: e.props.value});
+        this.props.handleStateChanged('currentTabLocation', e.props.value);
         browserHistory.push('#/employee/' + e.props.value);
     }
 
     render() {
         return (
             <div className="menu-tab">
-                <Tabs value={this.state.currentTabLocation}>
+                <Tabs value={this.props.currentTabLocation}>
                     <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeTabClick}>
                         <EmployeeTabDetails
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
                         <EmployeeTabHistory
-                                viewMode={this.state.viewMode}
-                                currentEmployee={this.state.employee}
+                                viewMode={this.props.viewMode}
+                                currentEmployee={this.props.editedEmployee}
                                 setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
                         <EmployeeTabAddress
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location" onActive={this.employeeTabClick}>
                         <EmployeeTabLocation
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
 
                 </Tabs>
                 <div className="footer-content">
-                    { (this.state.viewMode) ? (
+                    { (this.props.viewMode) ? (
                         <div>
                             <RaisedButton
                                 label={"Edit"}

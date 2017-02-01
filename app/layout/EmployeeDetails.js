@@ -16,7 +16,10 @@ class EmployeeDetails extends Component {
         allEmployee: DummyData,
         employees : DummyData,
         currentEmployee: DummyData[0],
-        searchingText: ''
+        currentTabLocation: '',
+        searchingText: '',
+        editedEmployee: DummyData[0],
+        viewMode: true
     }
 
     constructor(props) {
@@ -36,7 +39,11 @@ class EmployeeDetails extends Component {
     }
 
     setEmployees = (employeesData) => {
-        this.setState({currentEmployee: employeesData});
+        this.setState({
+            currentEmployee: employeesData,
+            editedEmployee: employeesData,
+            viewMode: true
+        });
     }
 
     addCurrentEmployee = (newEmployee) => {
@@ -90,6 +97,10 @@ class EmployeeDetails extends Component {
         return newEmployeeList;
     }
 
+    handleStateChanged = (type, value) => {
+        this.setState({[type]:  value});
+    }
+
     render(){
         return(
             <div>
@@ -97,10 +108,14 @@ class EmployeeDetails extends Component {
                 <EmployeeToolbar
                     employees={this.state.employees}
                     currentEmployee={this.state.currentEmployee}
+                    currentTabLocation={this.state.currentTabLocation}
+                    editedEmployee={this.state.editedEmployee}
                     searchingText={this.state.searchingText}
+                    viewMode={this.state.viewMode}
                     setFilteringProps={this.setFilteringProps.bind(this)}
                     updateCurrentEmployee={this.updateCurrentEmployee.bind(this)}
-                    deleteCurrentEmployee={this.deleteCurrentEmployee.bind(this)}/>
+                    deleteCurrentEmployee={this.deleteCurrentEmployee.bind(this)}
+                    handleStateChanged={this.handleStateChanged.bind(this)}/>
                 <EmployeeList
                     employees={this.state.employees}
                     setEmployees={this.setEmployees.bind(this)}
