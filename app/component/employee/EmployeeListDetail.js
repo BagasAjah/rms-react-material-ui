@@ -11,14 +11,10 @@ import moment from 'moment'
 
 
 class EmployeeListDetail extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     employeeClick(currentEmployee) {
         this.props.setCurrentEmployee(currentEmployee);
     }
-
 
     render(){
         var employee = this.props.employee;

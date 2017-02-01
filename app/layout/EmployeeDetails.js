@@ -9,37 +9,37 @@ import EmployeeToolbar from "../component/employee/EmployeeToolbar"
 import EmployeeList from "../component/employee/EmployeeList"
 
 import DummyData from "../dummy_data/sampleEmployeeData"
+import {searchEmployee} from "../component/lib/employee/employeeHelper"
 
 class EmployeeDetails extends Component {
+    state = {
+        allEmployee: DummyData,
+        employees : DummyData,
+        currentEmployee: DummyData[0],
+        searchingText: ''
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            allEmployee: DummyData,
-            employees : DummyData,
-            currentEmployee: DummyData[0],
-            filteredEmployees: [],
-            filterMode: false
-        };
         this.addEmployeeList = this.addEmployeeList.bind(this);
         this.updateEmployeeList = this.updateEmployeeList.bind(this);
         this.deleteCurrentEmployee = this.deleteCurrentEmployee.bind(this);
+        this.setSearchingTextProps = this.setSearchingTextProps.bind(this);
     }
 
-    setFilteringProps(filteredEmployees, filterMode) {
-        this.setState({filteredEmployees: filteredEmployees});
-        this.setState({filterMode: filterMode});
-        if (this.state.filterMode) {
-            this.setState({employees: this.state.filteredEmployees});
-        } else {
-            this.setState({employees: this.state.allEmployee});
-        }
+    setSearchingTextProps = (value) => this.setState({searchingText: value})
+
+    setFilteringProps = (searchingText) => {
+        this.setSearchingTextProps(searchingText);
+        var employees = searchEmployee(this.state.allEmployee, searchingText);
+        this.setState({employees: employees});
     }
 
-    setEmployees(employeesData) {
+    setEmployees = (employeesData) => {
         this.setState({currentEmployee: employeesData});
     }
 
-    addCurrentEmployee(newEmployee){
+    addCurrentEmployee = (newEmployee) => {
         this.setState({
             allEmployee: this.addEmployeeList(newEmployee, this.state.allEmployee),
             employees: this.addEmployeeList(newEmployee, this.state.employees),
@@ -47,7 +47,7 @@ class EmployeeDetails extends Component {
         });
     }
 
-    updateCurrentEmployee(updatedEmployee){
+    updateCurrentEmployee = (updatedEmployee) => {
         this.setState({
             allEmployee: this.updateEmployeeList(updatedEmployee, this.state.allEmployee),
             employees: this.updateEmployeeList(updatedEmployee, this.state.employees),
@@ -55,7 +55,7 @@ class EmployeeDetails extends Component {
         });
     }
 
-    deleteCurrentEmployee(deletedEmployee){
+    deleteCurrentEmployee = (deletedEmployee) => {
         this.setState({
             allEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee),
             employees: this.deleteEmployeeOnList(deletedEmployee, this.state.employees),
@@ -63,12 +63,12 @@ class EmployeeDetails extends Component {
         });
     }
 
-    addEmployeeList(employee, employees){
+    addEmployeeList = (employee, employees) => {
         var newEmployee = update(employees, {$push:[employee]});
         return newEmployee;
     }
 
-    updateEmployeeList(employee, employees){
+    updateEmployeeList = (employee, employees) => {
         var newEmployeeList = [];
         for(var i=0; i< employees.length; i++){
             if(employees[i].id == employee.id){
@@ -80,7 +80,7 @@ class EmployeeDetails extends Component {
         return newEmployeeList;
     }
 
-    deleteEmployeeOnList(employee, employees){
+    deleteEmployeeOnList = (employee, employees) => {
         var newEmployeeList = [];
         for(var i=0; i< employees.length; i++){
             if(employees[i].id != employee.id){
@@ -97,6 +97,7 @@ class EmployeeDetails extends Component {
                 <EmployeeToolbar
                     employees={this.state.employees}
                     currentEmployee={this.state.currentEmployee}
+                    searchingText={this.state.searchingText}
                     setFilteringProps={this.setFilteringProps.bind(this)}
                     updateCurrentEmployee={this.updateCurrentEmployee.bind(this)}
                     deleteCurrentEmployee={this.deleteCurrentEmployee.bind(this)}/>

@@ -1,0 +1,1 @@
+export const partial = (fn, ...args) => fun.bind(null, ...args)

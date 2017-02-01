@@ -16,7 +16,7 @@ var config = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        presets: ['es2015','react']
+        presets: ['es2015','react','stage-2']
       }
     },{
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -30,7 +30,8 @@ var config = {
     contentBase: "./public",
     colors: true,
     historyApiFallback: true,
-    inline: true
+    inline: true,
+    port: 3002
   },
 }
 

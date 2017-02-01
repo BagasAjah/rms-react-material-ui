@@ -21,6 +21,7 @@ class EmployeeToolbar extends Component {
           <Toolbar style={Constants.toolBarColor}>
             <EmployeeSearch
                 employees={this.props.employees}
+                searchingText={this.props.searchingText}
                 setFilteringProps={this.props.setFilteringProps.bind(this)}/>
             <EmployeeTab
                 currentEmployee={this.props.currentEmployee}

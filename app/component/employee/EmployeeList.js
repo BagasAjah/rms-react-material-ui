@@ -13,11 +13,6 @@ import NewEmployeeDialog from "./NewEmployeeDialog"
 
 class EmployeeList extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state={}
-    }
-
     render() {
         var employee = this.props.employees;
 
@@ -26,7 +21,7 @@ class EmployeeList extends Component {
                 key={index}
                 index={index}
                 employee={employee}
-                setCurrentEmployee={this.props.setEmployees.bind(this)}
+                setCurrentEmployee={this.props.setEmployees}
                 />
         );
         return (
