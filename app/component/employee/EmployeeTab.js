@@ -42,7 +42,7 @@ class EmployeeTab extends Component {
 
     updateButtonClick(){
         this.props.handleStateChanged('viewMode', true);
-        this.props.updateCurrentEmployee(this.state.employee);
+        this.props.updateCurrentEmployee(this.props.editedEmployee);
     }
 
     editButtonClick(){
@@ -52,7 +52,7 @@ class EmployeeTab extends Component {
 
     deleteButtonClick(){
         this.props.handleStateChanged('viewMode', true);
-        this.props.deleteCurrentEmployee(this.state.employee);
+        this.props.deleteCurrentEmployee(this.props.editedEmployee);
     }
 
     cancelButtonClick(){
@@ -81,15 +81,17 @@ class EmployeeTab extends Component {
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
                         <EmployeeTabHistory
-                                viewMode={this.props.viewMode}
-                                currentEmployee={this.props.editedEmployee}
-                                setSavedEmployee={this.setSavedEmployee.bind(this)}/>
-                    </Tab>
-                    <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
-                        <EmployeeTabGradeHistory
                             viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            newEmployee={this.props.newEmployee}
+                            openDialog={this.props.openDialog}
+                            selectedJobDescIndex={this.props.selectedJobDescIndex}
+                            selectedIndex={this.props.selectedIndex}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
+                    </Tab>
+                    <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
+
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember
@@ -108,6 +110,7 @@ class EmployeeTab extends Component {
                             viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+
                     </Tab>
 
                 </Tabs>

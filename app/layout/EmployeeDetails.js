@@ -9,7 +9,7 @@ import EmployeeToolbar from "../component/employee/EmployeeToolbar"
 import EmployeeList from "../component/employee/EmployeeList"
 
 import DummyData from "../dummy_data/sampleEmployeeData"
-import {searchEmployee} from "../component/lib/employee/employeeHelper"
+import {searchEmployee, setDefaultEmployee} from "../component/lib/employee/employeeHelper"
 
 class EmployeeDetails extends Component {
     state = {
@@ -17,8 +17,12 @@ class EmployeeDetails extends Component {
         employees : DummyData,
         currentEmployee: DummyData[0],
         currentTabLocation: '',
-        searchingText: '',
         editedEmployee: DummyData[0],
+        newEmployee: setDefaultEmployee(),
+        openDialog: false,
+        searchingText: '',
+        selectedJobDescIndex: null,
+        selectedIndex: null,
         viewMode: true
     }
 
@@ -42,6 +46,7 @@ class EmployeeDetails extends Component {
         this.setState({
             currentEmployee: employeesData,
             editedEmployee: employeesData,
+            selectedIndex: null,
             viewMode: true
         });
     }
@@ -66,7 +71,8 @@ class EmployeeDetails extends Component {
         this.setState({
             allEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee),
             employees: this.deleteEmployeeOnList(deletedEmployee, this.state.employees),
-            currentEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee)[0]
+            currentEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee)[0],
+            editedEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee)[0]
         });
     }
 
@@ -110,7 +116,11 @@ class EmployeeDetails extends Component {
                     currentEmployee={this.state.currentEmployee}
                     currentTabLocation={this.state.currentTabLocation}
                     editedEmployee={this.state.editedEmployee}
+                    newEmployee={this.state.newEmployee}
+                    openDialog={this.state.openDialog}
                     searchingText={this.state.searchingText}
+                    selectedJobDescIndex={this.state.selectedJobDescIndex}
+                    selectedIndex={this.state.selectedIndex}
                     viewMode={this.state.viewMode}
                     setFilteringProps={this.setFilteringProps.bind(this)}
                     updateCurrentEmployee={this.updateCurrentEmployee.bind(this)}
@@ -124,6 +134,5 @@ class EmployeeDetails extends Component {
         )
     }
 }
-
 
 export default EmployeeDetails;

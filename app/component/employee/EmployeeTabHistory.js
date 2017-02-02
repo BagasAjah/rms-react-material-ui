@@ -17,14 +17,10 @@ class EmployeeTabHistory extends Component {
     constructor(props) {
         super(props);
         this.state={
-            historyStartDate: new Object,
             historyEndDate: new Object,
             company: '',
             position: '',
-            jobDesc: [],
-            selectedIndex: null,
-            selectedJobDescIndex: null,
-            openDialog: false
+            jobDesc: []
         }
         this.addNewHistory = this.addNewHistory.bind(this);
         this.addNewHistoryJobDesc = this.addNewHistoryJobDesc.bind(this);
@@ -34,15 +30,9 @@ class EmployeeTabHistory extends Component {
         this.handleCompanyChanged = this.handleCompanyChanged.bind(this);
         this.handlePositionChanged = this.handlePositionChanged.bind(this);
         this.handleJobDescChanged = this.handleJobDescChanged.bind(this);
+        this.handleDataChanged = this.handleDataChanged.bind(this);
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.currentEmployee.id != this.props.currentEmployee.id || nextProps.viewMode) {
-            this.setState({selectedIndex: null});
-            this.setState({selectedJobDescIndex: null});
-        }
     }
 
     handleStateDataChanged(type, value){
@@ -50,23 +40,28 @@ class EmployeeTabHistory extends Component {
     }
 
     openDialogClick(){
-        this.setState({
-            historyStartDate: new Object,
-            historyEndDate: new Object,
-            company: '',
-            position: '',
-            jobDesc: [],
-            openDialog: true
+        var updatedEmployee = update(this.props.newEmployee, {
+            'history': {
+                0: {
+                    'historyStartDate':  {$set: new Object},
+                    'historyEndDate': {$set: new Object},
+                    'company': {$set: ''},
+                    'position': {$set: ''},
+                    'jobDesc': {$set: []}
+                }
+            }
         });
+        this.props.handleStateChanged('openDialog', true);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     closeDialogClick(){
-        this.setState({openDialog: false});
+        this.props.handleStateChanged('openDialog', false);
     }
 
     updateClick(index, jobDescIndex){
-        this.setState({selectedIndex: index});
-        this.setState({selectedJobDescIndex: jobDescIndex});
+        this.props.handleStateChanged('selectedIndex', index);
+        this.props.handleStateChanged('selectedJobDescIndex', jobDescIndex);
     }
 
     deleteClick(index, jobDescIndex){
@@ -89,11 +84,11 @@ class EmployeeTabHistory extends Component {
             });
         }
         this.props.setSavedEmployee(updatedEmployee);
-        this.setState({selectedIndex: null});
-        this.setState({selectedJobDescIndex: null});
+        this.props.handleStateChanged('selectedIndex', null);
+        this.props.handleStateChanged('selectedJobDescIndex', null);
     }
 
-    handleJobDescChangedd(index, jobDescIndex, selectedJobDescValue){
+    handleEditJobDescChanged(index, jobDescIndex, selectedJobDescValue){
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 [index]: {
@@ -120,49 +115,66 @@ class EmployeeTabHistory extends Component {
     }
 
     addNewHistoryJobDesc(){
-        var updatedJobDesc = update(this.state.jobDesc, {$push: [['']]});
-        this.handleStateDataChanged('jobDesc', updatedJobDesc);
+        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {$push: [['']]});
+        var updatedEmployee = this.handleDataChanged('jobDesc', updatedJobDesc);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
+    }
+
+    handleDataChanged(type, value){
+        var updatedEmployee = update(this.props.newEmployee, {
+            'history': {
+                0: {
+                    [type]:  {$set: value}
+                }
+            }
+        });
+        return updatedEmployee;
     }
 
     handleStartDateChanged(e, value){
-        this.handleStateDataChanged('historyStartDate', value);
+        var updatedEmployee = this.handleDataChanged('historyStartDate', value);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     handleEndDateChanged(e, value){
-        this.handleStateDataChanged('historyEndDate', value);
+        var updatedEmployee = this.handleDataChanged('historyEndDate', value);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     handleCompanyChanged(e, value){
-        this.handleStateDataChanged('company', value);
+        var updatedEmployee = this.handleDataChanged('company', value);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     handlePositionChanged(e, value){
-        this.handleStateDataChanged('position', value);
+        var updatedEmployee = this.handleDataChanged('position', value);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     handleJobDescChanged(e, value, index){
-        var updatedJobDesc = update(this.state.jobDesc, {
+        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {
             [index]: {
                 $set: value
             }
         });
-        this.handleStateDataChanged('jobDesc', updatedJobDesc);
+        var updatedEmployee = this.handleDataChanged('jobDesc', updatedJobDesc);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     addNewHistory(){
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 $push: [{
-                    historyStartDate: this.state.historyStartDate,
-                    historyEndDate: this.state.historyEndDate,
-                    company: this.state.company,
-                    position: this.state.position,
-                    jobDesc: this.state.jobDesc
+                    historyStartDate: this.props.newEmployee.history[0].historyStartDate,
+                    historyEndDate: this.props.newEmployee.history[0].historyEndDate,
+                    company: this.props.newEmployee.history[0].company,
+                    position: this.props.newEmployee.history[0].position,
+                    jobDesc: this.props.newEmployee.history[0].jobDesc
                 }]
             }
         });
         this.props.setSavedEmployee(updatedEmployee);
-        this.setState({openDialog: false});
+        this.props.handleStateChanged('openDialog', false);
     }
 
     render(){
@@ -180,14 +192,14 @@ class EmployeeTabHistory extends Component {
                 index={historyIndex}
                 history={historyList}
                 viewMode={this.props.viewMode}
-                selectedIndex={this.state.selectedIndex}
-                selectedJobDescIndex={this.state.selectedJobDescIndex}
+                selectedIndex={this.props.selectedIndex}
+                selectedJobDescIndex={this.props.selectedJobDescIndex}
                 deleteClick={this.deleteClick.bind(this)}
                 updateClick={this.updateClick.bind(this)}
-                handleJobDescChangedd={this.handleJobDescChangedd.bind(this)}
+                handleEditJobDescChanged={this.handleEditJobDescChanged.bind(this)}
                 addNewJobDesc={this.addNewJobDesc.bind(this)}/>
         ));
-        var jobDescList = this.state.jobDesc;
+        var jobDescList = this.props.newEmployee.history[0].jobDesc;
         var jobDescListRender = jobDescList.map((jobDescList, index) => (
             <div style={{width:'100%'}} key={index}>
                 <TextField
@@ -218,32 +230,32 @@ class EmployeeTabHistory extends Component {
                     title="Employee History Details"
                     actions={actionsButton}
                     modal={false}
-                    open={this.state.openDialog}
+                    open={this.props.openDialog}
                     autoScrollBodyContent={true}
                     onRequestClose={this.closeDialogClick}>
                         <DatePicker
                             className='detail-dialog'
                             floatingLabelText="History Start Date"
-                            value={this.state.historyStartDate}
+                            value={this.props.newEmployee.history[0].historyStartDate}
                             onChange={(e, value) => this.handleStartDateChanged(e, value)}
                             autoOk={true} />
                         <DatePicker
                             className='detail-dialog'
                             floatingLabelText="History End Date"
-                            value={this.state.historyEndDate}
+                            value={this.props.newEmployee.history[0].historyEndDate}
                             onChange={(e, value) => this.handleEndDateChanged(e, value)}
                             autoOk={true} />
                         <TextField
                             className='detail-dialog'
                             floatingLabelText="Company Name"
-                            value={this.state.company}
+                            value={this.props.newEmployee.history[0].company}
                             onChange={(e, value) => this.handleCompanyChanged(e, value)}
                             underlineShow={true}/>
                         <TextField
                             className='detail-dialog'
                             style={{paddingLeft:10}}
                             floatingLabelText="Position"
-                            value={this.state.position}
+                            value={this.props.newEmployee.history[0].position}
                             onChange={(e, value) => this.handlePositionChanged(e, value)}
                             underlineShow={true}/><br />
                         <div className="detail-dialog" style={{width:'100%'}}>

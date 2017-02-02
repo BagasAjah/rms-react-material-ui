@@ -31,7 +31,7 @@ class EmployeeHistoryDetail extends Component {
     }
 
     handleJobDescChanged(jobDescValue, jobDescIndex){
-        this.props.handleJobDescChanged(this.props.index, jobDescIndex, jobDescValue);
+        this.props.handleEditJobDescChanged(this.props.index, jobDescIndex, jobDescValue);
     }
 
     addNewJobDesc(){

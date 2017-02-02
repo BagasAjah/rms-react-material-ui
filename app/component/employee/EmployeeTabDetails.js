@@ -15,13 +15,6 @@ class EmployeeTabDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            lookupGender : lookupData.gender,
-            lookupMaritalStatus : lookupData.statusMarital,
-            lookupStatus : lookupData.status,
-            lookupGrade : lookupData.grade,
-            lookupDivision : lookupData.division
-        }
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handleGenderChange = this.handleGenderChange.bind(this);
@@ -37,11 +30,6 @@ class EmployeeTabDetails extends Component {
         this.handleDivisionChange = this.handleDivisionChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.setSavedEmployee = this.setSavedEmployee.bind(this);
-    }
-
-    shouldComponentUpdate(nextProps, nextState){
-       return nextProps.viewMode !== nextState.viewMode;
-       // and compare any props that might cause an update
     }
 
     handleFirstNameChange(){
@@ -119,19 +107,19 @@ class EmployeeTabDetails extends Component {
     }
 
     render(){
-        var lookupGenderMenuItem = this.state.lookupGender.map(lookupGender =>
+        var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
             <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
         );
-        var lookupMaritalStatusMenuItem = this.state.lookupMaritalStatus.map(lookupMaritalStatus =>
+        var lookupMaritalStatusMenuItem = lookupData.statusMarital.map(lookupMaritalStatus =>
             <MenuItem key= {lookupMaritalStatus.lookupCode} value={lookupMaritalStatus.lookupCode} primaryText={lookupMaritalStatus.lookupValue} />
         );
-        var lookupStatusMenuItem = this.state.lookupStatus.map(lookupStatus =>
+        var lookupStatusMenuItem = lookupData.status.map(lookupStatus =>
             <MenuItem key= {lookupStatus.lookupCode} value={lookupStatus.lookupCode} primaryText={lookupStatus.lookupValue} />
         );
-        var lookupGradeMenuItem = this.state.lookupGrade.map(lookupGrade =>
+        var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
             <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
         );
-        var lookupDivisionMenuItem = this.state.lookupDivision.map(lookupDivision =>
+        var lookupDivisionMenuItem = lookupData.division.map(lookupDivision =>
             <MenuItem key= {lookupDivision.lookupCode} value={lookupDivision.lookupCode} primaryText={lookupDivision.lookupValue} />
         );
         return(
@@ -143,26 +131,26 @@ class EmployeeTabDetails extends Component {
                     floatingLabelText="First Name"
                     ref={(input) => this.firstNameInput = input}
                     onChange={this.handleFirstNameChange}
-                    value={this.props.currentEmployee.firstName}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.firstName : ''}
                     disabled={this.props.viewMode}
                 /><br />
                 <TextField
                     floatingLabelText="Last Name"
                     ref={(input) => this.lastNameInput = input}
                     onChange={this.handleLastNameChange}
-                    value={this.props.currentEmployee.lastName}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.lastName : ''}
                     disabled={this.props.viewMode}
                 /><br />
                 <SelectField
                     floatingLabelText="Gender"
-                    value={this.props.currentEmployee.gender}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.gender : ''}
                     onChange={(e, i, value) => this.handleGenderChange(e, i, value)}
                     disabled={this.props.viewMode}>
                     {lookupGenderMenuItem}
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Date of Birth"
-                    value={this.props.currentEmployee.dob}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.dob : ''}
                     onChange={(e, value) => this.handleDobChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
@@ -170,13 +158,13 @@ class EmployeeTabDetails extends Component {
                 <TextField
                     floatingLabelText="Nationality"
                     ref={(input) => this.nationalityInput = input}
-                    value={this.props.currentEmployee.nationality}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.nationality : ''}
                     onChange={this.handleNationalityChange}
                     disabled={this.props.viewMode}
                 /><br />
                 <SelectField
                     floatingLabelText="Marital Status"
-                    value={this.props.currentEmployee.maritalStatus}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.maritalStatus : ''}
                     onChange={(e, i, value) => this.handleMaritalStatusChange(e, i, value)}
                     disabled={this.props.viewMode}>
                     {lookupMaritalStatusMenuItem}
@@ -184,7 +172,7 @@ class EmployeeTabDetails extends Component {
                 <TextField
                     floatingLabelText="Phone"
                     ref={(input) => this.phoneInput = input}
-                    value={this.props.currentEmployee.phone}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.phone : ''}
                     onChange={this.handlePhoneChange}
                     disabled={this.props.viewMode}
                 /><br />
@@ -193,27 +181,27 @@ class EmployeeTabDetails extends Component {
                 <TextField
                     floatingLabelText="Sub Division"
                     ref={(input) => this.subDivisionInput = input}
-                    value={this.props.currentEmployee.subDivision}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.subDivision : ''}
                     onChange={this.handleSubDivisionChange}
                     disabled={this.props.viewMode}
                 /><br />
                 <SelectField
                     floatingLabelText="Status"
-                    value={this.props.currentEmployee.status}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.status : ''}
                     onChange={(e,i, value) => this.handleStatusChange(e, i, value)}
                     disabled={this.props.viewMode}>
                     {lookupStatusMenuItem}
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Suspend Date"
-                    value={this.props.currentEmployee.suspendDate}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.suspendDate : ''}
                     onChange={(e, value) => this.handleSuspendDateChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
                 />
                 <DatePicker
                     floatingLabelText="Hire Date"
-                    value={this.props.currentEmployee.hireDate}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.hireDate : ''}
                     onChange={(e, value) => this.handleHireDateChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
@@ -221,14 +209,14 @@ class EmployeeTabDetails extends Component {
                 <SelectField
                     floatingLabelText="Grade"
                     maxHeight={200}
-                    value={this.props.currentEmployee.grade}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.grade : ''}
                     onChange={(e, i, value) => this.handleGradeChange(e, i, value)}
                     disabled={this.props.viewMode}>
                     {lookupGradeMenuItem}
                 </SelectField><br />
                 <SelectField
                     floatingLabelText="Division"
-                    value={this.props.currentEmployee.division}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.division : ''}
                     onChange={(e, i, value) => this.handleDivisionChange(e, i, value)}
                     disabled={this.props.viewMode}>
                     {lookupDivisionMenuItem}
@@ -236,7 +224,7 @@ class EmployeeTabDetails extends Component {
                 <TextField
                     floatingLabelText="Email"
                     ref={(input) => this.emailInput = input}
-                    value={this.props.currentEmployee.email}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.email : ''}
                     onChange={this.handleEmailChange}
                     disabled={this.props.viewMode}
                 /><br />

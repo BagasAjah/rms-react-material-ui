@@ -11,10 +11,6 @@ import Constants from "../styles/Constants"
 
 class EmployeeToolbar extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return(
         <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
@@ -27,6 +23,10 @@ class EmployeeToolbar extends Component {
                 currentEmployee={this.props.currentEmployee}
                 currentTabLocation={this.props.currentTabLocation}
                 editedEmployee={this.props.editedEmployee}
+                newEmployee={this.props.newEmployee}
+                openDialog={this.props.openDialog}
+                selectedJobDescIndex={this.props.selectedJobDescIndex}
+                selectedIndex={this.props.selectedIndex}
                 viewMode={this.props.viewMode}
                 updateCurrentEmployee={this.props.updateCurrentEmployee.bind(this)}
                 deleteCurrentEmployee={this.props.deleteCurrentEmployee.bind(this)}
