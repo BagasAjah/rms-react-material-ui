@@ -40,12 +40,12 @@ class EmployeeTabHistory extends Component {
                 }
             }
         });
-        this.props.handleStateChanged('openDialog', true);
+        this.props.handleOpenDialogChanged('historyDialog', true);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     closeDialogClick = () => {
-        this.props.handleStateChanged('openDialog', false);
+        this.props.handleOpenDialogChanged('historyDialog', false);
     }
 
     updateClick = (index, jobDescIndex) => {
@@ -163,7 +163,7 @@ class EmployeeTabHistory extends Component {
             }
         });
         this.props.setSavedEmployee(updatedEmployee);
-        this.props.handleStateChanged('openDialog', false);
+        this.props.handleOpenDialogChanged('historyDialog', false);
     }
 
     render = () => {
@@ -222,7 +222,7 @@ class EmployeeTabHistory extends Component {
                     title="Employee History Details"
                     actions={actionsButton}
                     modal={false}
-                    open={this.props.openDialog}
+                    open={this.props.openDialog.historyDialog}
                     autoScrollBodyContent={true}
                     onRequestClose={this.closeDialogClick}>
                         <DatePicker

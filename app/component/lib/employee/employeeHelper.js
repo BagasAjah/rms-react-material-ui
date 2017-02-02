@@ -1,4 +1,5 @@
 import {createFilter} from 'react-search-input'
+import update from 'react-addons-update';
 
 const KEYS_TO_FILTERS = ['firstName', 'lastName'];
 
@@ -28,7 +29,12 @@ export const setDefaultEmployee = () => {
             position: '',
             jobDesc: []
         }],
-        gradeHistory: [],
+        gradeHistory: [{
+            ds: '',
+            grade: '',
+            startDate: new Object,
+            endDate: new Object
+        }],
         familyMember: [{
             familyName: '',
             familyGender: '',
@@ -54,4 +60,15 @@ export const searchEmployee = (employees, searchingText) => {
     } else {
         return employees;
     }
+}
+
+export const handleEmployeeDetailsInfo = (type, field, value, employee) => {
+    var updatedEmployee = update(employee, {
+        [type]: {
+            0: {
+                [field]:  {$set: value}
+            }
+        }
+    });
+    return updatedEmployee;
 }

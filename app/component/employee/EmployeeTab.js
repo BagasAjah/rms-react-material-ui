@@ -89,13 +89,20 @@ class EmployeeTab extends Component {
                             selectedJobDescIndex={this.props.selectedJobDescIndex}
                             selectedIndex={this.props.selectedIndex}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
                             handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory
                             viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            newEmployee={this.props.newEmployee}
+                            openDialog={this.props.openDialog}
+                            openValidationMessage={this.props.openValidationMessage}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
+                            handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember

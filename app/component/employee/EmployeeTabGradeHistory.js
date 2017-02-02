@@ -17,6 +17,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import {grey500} from 'material-ui/styles/colors';
 
 import lookupData from "../../dummy_data/lookupData"
+import {handleEmployeeDetailsInfo} from "../lib/employee/employeeHelper"
 
 const styles = {
   customWidthDialog: {
@@ -38,16 +39,6 @@ class EmployeeTabGradeHistory extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            ds: '',
-            grade: '',
-            startDate: new Object,
-            endDate: new Object,
-            showCheckboxes: false,
-            openDialog: false,
-            lookupGrade: lookupData.grade,
-            openValidationMessage: false
-        }
         this.addGradeHistoryClick = this.addGradeHistoryClick.bind(this);
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
@@ -58,34 +49,40 @@ class EmployeeTabGradeHistory extends Component {
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
     }
 
-    openDialogClick(){
-        this.setState({
-            ds: '',
-            grade: '',
-            startDate: '',
-            endDate: new Object,
-            openDialog: true,
-            openValidationMessage: false
+    openDialogClick = () => {
+        var updatedEmployee = update(this.props.newEmployee, {
+            'gradeHistory': {
+                0: {
+                    'ds':  {$set: ''},
+                    'grade': {$set: ''},
+                    'startDate': {$set: null},
+                    'endDate': {$set: new Object}
+                }
+            }
         });
+        this.props.handleOpenDialogChanged('gradeDialog', true);
+        this.props.handleOpenValidationMessage('gradeValidation', false);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    closeDialogClick(){
-        this.setState({openDialog: false});
-        this.setState({openValidationMessage: false});
+    closeDialogClick = () => {
+        this.props.handleOpenDialogChanged('gradeDialog', false);
+        this.props.handleOpenValidationMessage('gradeValidation', false);
     }
 
-    addGradeHistoryClick(){
-        if(this.state.ds == '' || this.state.grade =='' || this.state.startDate == new Object) {
-            this.setState({openValidationMessage: true});
+    addGradeHistoryClick = () => {
+        var gradeHistory = this.props.newEmployee.gradeHistory[0];
+        if(gradeHistory.ds == '' || gradeHistory.grade =='' || gradeHistory.startDate == null) {
+            this.props.handleOpenValidationMessage('gradeValidation', true);
         } else {
             var currentEmployee = this.props.currentEmployee;
             currentEmployee.gradeHistory.reverse();
             var updatedEmployee = update(currentEmployee, {'gradeHistory': {
                 $push: [{
-                    ds: this.state.ds,
-                    grade: this.state.grade,
-                    startDate: this.state.startDate,
-                    endDate: this.state.endDate
+                    ds: gradeHistory.ds,
+                    grade: gradeHistory.grade,
+                    startDate: gradeHistory.startDate,
+                    endDate: gradeHistory.endDate
                 }]
             }});
             updatedEmployee.gradeHistory.reverse();
@@ -94,7 +91,7 @@ class EmployeeTabGradeHistory extends Component {
         }
     }
 
-    deleteClick(){
+    deleteClick = () => {
         if(!this.props.viewMode){
             var currentGradeHistory = this.props.currentEmployee.gradeHistory[0];
             var updatedEmployee = update(this.props.currentEmployee, {'gradeHistory': {$splice: [[0,1]]}});
@@ -102,23 +99,38 @@ class EmployeeTabGradeHistory extends Component {
         }
     }
 
-    handleDsChange(e, index, value){
-        this.setState({ds: value});
+    handleDsChange = (e, index, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','ds', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleGradeChange(e, index, value){
-        this.setState({grade: value});
+    handleGradeChange = (e, index, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','grade', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleStartDateChange(e, value){
-        this.setState({startDate: value});
+    handleStartDateChange = (e, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','startDate', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleEndDateChange(e, value){
-        this.setState({endDate: value});
+    handleEndDateChange = (e, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','endDate', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    render(){
+    render = () => {
+        const noDataFound = [
+            <TableRow key='not-found'>
+                <TableRowColumn style={{textAlign: 'center'}}>
+                    <TextField
+                        id="not-found-field"
+                        value={"No Grade Data Found"}
+                        disabled={true}
+                        underlineShow={false}/>
+                </TableRowColumn>
+            </TableRow>
+        ];
         const actionsButton = [
             <FlatButton
                 label="Add"
@@ -126,73 +138,78 @@ class EmployeeTabGradeHistory extends Component {
                 onTouchTap={this.addGradeHistoryClick}
             />
         ];
-        var gradeHistory = this.props.currentEmployee.gradeHistory;
+        var employeeNotFound = true;
+        if (this.props.currentEmployee) {
+            var gradeHistory = this.props.currentEmployee.gradeHistory;
 
-        var dsData = [];
-        for(var i=1; i<23; i++){
-            dsData.push(i);
+            var dsData = [];
+            for(var i=1; i<23; i++){
+                dsData.push(i);
+            }
+            for(var i=0; i<gradeHistory.length; i++){
+                delete dsData[dsData.indexOf(gradeHistory[i].ds)];
+            }
+
+            var lookupDS = dsData.map( dsData =>
+                <MenuItem key= {dsData} value={dsData} primaryText={"DS"+dsData} />
+            );
+
+            var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
+                <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
+            );
+            var gradeHistoryListDetail = gradeHistory.map( (gradeHistory, index) =>
+                (<TableRow key={index}>
+                    <TableRowColumn>
+                        <TextField
+                            id={"ds-"+gradeHistory.ds}
+                            value={"DS"+gradeHistory.ds}
+                            disabled={true}
+                            underlineShow={false}/>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                        <SelectField
+                            id={"grade-"+gradeHistory.ds}
+                            className="grade-history-width"
+                            maxHeight={200}
+                            value={gradeHistory.grade}
+                            disabled={true}
+                            underlineShow={false}>
+                            {lookupGradeMenuItem}
+                        </SelectField>
+                    </TableRowColumn>
+                    <TableRowColumn>
+                        <DatePicker
+                            id={"start-date-"+gradeHistory.ds}
+                            value={gradeHistory.startDate}
+                            autoOk={true}
+                            disabled={true}
+                            underlineShow={false}
+                        />
+                    </TableRowColumn>
+                    <TableRowColumn>
+                        <DatePicker
+                            id={"end-date-"+gradeHistory.ds}
+                            value={gradeHistory.endDate}
+                            autoOk={true}
+                            disabled={true}
+                            underlineShow={false}
+                        />
+                    </TableRowColumn>
+                    <TableRowColumn>{
+                        (index == 0) ?
+                            <ActionDelete color={grey500} onClick={this.deleteClick}/>
+                        : ''
+                    }</TableRowColumn>
+                </TableRow>)
+            );
+            employeeNotFound = false;
         }
-        for(var i=0; i<gradeHistory.length; i++){
-            delete dsData[dsData.indexOf(gradeHistory[i].ds)];
-        }
-
-        var lookupDS = dsData.map( dsData =>
-            <MenuItem key= {dsData} value={dsData} primaryText={"DS"+dsData} />
-        );
-
-        var lookupGradeMenuItem = this.state.lookupGrade.map(lookupGrade =>
-            <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
-        );
-        var gradeHistoryListDetail = gradeHistory.map( (gradeHistory, index) =>
-            (<TableRow key={index}>
-                <TableRowColumn>
-                    <TextField
-                        id={"ds-"+gradeHistory.ds}
-                        value={"DS"+gradeHistory.ds}
-                        disabled={true}
-                        underlineShow={false}/>
-                </TableRowColumn>
-                <TableRowColumn>
-                    <SelectField
-                        id={"grade-"+gradeHistory.ds}
-                        className="grade-history-width"
-                        maxHeight={200}
-                        value={gradeHistory.grade}
-                        disabled={true}
-                        underlineShow={false}>
-                        {lookupGradeMenuItem}
-                    </SelectField>
-                </TableRowColumn>
-                <TableRowColumn>
-                    <DatePicker
-                        id={"start-date-"+gradeHistory.ds}
-                        value={gradeHistory.startDate}
-                        autoOk={true}
-                        disabled={true}
-                        underlineShow={false}
-                    />
-                </TableRowColumn>
-                <TableRowColumn>
-                    <DatePicker
-                        id={"end-date-"+gradeHistory.ds}
-                        value={gradeHistory.endDate}
-                        autoOk={true}
-                        disabled={true}
-                        underlineShow={false}
-                    />
-                </TableRowColumn>
-                <TableRowColumn>{
-                    (index == 0) ?
-                        <ActionDelete color={grey500} onClick={this.deleteClick}/>
-                    : ''
-                }</TableRowColumn>
-            </TableRow>)
-        );
         return(
             <div className="menu-content">
                 <h2>Employee Grade History</h2>
+                {employeeNotFound ? (<div style={{textAlign: 'center'}}>Employee Grade Not Found</div>) :
                 <Table>
-                    <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
+                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
                             <TableHeaderColumn>DS</TableHeaderColumn>
                             <TableHeaderColumn>Grade</TableHeaderColumn>
@@ -201,10 +218,12 @@ class EmployeeTabGradeHistory extends Component {
                             <TableHeaderColumn>Action</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
-                    <TableBody displayRowCheckbox={this.state.showCheckboxes}>
-                        {gradeHistoryListDetail}
+                    <TableBody displayRowCheckbox={false}>
+                        {(gradeHistoryListDetail.length == 0) ?
+                                (noDataFound) : (gradeHistoryListDetail)}
                     </TableBody>
                 </Table>
+                }
                 <FloatingActionButton className="btn-add-tab-position"
                     backgroundColor={grey500}
                     onClick={this.openDialogClick}
@@ -216,15 +235,15 @@ class EmployeeTabGradeHistory extends Component {
                     contentStyle={styles.customWidthDialog}
                     actions={actionsButton}
                     modal={false}
-                    open={this.state.openDialog}
+                    open={this.props.openDialog.gradeDialog}
                     onRequestClose={this.closeDialogClick}>
                         <SelectField
                             className="grade-history-width"
                             style={styles.customWidthField}
                             floatingLabelText="DS"
                             maxHeight={200}
-                            value={this.state.ds}
-                            errorText={this.state.openValidationMessage && (this.state.ds=='')?validationErrorMessage:""}
+                            value={this.props.newEmployee.gradeHistory[0].ds}
+                            errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].ds=='')?validationErrorMessage:""}
                             onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
                             {lookupDS}
                         </SelectField>
@@ -233,8 +252,8 @@ class EmployeeTabGradeHistory extends Component {
                             style={styles.customWidthField}
                             floatingLabelText="Grade"
                             maxHeight={200}
-                            value={this.state.grade}
-                            errorText={this.state.openValidationMessage && (this.state.grade=='')?validationErrorMessage:""}
+                            value={this.props.newEmployee.gradeHistory[0].grade}
+                            errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].grade=='')?validationErrorMessage:""}
                             onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
                             {lookupGradeMenuItem}
                         </SelectField>
@@ -242,15 +261,15 @@ class EmployeeTabGradeHistory extends Component {
                             className="grade-history-width"
                             style={styles.customWidthDate}
                             floatingLabelText="Start Date"
-                            value={this.state.startDate}
-                            errorText={this.state.openValidationMessage && (this.state.startDate=='')?validationErrorMessage:""}
+                            value={this.props.newEmployee.gradeHistory[0].startDate}
+                            errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].startDate==null)?validationErrorMessage:""}
                             onChange={(e, value) => this.handleStartDateChange(e, value)}
                             autoOk={true} />
                         <DatePicker
                             className="grade-history-width"
                             style={styles.customWidthDate}
                             floatingLabelText="End Date"
-                            value={this.state.endDate}
+                            value={this.props.newEmployee.gradeHistory[0].endDate}
                             onChange={(e, value) => this.handleEndDateChange(e, value)}
                             autoOk={true} />
                 </Dialog>

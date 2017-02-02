@@ -19,7 +19,13 @@ class EmployeeDetails extends Component {
         currentTabLocation: '',
         editedEmployee: DummyData[0],
         newEmployee: setDefaultEmployee(),
-        openDialog: false,
+        openDialog: {
+            gradeDialog: false,
+            historyDialog: false
+        },
+        openValidationMessage: {
+            gradeValidation: false
+        },
         searchingText: '',
         selectedJobDescIndex: null,
         selectedIndex: null,
@@ -110,6 +116,20 @@ class EmployeeDetails extends Component {
         this.setState({[type]:  value});
     }
 
+    handleOpenDialogChanged = (type, value) => {
+        var updatedOpenDialog = update(this.state.openDialog, {
+            [type] : {$set: value}
+        });
+        this.handleStateChanged('openDialog', updatedOpenDialog);
+    }
+
+    handleOpenValidationMessage = (type, value) => {
+        var updatedOpenValidation = update(this.state.openValidationMessage, {
+            [type] : {$set: value}
+        });
+        this.handleStateChanged('openValidationMessage', updatedOpenValidation);
+    }
+
     render = () => {
         return(
             <div>
@@ -121,6 +141,7 @@ class EmployeeDetails extends Component {
                     editedEmployee={this.state.editedEmployee}
                     newEmployee={this.state.newEmployee}
                     openDialog={this.state.openDialog}
+                    openValidationMessage={this.state.openValidationMessage}
                     searchingText={this.state.searchingText}
                     selectedJobDescIndex={this.state.selectedJobDescIndex}
                     selectedIndex={this.state.selectedIndex}
@@ -128,6 +149,8 @@ class EmployeeDetails extends Component {
                     setFilteringProps={this.setFilteringProps.bind(this)}
                     updateCurrentEmployee={this.updateCurrentEmployee.bind(this)}
                     deleteCurrentEmployee={this.deleteCurrentEmployee.bind(this)}
+                    handleOpenDialogChanged={this.handleOpenDialogChanged.bind(this)}
+                    handleOpenValidationMessage={this.handleOpenValidationMessage.bind(this)}
                     handleStateChanged={this.handleStateChanged.bind(this)}/>
                 <EmployeeList
                     employees={this.state.employees}
