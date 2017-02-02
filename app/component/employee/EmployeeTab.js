@@ -92,6 +92,12 @@ class EmployeeTab extends Component {
                             handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
+                        <EmployeeTabGradeHistory
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                    </Tab>
+                    <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember
                             viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
@@ -99,8 +105,6 @@ class EmployeeTab extends Component {
                             selectedIndex={this.props.selectedIndex}
                             handleStateChanged={this.props.handleStateChanged.bind(this)}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
-                    </Tab>
-                    <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
                     </Tab>

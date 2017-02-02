@@ -39,7 +39,10 @@ class EmployeeDetails extends Component {
     setFilteringProps = (searchingText) => {
         this.setSearchingTextProps(searchingText);
         var employees = searchEmployee(this.state.allEmployee, searchingText);
-        this.setState({employees: employees});
+        this.setState({
+            employees: employees,
+            editedEmployee: employees[0]
+        });
     }
 
     setEmployees = (employeesData) => {

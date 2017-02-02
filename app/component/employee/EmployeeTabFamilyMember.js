@@ -139,65 +139,70 @@ class EmployeeTabFamilyMember extends Component {
         var lookupTypeMenuItem = lookupData.familyType.map(lookupType =>
             <MenuItem key= {lookupType.lookupCode} value={lookupType.lookupCode} primaryText={lookupType.lookupValue} />
         );
-        var familyMember = this.props.currentEmployee.familyMember;
-        var familyMemberListDetail = familyMember.map( (familyMember, familyIndex) =>
-            (<TableRow key={familyIndex}>
-                <TableRowColumn width={"25%"}>
-                    <TextField
-                        id={"family-name-"+familyMember.familyId}
-                        value={familyMember.familyName}
-                        disabled={familyIndex==this.props.selectedIndex?false:true}
-                        onChange={(event, value) =>  this.handleFamilyNameChanged(event, value, familyIndex)}
-                        underlineShow={false}/>
-                </TableRowColumn>
-                <TableRowColumn width={"10%"}>
-                    <SelectField
-                        id={"family-gender-"+familyMember.familyId}
-                        maxHeight={200}
-                        value={familyMember.familyGender}
-                        disabled={familyIndex==this.props.selectedIndex?false:true}
-                        onChange={(event, index, value) =>  this.handleFamilyGenderChanged(event, index, value, familyIndex)}
-                        underlineShow={false}>
-                        {lookupGenderMenuItem}
-                    </SelectField>
-                </TableRowColumn>
-                <TableRowColumn width={"25%"}>
-                    <DatePicker
-                        id={"family-dob-"+familyMember.familyId}
-                        value={familyMember.familyDob}
-                        autoOk={true}
-                        disabled={familyIndex==this.props.selectedIndex?false:true}
-                        onChange={(event, value) =>  this.handleFamilyDobChanged(event, value, familyIndex)}
-                        underlineShow={false}
-                    />
-                </TableRowColumn>
-                <TableRowColumn width={"15%"}>
-                    <SelectField
-                        id={"family-type-"+familyMember.familyId}
-                        maxHeight={200}
-                        value={familyMember.familyType}
-                        disabled={familyIndex==this.props.selectedIndex?false:true}
-                        onChange={(event, index, value) =>  this.handleFamilyTypeChanged(event, index, value, familyIndex)}
-                        underlineShow={false}>
-                        {lookupTypeMenuItem}
-                    </SelectField>
-                </TableRowColumn>
-                <TableRowColumn width={"5%"}>
-                    <Checkbox
-                        label="Simple"
-                        checked={familyMember.isActive}
-                        onCheck={(event, isInputChecked) =>  this.handleFamilyIsActiveChanged(event, isInputChecked, familyIndex)}
-                        disabled={familyIndex==this.props.selectedIndex?false:true}/>
-                </TableRowColumn>
-                <TableRowColumn width={"20%"}>
-                    <ContentUpdate className='pen-icon-margin' color={grey500} onClick={this.updateClick.bind(this, familyIndex)}/>
-                    <ActionDelete color={grey500} onClick={this.deleteClick.bind(this, familyIndex)}/>
-                </TableRowColumn>
-            </TableRow>)
-        );
+        var employeeNotFound = true;
+        if (this.props.currentEmployee) {
+            var familyMember = this.props.currentEmployee.familyMember;
+            var familyMemberListDetail = familyMember.map( (familyMember, familyIndex) =>
+                (<TableRow key={familyIndex}>
+                    <TableRowColumn width={"25%"}>
+                        <TextField
+                            id={"family-name-"+familyMember.familyId}
+                            value={familyMember.familyName}
+                            disabled={familyIndex==this.props.selectedIndex?false:true}
+                            onChange={(event, value) =>  this.handleFamilyNameChanged(event, value, familyIndex)}
+                            underlineShow={false}/>
+                    </TableRowColumn>
+                    <TableRowColumn width={"10%"}>
+                        <SelectField
+                            id={"family-gender-"+familyMember.familyId}
+                            maxHeight={200}
+                            value={familyMember.familyGender}
+                            disabled={familyIndex==this.props.selectedIndex?false:true}
+                            onChange={(event, index, value) =>  this.handleFamilyGenderChanged(event, index, value, familyIndex)}
+                            underlineShow={false}>
+                            {lookupGenderMenuItem}
+                        </SelectField>
+                    </TableRowColumn>
+                    <TableRowColumn width={"25%"}>
+                        <DatePicker
+                            id={"family-dob-"+familyMember.familyId}
+                            value={familyMember.familyDob}
+                            autoOk={true}
+                            disabled={familyIndex==this.props.selectedIndex?false:true}
+                            onChange={(event, value) =>  this.handleFamilyDobChanged(event, value, familyIndex)}
+                            underlineShow={false}
+                        />
+                    </TableRowColumn>
+                    <TableRowColumn width={"15%"}>
+                        <SelectField
+                            id={"family-type-"+familyMember.familyId}
+                            maxHeight={200}
+                            value={familyMember.familyType}
+                            disabled={familyIndex==this.props.selectedIndex?false:true}
+                            onChange={(event, index, value) =>  this.handleFamilyTypeChanged(event, index, value, familyIndex)}
+                            underlineShow={false}>
+                            {lookupTypeMenuItem}
+                        </SelectField>
+                    </TableRowColumn>
+                    <TableRowColumn width={"5%"}>
+                        <Checkbox
+                            label="Simple"
+                            checked={familyMember.isActive}
+                            onCheck={(event, isInputChecked) =>  this.handleFamilyIsActiveChanged(event, isInputChecked, familyIndex)}
+                            disabled={familyIndex==this.props.selectedIndex?false:true}/>
+                    </TableRowColumn>
+                    <TableRowColumn width={"20%"}>
+                        <ContentUpdate className='pen-icon-margin' color={grey500} onClick={this.updateClick.bind(this, familyIndex)}/>
+                        <ActionDelete color={grey500} onClick={this.deleteClick.bind(this, familyIndex)}/>
+                    </TableRowColumn>
+                </TableRow>)
+            );
+            employeeNotFound = false;
+        }
         return(
             <div className="menu-content">
                 <h2>Employee Family Member</h2>
+                {employeeNotFound ? (<div style={{textAlign: 'center'}}>Family Member Not Found</div>) :
                 <Table selectable={false}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
@@ -214,6 +219,7 @@ class EmployeeTabFamilyMember extends Component {
                             (noDataFound) : (familyMemberListDetail)}
                     </TableBody>
                 </Table>
+                }
                 <FloatingActionButton className="btn-add-tab-position"
                     backgroundColor={grey500}
                     onClick={this.addFamilyMemberClick}

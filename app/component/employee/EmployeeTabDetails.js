@@ -150,7 +150,7 @@ class EmployeeTabDetails extends Component {
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Date of Birth"
-                    value={this.props.currentEmployee ? this.props.currentEmployee.dob : ''}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.dob : new Object}
                     onChange={(e, value) => this.handleDobChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
@@ -194,14 +194,14 @@ class EmployeeTabDetails extends Component {
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Suspend Date"
-                    value={this.props.currentEmployee ? this.props.currentEmployee.suspendDate : ''}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.suspendDate : new Object}
                     onChange={(e, value) => this.handleSuspendDateChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
                 />
                 <DatePicker
                     floatingLabelText="Hire Date"
-                    value={this.props.currentEmployee ? this.props.currentEmployee.hireDate : ''}
+                    value={this.props.currentEmployee ? this.props.currentEmployee.hireDate : new Object}
                     onChange={(e, value) => this.handleHireDateChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}

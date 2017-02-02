@@ -174,20 +174,23 @@ class EmployeeTabHistory extends Component {
                 onClick={this.addNewHistory}
             />
         ];
-        var historyList = this.props.currentEmployee.history;
-        var employeeHistoryDetail = historyList.map((historyList, historyIndex) => (
-            <EmployeeHistoryDetail
-                key={historyIndex}
-                index={historyIndex}
-                history={historyList}
-                viewMode={this.props.viewMode}
-                selectedIndex={this.props.selectedIndex}
-                selectedJobDescIndex={this.props.selectedJobDescIndex}
-                deleteClick={this.deleteClick.bind(this)}
-                updateClick={this.updateClick.bind(this)}
-                handleEditJobDescChanged={this.handleEditJobDescChanged.bind(this)}
-                addNewJobDesc={this.addNewJobDesc.bind(this)}/>
-        ));
+        var employeeHistoryDetail = [];
+        if (this.props.currentEmployee) {
+            var historyList = this.props.currentEmployee.history;
+            employeeHistoryDetail = historyList.map((historyList, historyIndex) => (
+                <EmployeeHistoryDetail
+                    key={historyIndex}
+                    index={historyIndex}
+                    history={historyList}
+                    viewMode={this.props.viewMode}
+                    selectedIndex={this.props.selectedIndex}
+                    selectedJobDescIndex={this.props.selectedJobDescIndex}
+                    deleteClick={this.deleteClick.bind(this)}
+                    updateClick={this.updateClick.bind(this)}
+                    handleEditJobDescChanged={this.handleEditJobDescChanged.bind(this)}
+                    addNewJobDesc={this.addNewJobDesc.bind(this)}/>
+            ));
+        }
         var jobDescList = this.props.newEmployee.history[0].jobDesc;
         var jobDescListRender = jobDescList.map((jobDescList, index) => (
             <div style={{width:'100%'}} key={index}>
