@@ -20,29 +20,6 @@ class NewEmployeeDialog extends Component {
         this.state={
             stepIndex: 0,
             finished: false,
-            openDialog: false,
-            employee: {
-                id: 0,
-                firstName: '',
-                lastName: '',
-                gender: '',
-                dob: new Object,
-                nationality: '',
-                maritalStatus: '',
-                phone: '',
-                subDivision: '',
-                status: '',
-                suspendDate: new Object,
-                hireDate: new Object,
-                grade: '',
-                division: '',
-                email: '',
-                office: '',
-                history:[],
-                gradeHistory: [],
-                familyMember: [],
-                location: []
-            }
         }
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
@@ -55,37 +32,15 @@ class NewEmployeeDialog extends Component {
     }
 
     openDialogClick(){
+        this.props.handleOpenDialogChanged('newEmployeeDialog', true);
         this.setState({
-            openDialog: true,
             stepIndex: 0,
-            finished: false,
-            employee: {
-                id: 0,
-                firstName: '',
-                lastName: '',
-                gender: '',
-                dob: new Object,
-                nationality: '',
-                maritalStatus: '',
-                phone: '',
-                subDivision: '',
-                status: '',
-                suspendDate: new Object,
-                hireDate: new Object,
-                grade: '',
-                division: '',
-                email: '',
-                office: '',
-                history:[],
-                gradeHistory: [],
-                familyMember: [],
-                location: []
-            }
+            finished: false
         });
     }
 
     closeDialogClick(){
-        this.setState({openDialog: false});
+        this.props.handleOpenDialogChanged('newEmployeeDialog', false);
     }
 
     handleNext(){
@@ -96,7 +51,7 @@ class NewEmployeeDialog extends Component {
         });
         if(stepIndex > 2){
             this.props.addCurrentEmployee(this.state.employee);
-            this.setState({openDialog: false});
+            this.props.handleOpenDialogChanged('newEmployeeDialog', false);
         }
     }
 
@@ -113,7 +68,7 @@ class NewEmployeeDialog extends Component {
             return (
                 <EmployeeTabDetails
                     viewMode={false}
-                    currentEmployee={this.state.employee}
+                    currentEmployee={this.props.newEmployee}
                     setSavedEmployee={this.setSavedEmployee.bind(this)}
                     />);
           case 1:
@@ -168,7 +123,7 @@ class NewEmployeeDialog extends Component {
                     actions={actionsButton}
                     modal={false}
                     contentStyle={{width: "65%", maxWidth: "none", height:"65%", maxHeight:"none"}}
-                    open={this.state.openDialog}
+                    open={this.props.openDialog.newEmployeeDialog}
                     autoScrollBodyContent={true}
                     onRequestClose={this.closeDialogClick}>
                     <div>

@@ -23,6 +23,7 @@ class EmployeeDetails extends Component {
             gradeDialog: false,
             historyDialog: false,
             locationDialog: false,
+            newEmployeeDialog: false,
         },
         openValidationMessage: {
             gradeValidation: false,
@@ -156,8 +157,11 @@ class EmployeeDetails extends Component {
                     handleStateChanged={this.handleStateChanged.bind(this)}/>
                 <EmployeeList
                     employees={this.state.employees}
+                    openDialog={this.state.openDialog}
+                    newEmployee={this.state.newEmployee}
                     setEmployees={this.setEmployees.bind(this)}
-                    addCurrentEmployee={this.addCurrentEmployee.bind(this)}/>
+                    addCurrentEmployee={this.addCurrentEmployee.bind(this)}
+                    handleOpenDialogChanged={this.handleOpenDialogChanged.bind(this)}/>
             </div>
         )
     }

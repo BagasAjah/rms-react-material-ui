@@ -37,7 +37,10 @@ class EmployeeList extends Component {
                         </div>)
                     }
                     <NewEmployeeDialog
-                        addCurrentEmployee={this.props.addCurrentEmployee.bind(this)}/>
+                        newEmployee={this.props.newEmployee}
+                        openDialog={this.props.openDialog}
+                        addCurrentEmployee={this.props.addCurrentEmployee.bind(this)}
+                        handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}/>
                 </div>
             </MuiThemeProvider>
         )
