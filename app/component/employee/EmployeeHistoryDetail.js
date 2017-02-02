@@ -18,23 +18,23 @@ class EmployeeHistoryDetail extends Component {
         this.deleteClick = this.deleteClick.bind(this);
     }
 
-    updateClick(jobDescIndex){
+    updateClick = (jobDescIndex) => {
         this.props.updateClick(this.props.index, jobDescIndex);
     }
 
-    deleteJobDescClick(jobDescIndex){
+    deleteJobDescClick = (jobDescIndex) => {
         this.props.deleteClick(this.props.index, jobDescIndex);
     }
 
-    deleteClick(){
+    deleteClick = () => {
         this.props.deleteClick(this.props.index, null);
     }
 
-    handleJobDescChanged(jobDescValue, jobDescIndex){
-        this.props.handleJobDescChanged(this.props.index, jobDescIndex, jobDescValue);
+    handleJobDescChanged = (jobDescValue, jobDescIndex) => {
+        this.props.handleEditJobDescChanged(this.props.index, jobDescIndex, jobDescValue);
     }
 
-    addNewJobDesc(){
+    addNewJobDesc = () => {
         this.props.addNewJobDesc(this.props.index);
     }
 

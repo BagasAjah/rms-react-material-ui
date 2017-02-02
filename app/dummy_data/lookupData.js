@@ -145,5 +145,4 @@ const lookupData = {
     ]
 }
 
-
 export default lookupData;

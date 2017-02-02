@@ -133,18 +133,7 @@ const DummyData = [
         email: 'Test.Coba@mitrais.com',
         office: 'Bali',
         history:[],
-        gradeHistory: [{
-            ds: 5,
-            grade: "SE2",
-            startDate: new Date(2013,12,18),
-            endDate: new Object
-        },
-        {
-            ds: 4,
-            grade: "SE2",
-            startDate: new Date(2013,10,18),
-            endDate: new Date(2013,12,18)
-        }],
+        gradeHistory: [],
         familyMember: [],
         location: []
     },

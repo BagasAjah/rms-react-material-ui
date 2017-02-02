@@ -22,13 +22,8 @@ class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
-        this.props.currentEmployee.gradeHistory.sort();
-        this.props.currentEmployee.gradeHistory.reverse();
-        this.state = {
-            viewMode: true,
-            employee: this.props.currentEmployee,
-            currentTabLocation: ''
-        };
+        this.props.editedEmployee.gradeHistory.sort();
+        this.props.editedEmployee.gradeHistory.reverse();
         this.updateButtonClick = this.updateButtonClick.bind(this);
         this.editButtonClick = this.editButtonClick.bind(this);
         this.cancelButtonClick = this.cancelButtonClick.bind(this);
@@ -37,98 +32,110 @@ class EmployeeTab extends Component {
         this.employeeTabClick = this.employeeTabClick.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount = () => {
         var currentTabLocationHash = browserHistory.getCurrentLocation().hash;
-        var lastslashindex = currentTabLocationHash.lastIndexOf('/');
-        var currentTabLocation = currentTabLocationHash.substring(lastslashindex  + 1);
+        var lastSlashIndex = currentTabLocationHash.lastIndexOf('/');
+        var currentTabLocation = currentTabLocationHash.substring(lastSlashIndex  + 1);
         (currentTabLocation == 'employee') ? currentTabLocation = 'details' : currentTabLocation;
-        this.setState({currentTabLocation: currentTabLocation});
+        this.props.handleStateChanged('currentTabLocation', currentTabLocation);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({employee: nextProps.currentEmployee});
-        this.setState({viewMode: true});
+    updateButtonClick = () => {
+        this.props.handleStateChanged('viewMode', true);
+        this.props.handleStateChanged('selectedIndex', null);
+        this.props.updateCurrentEmployee(this.props.editedEmployee);
     }
 
-    updateButtonClick(){
-        this.setState({viewMode: true});
-        this.props.updateCurrentEmployee(this.state.employee);
-    }
-
-    editButtonClick(){
-        this.setState({viewMode: false});
+    editButtonClick = () => {
+        this.props.handleStateChanged('viewMode', false);
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
-    deleteButtonClick(){
-        this.setState({
-            employee: {
-                id: '',
-                firstName: ''
-            },
-            viewMode: true
-            });
-        this.props.deleteCurrentEmployee(this.state.employee);
+    deleteButtonClick = () => {
+        this.props.handleStateChanged('viewMode', true);
+        this.props.deleteCurrentEmployee(this.props.editedEmployee);
     }
 
-    cancelButtonClick(){
-        this.setState({viewMode: true});
+    cancelButtonClick = () => {
+        this.props.handleStateChanged('viewMode', true);
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
-    setSavedEmployee(employee){
-        this.setState({employee: employee});
+    setSavedEmployee = (employee) => {
+        this.props.handleStateChanged('editedEmployee', employee);
     }
 
-    employeeTabClick(e){
-        this.setState({currentTabLocation: e.props.value});
+    employeeTabClick = (e) => {
+        this.props.handleStateChanged('currentTabLocation', e.props.value);
         browserHistory.push('#/employee/' + e.props.value);
     }
 
-    render() {
+    render = () => {
         return (
             <div className="menu-tab">
-                <Tabs value={this.state.currentTabLocation}>
+                <Tabs value={this.props.currentTabLocation}>
                     <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeTabClick}>
                         <EmployeeTabDetails
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
                         <EmployeeTabHistory
-                                viewMode={this.state.viewMode}
-                                currentEmployee={this.state.employee}
-                                setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            newEmployee={this.props.newEmployee}
+                            openDialog={this.props.openDialog}
+                            selectedJobDescIndex={this.props.selectedJobDescIndex}
+                            selectedIndex={this.props.selectedIndex}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            newEmployee={this.props.newEmployee}
+                            openDialog={this.props.openDialog}
+                            openValidationMessage={this.props.openValidationMessage}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
+                            handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            newEmployee={this.props.newEmployee}
+                            selectedIndex={this.props.selectedIndex}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
                         <EmployeeTabAddress
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location" onActive={this.employeeTabClick}>
                         <EmployeeTabLocation
-                            viewMode={this.state.viewMode}
-                            currentEmployee={this.state.employee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            newEmployee={this.props.newEmployee}
+                            openDialog={this.props.openDialog}
+                            openValidationMessage={this.props.openValidationMessage}
+                            selectedIndex={this.props.selectedIndex}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
+                            handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
 
                 </Tabs>
                 <div className="footer-content">
-                    { (this.state.viewMode) ? (
+                    { (this.props.viewMode) ? (
                         <div>
                             <RaisedButton
                                 label={"Edit"}

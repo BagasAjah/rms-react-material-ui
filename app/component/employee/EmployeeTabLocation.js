@@ -15,26 +15,17 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import EmployeeLocationDetail from "./EmployeeLocationDetail"
 import lookupData from "../../dummy_data/lookupData"
 
+import {handleEmployeeDetailsInfo} from "../lib/employee/employeeHelper"
+
 const validationErrorMessage = "This field is required!";
 
 class EmployeeTabLocation extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            officeStartDate:new Object,
-            officeEndDate:new Object,
-            officeLocation:'',
-            officeAddress:'',
-            selectedIndex: null,
-            openDialog: false,
-            lookupLocation: lookupData.location,
-            openValidationMessage: false
-        }
         this.handleStartDateChanged = this.handleStartDateChanged.bind(this);
         this.handleEndDateChanged = this.handleEndDateChanged.bind(this);
         this.handleOfficeLocationChanged = this.handleOfficeLocationChanged.bind(this);
         this.handleOfficeAddressChanged = this.handleOfficeAddressChanged.bind(this);
-        this.handleStateDataChange = this.handleStateDataChange.bind(this);
         this.addOfficeLocationClick = this.addOfficeLocationClick.bind(this);
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
@@ -43,13 +34,7 @@ class EmployeeTabLocation extends Component {
         this.deleteClick = this.deleteClick.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.currentEmployee.id != this.props.currentEmployee.id || nextProps.viewMode) {
-            this.setState({selectedIndex: null});
-        }
-    }
-
-    handleDataChange(index, value, type){
+    handleDataChange = (index, value, type) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'location': {
                 [index]: {
@@ -60,52 +45,59 @@ class EmployeeTabLocation extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    handleStartDateChanged(e, value){
-        this.handleStateDataChange('officeStartDate', value);
+    handleStartDateChanged = (e, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeStartDate', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleEndDateChanged(e, value){
-        this.handleStateDataChange('officeEndDate', value);
+    handleEndDateChanged = (e, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeEndDate', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleOfficeLocationChanged(e, index, value){
-        this.handleStateDataChange('officeLocation', value);
+    handleOfficeLocationChanged = (e, index, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeLocation', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleOfficeAddressChanged(e, value){
-        this.handleStateDataChange('officeAddress', value);
+    handleOfficeAddressChanged = (e, value) => {
+        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeAddress', value, this.props.newEmployee);
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleStateDataChange(type, value){
-        this.setState({[type]: value});
-    }
-
-    openDialogClick(){
-        this.setState({
-            openDialog: true,
-            officeStartDate:null,
-            officeEndDate: new Object,
-            officeLocation:'',
-            officeAddress:'',
-            openValidationMessage: false
+    openDialogClick = () => {
+        var updatedEmployee = update(this.props.newEmployee, {
+            'location': {
+                0: {
+                    'officeStartDate':  {$set: null},
+                    'officeEndDate': {$set: new Object},
+                    'officeLocation': {$set: ''},
+                    'officeAddress': {$set: ''}
+                }
+            }
         });
+        this.props.handleStateChanged('newEmployee', updatedEmployee);
+        this.props.handleStateChanged('selectedIndex', null);
+        this.props.handleOpenDialogChanged('locationDialog', true);
+        this.props.handleOpenValidationMessage('locationValidation', false);
     }
 
-    closeDialogClick(){
-        this.setState({openDialog: false});
+    closeDialogClick = () => {
+        this.props.handleOpenDialogChanged('locationDialog', false);
     }
 
-    addOfficeLocationClick(){
-        if(this.state.officeAddress == '' || this.state.officeLocation =='' || this.state.officeStartDate == null) {
-            this.setState({openValidationMessage: true});
+    addOfficeLocationClick = () => {
+        var location = this.props.newEmployee.location[0];
+        if(location.officeAddress == '' || location.officeLocation =='' || location.officeStartDate == null) {
+            this.props.handleOpenValidationMessage('locationValidation', true);
         } else {
             var currentEmployee = this.props.currentEmployee;
             var updatedEmployee = update(currentEmployee, {'location': {
                 $push: [{
-                    officeStartDate: this.state.officeStartDate,
-                    officeEndDate: this.state.officeEndDate,
-                    officeLocation: this.state.officeLocation,
-                    officeAddress: this.state.officeAddress
+                    officeStartDate: location.officeStartDate,
+                    officeEndDate: location.officeEndDate,
+                    officeLocation: location.officeLocation,
+                    officeAddress: location.officeAddress
                 }]
             }});
             this.props.setSavedEmployee(updatedEmployee);
@@ -113,16 +105,16 @@ class EmployeeTabLocation extends Component {
         }
     }
 
-    updateClick(index){
-        this.setState({selectedIndex: index});
+    updateClick = (index) => {
+        this.props.handleStateChanged('selectedIndex', index);
     }
 
-    deleteClick(index){
+    deleteClick = (index) => {
         var updatedEmployee = update(this.props.currentEmployee, {'location': {$splice: [[index,1]]}});
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    render() {
+    render = () => {
         const actionsButton = [
             <FlatButton
                 label="Add"
@@ -130,21 +122,25 @@ class EmployeeTabLocation extends Component {
                 onTouchTap={this.addOfficeLocationClick}
             />
         ];
-        var locationList = this.props.currentEmployee.location;
-        var lookupLocationMenuItem = this.state.lookupLocation.map(lookupLocation =>
-            <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
-        );
-        var employeeLocationDetail = locationList.map((locationList, locationIndex) => (
-            <EmployeeLocationDetail
-                key={locationIndex}
-                index={locationIndex}
-                location={locationList}
-                viewMode={this.props.viewMode}
-                selectedIndex={this.state.selectedIndex}
-                handleDataChange={this.handleDataChange.bind(this)}
-                deleteClick={this.deleteClick.bind(this)}
-                updateClick={this.updateClick.bind(this)}/>
-        ));
+        var employeeLocationDetail = [];
+        if (this.props.currentEmployee) {
+            var locationList = this.props.currentEmployee.location;
+            var lookupLocationMenuItem = lookupData.location.map(lookupLocation =>
+                <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
+            );
+            employeeLocationDetail = locationList.map((locationList, locationIndex) => (
+                <EmployeeLocationDetail
+                    key={locationIndex}
+                    index={locationIndex}
+                    location={locationList}
+                    viewMode={this.props.viewMode}
+                    selectedIndex={this.props.selectedIndex}
+                    handleDataChange={this.handleDataChange.bind(this)}
+                    deleteClick={this.deleteClick.bind(this)}
+                    updateClick={this.updateClick.bind(this)}/>
+            ));
+
+        }
         return (
             <div className="menu-content">
                 <h2>Employee Location Details</h2>
@@ -166,21 +162,21 @@ class EmployeeTabLocation extends Component {
                     title="Office Location Details"
                     actions={actionsButton}
                     modal={false}
-                    open={this.state.openDialog}
+                    open={this.props.openDialog.locationDialog}
                     onRequestClose={this.closeDialogClick}>
                         <DatePicker
                             className='detail-dialog'
                             floatingLabelText="Office Start Date"
                             name="Office Start Date"
                             ref="a"
-                            value={this.state.officeStartDate}
-                            errorText={this.state.openValidationMessage && (this.state.officeStartDate==null)?validationErrorMessage:""}
+                            value={this.props.newEmployee.location[0].officeStartDate}
+                            errorText={this.props.openValidationMessage.locationValidation && (this.props.newEmployee.location[0].officeStartDate==null)?validationErrorMessage:""}
                             onChange={(e, value) => this.handleStartDateChanged(e, value)}
                             autoOk={true} />
                         <DatePicker
                             className='detail-dialog'
                             floatingLabelText="Office End Date"
-                            value={this.state.officeEndDate}
+                            value={this.props.newEmployee.location[0].officeEndDate}
                             onChange={(e, value) => this.handleEndDateChanged(e, value)}
                             autoOk={true} />
                         <br />
@@ -188,16 +184,16 @@ class EmployeeTabLocation extends Component {
                             className='detail-dialog'
                             floatingLabelText="Office Location"
                             maxHeight={200}
-                            value={this.state.officeLocation}
-                            errorText={this.state.openValidationMessage && (this.state.officeLocation=='')?validationErrorMessage:""}
+                            value={this.props.newEmployee.location[0].officeLocation}
+                            errorText={this.props.openValidationMessage.locationValidation && (this.props.newEmployee.location[0].officeLocation=='')?validationErrorMessage:""}
                             onChange={(e, index, value) => this.handleOfficeLocationChanged(e, index, value)}>
                             {lookupLocationMenuItem}
                         </SelectField>
                         <TextField
                             className='detail-dialog'
                             floatingLabelText="Office Address"
-                            value={this.state.officeAddress}
-                            errorText={this.state.openValidationMessage && (this.state.officeAddress=='')?validationErrorMessage:""}
+                            value={this.props.newEmployee.location[0].officeAddress}
+                            errorText={this.props.openValidationMessage.locationValidation && (this.props.newEmployee.location[0].officeAddress=='')?validationErrorMessage:""}
                             onChange={(e, value) => this.handleOfficeAddressChanged(e, value)}
                             multiLine={true}
                             rows={2}
