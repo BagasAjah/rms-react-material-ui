@@ -21,10 +21,12 @@ class EmployeeDetails extends Component {
         newEmployee: setDefaultEmployee(),
         openDialog: {
             gradeDialog: false,
-            historyDialog: false
+            historyDialog: false,
+            locationDialog: false,
         },
         openValidationMessage: {
-            gradeValidation: false
+            gradeValidation: false,
+            locationValidation: false,
         },
         searchingText: '',
         selectedJobDescIndex: null,

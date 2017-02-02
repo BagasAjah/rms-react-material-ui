@@ -114,8 +114,23 @@ class EmployeeTab extends Component {
                             setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
+                        <EmployeeTabAddress
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location" onActive={this.employeeTabClick}>
+                        <EmployeeTabLocation
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            newEmployee={this.props.newEmployee}
+                            openDialog={this.props.openDialog}
+                            openValidationMessage={this.props.openValidationMessage}
+                            selectedIndex={this.props.selectedIndex}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}
+                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
+                            handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
 
                 </Tabs>

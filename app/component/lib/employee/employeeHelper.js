@@ -42,7 +42,12 @@ export const setDefaultEmployee = () => {
             familyType: '',
             isActive: false
         }],
-        location: []
+        location: [{
+            officeStartDate: new Object,
+            officeEndDate: new Object,
+            officeLocation: '',
+            officeAddress: ''
+        }]
     }
 }
 
