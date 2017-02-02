@@ -20,7 +20,7 @@ class EmployeeSearch extends Component {
         this.setFilteringProps = this.setFilteringProps.bind(this);
     }
 
-    setFilteringProps() {
+    setFilteringProps = () => {
         this.props.setFilteringProps(this.filterTextInput.input.value);
     }
 

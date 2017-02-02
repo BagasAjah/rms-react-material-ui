@@ -16,15 +16,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 class EmployeeTabHistory extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            historyEndDate: new Object,
-            company: '',
-            position: '',
-            jobDesc: []
-        }
         this.addNewHistory = this.addNewHistory.bind(this);
         this.addNewHistoryJobDesc = this.addNewHistoryJobDesc.bind(this);
-        this.handleStateDataChanged = this.handleStateDataChanged.bind(this);
         this.handleStartDateChanged = this.handleStartDateChanged.bind(this);
         this.handleEndDateChanged = this.handleEndDateChanged.bind(this);
         this.handleCompanyChanged = this.handleCompanyChanged.bind(this);
@@ -35,11 +28,7 @@ class EmployeeTabHistory extends Component {
         this.closeDialogClick = this.closeDialogClick.bind(this);
     }
 
-    handleStateDataChanged(type, value){
-        this.setState({[type]: value});
-    }
-
-    openDialogClick(){
+    openDialogClick = () => {
         var updatedEmployee = update(this.props.newEmployee, {
             'history': {
                 0: {
@@ -55,16 +44,16 @@ class EmployeeTabHistory extends Component {
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    closeDialogClick(){
+    closeDialogClick = () => {
         this.props.handleStateChanged('openDialog', false);
     }
 
-    updateClick(index, jobDescIndex){
+    updateClick = (index, jobDescIndex) => {
         this.props.handleStateChanged('selectedIndex', index);
         this.props.handleStateChanged('selectedJobDescIndex', jobDescIndex);
     }
 
-    deleteClick(index, jobDescIndex){
+    deleteClick = (index, jobDescIndex) => {
         var updatedEmployee = [];
         if (jobDescIndex != null){
             updatedEmployee = update(this.props.currentEmployee, {
@@ -88,7 +77,7 @@ class EmployeeTabHistory extends Component {
         this.props.handleStateChanged('selectedJobDescIndex', null);
     }
 
-    handleEditJobDescChanged(index, jobDescIndex, selectedJobDescValue){
+    handleEditJobDescChanged = (index, jobDescIndex, selectedJobDescValue) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 [index]: {
@@ -101,7 +90,7 @@ class EmployeeTabHistory extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    addNewJobDesc(index, jobDescIndex){
+    addNewJobDesc = (index, jobDescIndex) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 [index]: {
@@ -114,13 +103,13 @@ class EmployeeTabHistory extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    addNewHistoryJobDesc(){
+    addNewHistoryJobDesc = () => {
         var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {$push: [['']]});
         var updatedEmployee = this.handleDataChanged('jobDesc', updatedJobDesc);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleDataChanged(type, value){
+    handleDataChanged = (type, value) => {
         var updatedEmployee = update(this.props.newEmployee, {
             'history': {
                 0: {
@@ -131,27 +120,27 @@ class EmployeeTabHistory extends Component {
         return updatedEmployee;
     }
 
-    handleStartDateChanged(e, value){
+    handleStartDateChanged = (e, value) => {
         var updatedEmployee = this.handleDataChanged('historyStartDate', value);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleEndDateChanged(e, value){
+    handleEndDateChanged = (e, value) => {
         var updatedEmployee = this.handleDataChanged('historyEndDate', value);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleCompanyChanged(e, value){
+    handleCompanyChanged = (e, value) => {
         var updatedEmployee = this.handleDataChanged('company', value);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handlePositionChanged(e, value){
+    handlePositionChanged = (e, value) => {
         var updatedEmployee = this.handleDataChanged('position', value);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    handleJobDescChanged(e, value, index){
+    handleJobDescChanged = (e, value, index) => {
         var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {
             [index]: {
                 $set: value
@@ -161,7 +150,7 @@ class EmployeeTabHistory extends Component {
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
-    addNewHistory(){
+    addNewHistory = () => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 $push: [{

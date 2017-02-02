@@ -32,7 +32,7 @@ class EmployeeTab extends Component {
         this.employeeTabClick = this.employeeTabClick.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount = () => {
         var currentTabLocationHash = browserHistory.getCurrentLocation().hash;
         var lastslashindex = currentTabLocationHash.lastIndexOf('/');
         var currentTabLocation = currentTabLocationHash.substring(lastslashindex  + 1);
@@ -40,31 +40,31 @@ class EmployeeTab extends Component {
         this.props.handleStateChanged('currentTabLocation', currentTabLocation);
     }
 
-    updateButtonClick(){
+    updateButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
         this.props.updateCurrentEmployee(this.props.editedEmployee);
     }
 
-    editButtonClick(){
+    editButtonClick = () => {
         this.props.handleStateChanged('viewMode', false);
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
-    deleteButtonClick(){
+    deleteButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
         this.props.deleteCurrentEmployee(this.props.editedEmployee);
     }
 
-    cancelButtonClick(){
+    cancelButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
         this.setSavedEmployee(this.props.currentEmployee);
     }
 
-    setSavedEmployee(employee){
+    setSavedEmployee = (employee) => {
         this.props.handleStateChanged('editedEmployee', employee);
     }
 
-    employeeTabClick(e){
+    employeeTabClick = (e) => {
         this.props.handleStateChanged('currentTabLocation', e.props.value);
         browserHistory.push('#/employee/' + e.props.value);
     }
@@ -94,23 +94,10 @@ class EmployeeTab extends Component {
 
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
-                        <EmployeeTabFamilyMember
-                            viewMode={this.props.viewMode}
-                            currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
-                        <EmployeeTabAddress
-                            viewMode={this.props.viewMode}
-                            currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location" onActive={this.employeeTabClick}>
-                        <EmployeeTabLocation
-                            viewMode={this.props.viewMode}
-                            currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
-
                     </Tab>
 
                 </Tabs>

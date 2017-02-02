@@ -32,77 +32,77 @@ class EmployeeTabDetails extends Component {
         this.setSavedEmployee = this.setSavedEmployee.bind(this);
     }
 
-    handleFirstNameChange(){
+    handleFirstNameChange = () => {
         var employee = update(this.props.currentEmployee, {'firstName': {$set: this.firstNameInput.input.value}});
         this.setSavedEmployee(employee);
     }
 
-    handleLastNameChange(){
+    handleLastNameChange = () => {
         var employee = update(this.props.currentEmployee, {'lastName': {$set: this.lastNameInput.input.value}});
         this.setSavedEmployee(employee);
     }
 
-    handleGenderChange(event, index, value){
+    handleGenderChange = (event, index, value) => {
         var employee = update(this.props.currentEmployee, {'gender': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleDobChange(e, value){
+    handleDobChange = (e, value) => {
         var employee = update(this.props.currentEmployee, {'dob': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleNationalityChange(){
+    handleNationalityChange = () => {
         var employee = update(this.props.currentEmployee, {'nationality': {$set: this.nationalityInput.input.value}});
         this.setSavedEmployee(employee);
     }
 
-    handleMaritalStatusChange(e, index, value){
+    handleMaritalStatusChange = (e, index, value) => {
         var employee = update(this.props.currentEmployee, {'maritalStatus': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handlePhoneChange(){
+    handlePhoneChange = () => {
         var employee = update(this.props.currentEmployee, {'phone': {$set: this.phoneInput.input.value}});
         this.setSavedEmployee(employee);
     }
 
-    handleSubDivisionChange(){
+    handleSubDivisionChange = () => {
         var employee = update(this.props.currentEmployee, {'subDivision': {$set: this.subDivisionInput.input.value}});
         this.setSavedEmployee(employee);
     }
 
-    handleStatusChange(e, index, value){
+    handleStatusChange = (e, index, value) => {
         var employee = update(this.props.currentEmployee, {'status': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleSuspendDateChange(e, value){
+    handleSuspendDateChange = (e, value) => {
         var employee = update(this.props.currentEmployee, {'suspendDate': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleHireDateChange(e, value){
+    handleHireDateChange = (e, value) => {
         var employee = update(this.props.currentEmployee, {'hireDate': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleGradeChange(e, index, value){
+    handleGradeChange = (e, index, value) => {
         var employee = update(this.props.currentEmployee, {'grade': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleDivisionChange(e, index, value){
+    handleDivisionChange = (e, index, value) => {
         var employee = update(this.props.currentEmployee, {'division': {$set: value}});
         this.setSavedEmployee(employee);
     }
 
-    handleEmailChange(){
+    handleEmailChange = () => {
         var employee = update(this.props.currentEmployee, {'email': {$set: this.emailInput.input.value}});
         this.setSavedEmployee(employee);
     }
 
-    setSavedEmployee(employee){
+    setSavedEmployee = (employee) => {
         this.props.setSavedEmployee(employee);
     }
 
