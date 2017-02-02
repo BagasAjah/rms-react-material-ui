@@ -13,7 +13,7 @@ import NewEmployeeDialog from "./NewEmployeeDialog"
 
 class EmployeeList extends Component {
 
-    render() {
+    render = () => {
         var employee = this.props.employees;
 
         var employeeListDetail = employee.map( (employee, index) =>

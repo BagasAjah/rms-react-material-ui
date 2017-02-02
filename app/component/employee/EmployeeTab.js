@@ -34,14 +34,15 @@ class EmployeeTab extends Component {
 
     componentWillMount = () => {
         var currentTabLocationHash = browserHistory.getCurrentLocation().hash;
-        var lastslashindex = currentTabLocationHash.lastIndexOf('/');
-        var currentTabLocation = currentTabLocationHash.substring(lastslashindex  + 1);
+        var lastSlashIndex = currentTabLocationHash.lastIndexOf('/');
+        var currentTabLocation = currentTabLocationHash.substring(lastSlashIndex  + 1);
         (currentTabLocation == 'employee') ? currentTabLocation = 'details' : currentTabLocation;
         this.props.handleStateChanged('currentTabLocation', currentTabLocation);
     }
 
     updateButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
+        this.props.handleStateChanged('selectedIndex', null);
         this.props.updateCurrentEmployee(this.props.editedEmployee);
     }
 
@@ -69,7 +70,7 @@ class EmployeeTab extends Component {
         browserHistory.push('#/employee/' + e.props.value);
     }
 
-    render() {
+    render = () => {
         return (
             <div className="menu-tab">
                 <Tabs value={this.props.currentTabLocation}>
@@ -91,7 +92,13 @@ class EmployeeTab extends Component {
                             handleStateChanged={this.props.handleStateChanged.bind(this)}/>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
-
+                        <EmployeeTabFamilyMember
+                            viewMode={this.props.viewMode}
+                            currentEmployee={this.props.editedEmployee}
+                            newEmployee={this.props.newEmployee}
+                            selectedIndex={this.props.selectedIndex}
+                            handleStateChanged={this.props.handleStateChanged.bind(this)}
+                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                     </Tab>

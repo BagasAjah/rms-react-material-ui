@@ -11,7 +11,7 @@ import Constants from "../styles/Constants"
 
 class EmployeeToolbar extends Component {
 
-  render() {
+  render = () => {
     return(
         <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
           <Toolbar style={Constants.toolBarColor}>

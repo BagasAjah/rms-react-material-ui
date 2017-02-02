@@ -23,7 +23,7 @@ const iconStyles = {
 
 class Header extends Component {
 
-  render() {
+  render = () => {
     return(
   <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo500)}>
     <AppBar>

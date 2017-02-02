@@ -107,7 +107,7 @@ class EmployeeDetails extends Component {
         this.setState({[type]:  value});
     }
 
-    render(){
+    render = () => {
         return(
             <div>
                 <Header/>

@@ -106,7 +106,7 @@ class EmployeeTabDetails extends Component {
         this.props.setSavedEmployee(employee);
     }
 
-    render(){
+    render = () => {
         var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
             <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
         );

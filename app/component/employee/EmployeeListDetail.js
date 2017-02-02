@@ -12,11 +12,11 @@ import moment from 'moment'
 
 class EmployeeListDetail extends Component {
 
-    employeeClick(currentEmployee) {
+    employeeClick = (currentEmployee) => {
         this.props.setCurrentEmployee(currentEmployee);
     }
 
-    render(){
+    render = () => {
         var employee = this.props.employee;
         var hireDateStr = moment(this.props.employee.hireDate).format("DD MMM YYYY").toString();
         return(

@@ -29,7 +29,13 @@ export const setDefaultEmployee = () => {
             jobDesc: []
         }],
         gradeHistory: [],
-        familyMember: [],
+        familyMember: [{
+            familyName: '',
+            familyGender: '',
+            familyDob: new Object,
+            familyType: '',
+            isActive: false
+        }],
         location: []
     }
 }

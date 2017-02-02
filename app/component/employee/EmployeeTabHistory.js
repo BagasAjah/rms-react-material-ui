@@ -166,7 +166,7 @@ class EmployeeTabHistory extends Component {
         this.props.handleStateChanged('openDialog', false);
     }
 
-    render(){
+    render = () => {
         const actionsButton = [
             <FlatButton
                 label="Add"

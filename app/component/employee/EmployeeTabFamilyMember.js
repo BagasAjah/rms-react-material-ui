@@ -29,18 +29,6 @@ class EmployeeTabFamilyMember extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            familyName: '',
-            familyGender: '',
-            familyDob: new Object,
-            familyType: '',
-            isActive: false,
-            selectedIndex: null,
-            showCheckboxes: false,
-            lookupGender: lookupData.gender,
-            lookupType: lookupData.familyType,
-            openValidationMessage: false
-        }
         this.handleFamilyNameChanged = this.handleFamilyNameChanged.bind(this);
         this.handleFamilyGenderChanged = this.handleFamilyGenderChanged.bind(this);
         this.handleFamilyDobChanged = this.handleFamilyDobChanged.bind(this);
@@ -49,13 +37,7 @@ class EmployeeTabFamilyMember extends Component {
         this.addFamilyMemberClick = this.addFamilyMemberClick.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.currentEmployee.id != this.props.currentEmployee.id || nextProps.viewMode) {
-            this.setState({selectedIndex: null});
-        }
-    }
-
-    handleFamilyNameChanged(e, value, familyIndex){
+    handleFamilyNameChanged = (e, value, familyIndex) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'familyMember': {
                 [familyIndex]: {
@@ -66,7 +48,7 @@ class EmployeeTabFamilyMember extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    handleFamilyGenderChanged(e, index, value, familyIndex){
+    handleFamilyGenderChanged = (e, index, value, familyIndex) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'familyMember': {
                 [familyIndex]: {
@@ -77,7 +59,7 @@ class EmployeeTabFamilyMember extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    handleFamilyDobChanged(e, value, familyIndex){
+    handleFamilyDobChanged = (e, value, familyIndex) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'familyMember': {
                 [familyIndex]: {
@@ -88,7 +70,7 @@ class EmployeeTabFamilyMember extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    handleFamilyTypeChanged(e, index, value, familyIndex){
+    handleFamilyTypeChanged = (e, index, value, familyIndex) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'familyMember': {
                 [familyIndex]: {
@@ -99,7 +81,7 @@ class EmployeeTabFamilyMember extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    handleFamilyIsActiveChanged(e, isInputChecked, familyIndex){
+    handleFamilyIsActiveChanged = (e, isInputChecked, familyIndex) => {
         var updatedEmployee = update(this.props.currentEmployee, {
             'familyMember': {
                 [familyIndex]: {
@@ -110,36 +92,36 @@ class EmployeeTabFamilyMember extends Component {
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    addFamilyMemberClick(){
+    addFamilyMemberClick = () => {
         var currentEmployee = this.props.currentEmployee;
         var updatedEmployee = update(currentEmployee, {
             familyMember: {
                 $push: [{
-                    familyName: '',
-                    familyGender: '',
-                    familyDob: new Object,
-                    familyType: '',
-                    isActive: false
+                    familyName: this.props.newEmployee.familyMember[0].familyName,
+                    familyGender: this.props.newEmployee.familyMember[0].familyGender,
+                    familyDob: this.props.newEmployee.familyMember[0].familyDob,
+                    familyType: this.props.newEmployee.familyMember[0].familyType,
+                    isActive: this.props.newEmployee.familyMember[0].isActive
                 }]
             }
         });
         this.props.setSavedEmployee(updatedEmployee);
     }
 
-    updateClick(index){
+    updateClick = (index) => {
         if(!this.props.viewMode){
-            this.setState({selectedIndex: index});
+            this.props.handleStateChanged('selectedIndex', index);
         }
     }
 
-    deleteClick(index){
+    deleteClick = (index) => {
         if(!this.props.viewMode){
             var updatedEmployee = update(this.props.currentEmployee, {'familyMember': {$splice: [[index,1]]}});
             this.props.setSavedEmployee(updatedEmployee);
         }
     }
 
-    render(){
+    render = () => {
         const noDataFound = [
             <TableRow key='not-found'>
                 <TableRowColumn style={{textAlign: 'center'}}>
@@ -151,10 +133,10 @@ class EmployeeTabFamilyMember extends Component {
                 </TableRowColumn>
             </TableRow>
         ];
-        var lookupGenderMenuItem = this.state.lookupGender.map(lookupGender =>
+        var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
             <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
         );
-        var lookupTypeMenuItem = this.state.lookupType.map(lookupType =>
+        var lookupTypeMenuItem = lookupData.familyType.map(lookupType =>
             <MenuItem key= {lookupType.lookupCode} value={lookupType.lookupCode} primaryText={lookupType.lookupValue} />
         );
         var familyMember = this.props.currentEmployee.familyMember;
@@ -164,7 +146,7 @@ class EmployeeTabFamilyMember extends Component {
                     <TextField
                         id={"family-name-"+familyMember.familyId}
                         value={familyMember.familyName}
-                        disabled={familyIndex==this.state.selectedIndex?false:true}
+                        disabled={familyIndex==this.props.selectedIndex?false:true}
                         onChange={(event, value) =>  this.handleFamilyNameChanged(event, value, familyIndex)}
                         underlineShow={false}/>
                 </TableRowColumn>
@@ -173,7 +155,7 @@ class EmployeeTabFamilyMember extends Component {
                         id={"family-gender-"+familyMember.familyId}
                         maxHeight={200}
                         value={familyMember.familyGender}
-                        disabled={familyIndex==this.state.selectedIndex?false:true}
+                        disabled={familyIndex==this.props.selectedIndex?false:true}
                         onChange={(event, index, value) =>  this.handleFamilyGenderChanged(event, index, value, familyIndex)}
                         underlineShow={false}>
                         {lookupGenderMenuItem}
@@ -184,7 +166,7 @@ class EmployeeTabFamilyMember extends Component {
                         id={"family-dob-"+familyMember.familyId}
                         value={familyMember.familyDob}
                         autoOk={true}
-                        disabled={familyIndex==this.state.selectedIndex?false:true}
+                        disabled={familyIndex==this.props.selectedIndex?false:true}
                         onChange={(event, value) =>  this.handleFamilyDobChanged(event, value, familyIndex)}
                         underlineShow={false}
                     />
@@ -194,7 +176,7 @@ class EmployeeTabFamilyMember extends Component {
                         id={"family-type-"+familyMember.familyId}
                         maxHeight={200}
                         value={familyMember.familyType}
-                        disabled={familyIndex==this.state.selectedIndex?false:true}
+                        disabled={familyIndex==this.props.selectedIndex?false:true}
                         onChange={(event, index, value) =>  this.handleFamilyTypeChanged(event, index, value, familyIndex)}
                         underlineShow={false}>
                         {lookupTypeMenuItem}
@@ -205,7 +187,7 @@ class EmployeeTabFamilyMember extends Component {
                         label="Simple"
                         checked={familyMember.isActive}
                         onCheck={(event, isInputChecked) =>  this.handleFamilyIsActiveChanged(event, isInputChecked, familyIndex)}
-                        disabled={familyIndex==this.state.selectedIndex?false:true}/>
+                        disabled={familyIndex==this.props.selectedIndex?false:true}/>
                 </TableRowColumn>
                 <TableRowColumn width={"20%"}>
                     <ContentUpdate className='pen-icon-margin' color={grey500} onClick={this.updateClick.bind(this, familyIndex)}/>
@@ -217,7 +199,7 @@ class EmployeeTabFamilyMember extends Component {
             <div className="menu-content">
                 <h2>Employee Family Member</h2>
                 <Table selectable={false}>
-                    <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
+                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
                             <TableHeaderColumn width={"25%"}>Name</TableHeaderColumn>
                             <TableHeaderColumn width={"10%"}>Gender</TableHeaderColumn>
@@ -227,7 +209,7 @@ class EmployeeTabFamilyMember extends Component {
                             <TableHeaderColumn width={"20%"}></TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
-                    <TableBody displayRowCheckbox={this.state.showCheckboxes}>
+                    <TableBody displayRowCheckbox={false}>
                         {(familyMemberListDetail.length == 0) ?
                             (noDataFound) : (familyMemberListDetail)}
                     </TableBody>
