@@ -27,11 +27,11 @@ class NewEmployeeDialog extends Component {
         this.handlePrev = this.handlePrev.bind(this);
     }
 
-    setSavedEmployee(employee){
+    setSavedEmployee = (employee) => {
         this.setState({employee: employee});
     }
 
-    openDialogClick(){
+    openDialogClick = () => {
         this.props.handleOpenDialogChanged('newEmployeeDialog', true);
         this.setState({
             stepIndex: 0,
@@ -39,11 +39,11 @@ class NewEmployeeDialog extends Component {
         });
     }
 
-    closeDialogClick(){
+    closeDialogClick = () => {
         this.props.handleOpenDialogChanged('newEmployeeDialog', false);
     }
 
-    handleNext(){
+    handleNext = () => {
         const {stepIndex} = this.state;
         this.setState({
           stepIndex: stepIndex + 1,
@@ -55,14 +55,14 @@ class NewEmployeeDialog extends Component {
         }
     }
 
-    handlePrev(){
+    handlePrev = () => {
         const {stepIndex} = this.state;
         if (stepIndex > 0) {
           this.setState({stepIndex: stepIndex - 1});
         }
     }
 
-    getStepContent(stepIndex) {
+    getStepContent = (stepIndex) => {
         switch (stepIndex) {
           case 0:
             return (
@@ -80,7 +80,7 @@ class NewEmployeeDialog extends Component {
         }
     }
 
-    render(){
+    render = () => {
         const {stepIndex, finished} = this.state;
         const actionsButton = [
             <RaisedButton
