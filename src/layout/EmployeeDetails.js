@@ -8,32 +8,11 @@ import Header from "../component/common/Header"
 import EmployeeToolbar from "../component/employee/EmployeeToolbar"
 import EmployeeList from "../component/employee/EmployeeList"
 
-import DummyData from "../dummy_data/sampleEmployeeData"
+import initialState from "../initialState"
 import {searchEmployee, setDefaultEmployee} from "../component/lib/employee/employeeHelper"
 
 class EmployeeDetails extends Component {
-    state = {
-        allEmployee: DummyData,
-        employees : DummyData,
-        currentEmployee: DummyData[0],
-        currentTabLocation: '',
-        editedEmployee: DummyData[0],
-        newEmployee: setDefaultEmployee(),
-        openDialog: {
-            gradeDialog: false,
-            historyDialog: false,
-            locationDialog: false,
-            newEmployeeDialog: false,
-        },
-        openValidationMessage: {
-            gradeValidation: false,
-            locationValidation: false,
-        },
-        searchingText: '',
-        selectedJobDescIndex: null,
-        selectedIndex: null,
-        viewMode: true
-    }
+    state = initialState
 
     constructor(props) {
         super(props);
