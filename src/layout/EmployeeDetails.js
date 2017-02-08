@@ -6,7 +6,7 @@ import {render} from 'react-dom';
 import Header from "../component/common/Header"
 
 import EmployeeToolbar from "../component/employee/EmployeeToolbar"
-import EmployeeList from "../component/employee/EmployeeList"
+import EmployeeList from "../component/containers/employee/EmployeeList"
 
 import initialState from "../initialState"
 import {searchEmployee, setDefaultEmployee} from "../component/lib/employee/employeeHelper"
@@ -134,13 +134,7 @@ class EmployeeDetails extends Component {
                     handleOpenDialogChanged={this.handleOpenDialogChanged.bind(this)}
                     handleOpenValidationMessage={this.handleOpenValidationMessage.bind(this)}
                     handleStateChanged={this.handleStateChanged.bind(this)}/>
-                <EmployeeList
-                    employees={this.state.employees}
-                    openDialog={this.state.openDialog}
-                    newEmployee={this.state.newEmployee}
-                    setEmployees={this.setEmployees.bind(this)}
-                    addCurrentEmployee={this.addCurrentEmployee.bind(this)}
-                    handleOpenDialogChanged={this.handleOpenDialogChanged.bind(this)}/>
+                <EmployeeList />
             </div>
         )
     }

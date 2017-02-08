@@ -103,7 +103,7 @@ class EmployeeTabDetails extends Component {
     }
 
     setSavedEmployee = (employee) => {
-        this.props.setSavedEmployee(employee);
+        this.props.setSavedEmployee(employee, this.props.pageMode);
     }
 
     render = () => {

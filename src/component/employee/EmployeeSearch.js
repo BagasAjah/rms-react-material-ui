@@ -21,7 +21,7 @@ class EmployeeSearch extends Component {
     }
 
     setFilteringProps = () => {
-        this.props.setFilteringProps(this.filterTextInput.input.value);
+        this.props.setFilteringProps(this.filterTextInput.input.value, this.props.allEmployee);
     }
 
     render(){

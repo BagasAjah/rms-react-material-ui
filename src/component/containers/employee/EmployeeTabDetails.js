@@ -1,21 +1,28 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTabDetails from "../../employee/EmployeeTabDetails"
-import { setEmployee, changeEditEmployees } from "../../action/EmployeeActions"
+import { setEmployee, changeEditEmployees, changeNewEmployee } from "../../action/EmployeeActions"
 
-const mapStateToProps = (state) => ({
-    currentEmployee: state.editedEmployee,
-    viewMode: state.viewMode
+const mapStateToProps = (state, props) => ({
+    currentEmployee: props.currentEmployee,
+    pageMode: props.pageMode,
+    viewMode: props.viewMode
 })
 
 
 const mapDispatchToProps = (dispatch) => ({
-	setSavedEmployee(employeesData){
-	    dispatch(
-            changeEditEmployees(employeesData)
-        )
+	setSavedEmployee(employeesData, pageMode){
+        if (pageMode === 'EDIT'){
+            dispatch(
+                changeEditEmployees(employeesData)
+            )
+        } else {
+            dispatch(
+                changeNewEmployee(employeesData)
+            )
+        }
 	}
 })
 
-const employeeTabDetails = connect(mapStateToProps)(EmployeeTabDetails);
+const employeeTabDetails = connect(mapStateToProps, mapDispatchToProps)(EmployeeTabDetails);
 export default withRouter(employeeTabDetails)

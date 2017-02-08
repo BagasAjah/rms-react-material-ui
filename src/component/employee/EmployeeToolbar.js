@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 
 import EmployeeTab from "./EmployeeTab"
-import EmployeeSearch from "./EmployeeSearch"
+import EmployeeSearch from "../containers/employee/EmployeeSearch"
 import Constants from "../styles/Constants"
 
 class EmployeeToolbar extends Component {
@@ -15,10 +15,7 @@ class EmployeeToolbar extends Component {
     return(
         <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
           <Toolbar style={Constants.toolBarColor}>
-            <EmployeeSearch
-                employees={this.props.employees}
-                searchingText={this.props.searchingText}
-                setFilteringProps={this.props.setFilteringProps.bind(this)}/>
+            <EmployeeSearch />
             <EmployeeTab
                 currentEmployee={this.props.currentEmployee}
                 currentTabLocation={this.props.currentTabLocation}

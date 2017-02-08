@@ -12,7 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import EmployeeTabDetails from "./EmployeeTabDetails"
+import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class NewEmployeeDialog extends Component {
     }
 
     setSavedEmployee = (employee) => {
-        this.setState({employee: employee});
+        this.props.setSavedEmployee(employee);
     }
 
     openDialogClick = () => {
@@ -50,7 +50,7 @@ class NewEmployeeDialog extends Component {
           finished: stepIndex >= 2,
         });
         if(stepIndex > 2){
-            this.props.addCurrentEmployee(this.state.employee);
+            this.props.addCurrentEmployee(this.props.newEmployee);
             this.props.handleOpenDialogChanged('newEmployeeDialog', false);
         }
     }
@@ -67,10 +67,9 @@ class NewEmployeeDialog extends Component {
           case 0:
             return (
                 <EmployeeTabDetails
-                    viewMode={false}
-                    currentEmployee={this.props.newEmployee}
-                    setSavedEmployee={this.setSavedEmployee.bind(this)}
-                    />);
+                    currentEmployee = {this.props.newEmployee}
+                    pageMode ={'NEW'}
+                    viewMode = {false}/>);
           case 1:
             return 'History';
           case 2:

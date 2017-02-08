@@ -8,15 +8,18 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Constants from "../styles/Constants"
-//import EmployeeListDetail from "./EmployeeListDetail"
+
 import EmployeeListDetail from "../containers/employee/EmployeeListDetail"
-import NewEmployeeDialog from "./NewEmployeeDialog"
+import NewEmployeeDialog from "../containers/employee//NewEmployeeDialog"
 
 class EmployeeList extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
     render = () => {
         var employee = this.props.employees;
-
         var employeeListDetail = employee.map( (employee, index) =>
             <EmployeeListDetail
                 key={index}
@@ -35,11 +38,7 @@ class EmployeeList extends Component {
                             <span>We couldn't find what you were looking for</span>
                         </div>)
                     }
-                    <NewEmployeeDialog
-                        newEmployee={this.props.newEmployee}
-                        openDialog={this.props.openDialog}
-                        addCurrentEmployee={this.props.addCurrentEmployee}
-                        handleOpenDialogChanged={this.props.handleOpenDialogChanged}/>
+                    <NewEmployeeDialog />
                 </div>
             </MuiThemeProvider>
         )

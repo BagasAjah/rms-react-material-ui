@@ -18,15 +18,7 @@ injectTapEventPlugin();
     );
   }
 }*/
-const initialState = (localStorage["redux-store"]) ?
-    JSON.parse(localStorage["redux-store"]) :
-    sampleData
-
-const saveState = () =>
-    localStorage["redux-store"] = JSON.stringify(store.getState())
-
-const store = storeFactory(initialState)
-store.subscribe(saveState)
+const store = storeFactory(sampleData)
 // Render the main app react component into the app div.
 
 render((

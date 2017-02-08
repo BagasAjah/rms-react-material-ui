@@ -75,7 +75,10 @@ class EmployeeTab extends Component {
             <div className="menu-tab">
                 <Tabs value={this.props.currentTabLocation}>
                     <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeTabClick}>
-                        <EmployeeTabDetails/>
+                        <EmployeeTabDetails
+                            currentEmployee={this.props.editedEmployee}
+                            pageMode ={'EDIT'}
+                            viewMode = {this.props.viewMode}/>
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
                         <EmployeeTabHistory />
