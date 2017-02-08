@@ -2,47 +2,47 @@ import C from '../constants'
 import { combineReducers } from 'redux'
 import {setDefaultEmployee} from "../component/lib/employee/employeeHelper"
 
-const employeeDetailReducer = () => {
-
-}
-
-const allEmployee = () => {
-
-}
-
-const employees = () => {
-
-}
-
-const currentEmployee = (state = setDefaultEmployee, action) => {
+const currentEmployee = (state = {}, action) => {
     switch (action.type) {
-        case C.CHANGE_EMPLOYEE_VALUE:
-            return action.payload
+        case C.SET_EMPLOYEE:
+            return action.currentEmployee;
         default:
             return state;
     }
 }
 
-const currentTabLocation = () => {
-
+const editedEmployee = (state = {}, action) => {
+    switch (action.type) {
+        case C.SET_EMPLOYEE:
+            return action.currentEmployee;
+        case C.CHANGE_EDIT_EMPLOYEE:
+            return action.currentEmployee;
+        default:
+            return state;
+    }
 }
 
-const editedEmployee = () => {
-
+const selectedIndex = (state = null, action) => {
+    switch (action.type) {
+        case C.SET_EMPLOYEE:
+            return null;
+        default:
+            return state;
+    }
 }
 
-const newEmployee = () => {
-
-}
-
-const gradeDialog = () => {
-
-}
-
-const historyDialog = () => {
-
+const viewMode = (state = true, action) => {
+    switch (action.type) {
+        case C.SET_EMPLOYEE:
+            return true;
+        default:
+            return state;
+    }
 }
 
 export default combineReducers({
-    currentEmployee,null
+    currentEmployee,
+    editedEmployee,
+    selectedIndex,
+    viewMode
 })

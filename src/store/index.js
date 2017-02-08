@@ -11,7 +11,7 @@ const consoleMessages = store => next => action => {
 
 	console.log(`
 
-		after
+		result
 
 	`)
 
@@ -21,8 +21,9 @@ const consoleMessages = store => next => action => {
 
 }
 
+
 export default (initialState={}) => {
-	return applyMiddleware(consoleMessages)(createStore)(appReducer, initialState)
+	return applyMiddleware(consoleMessages)(createStore)(appReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 }
 
 

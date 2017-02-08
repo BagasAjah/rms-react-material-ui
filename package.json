@@ -21,6 +21,7 @@
     "babel-preset-react": "~6.5.*",
     "babel-preset-stage-2": "^6.22.0",
     "react-scripts": "^0.8.5",
+    "redux-devtools-extension": "^2.13.0",
     "webpack": "~1.12.*",
     "webpack-dev-server": "~1.14.*"
   },

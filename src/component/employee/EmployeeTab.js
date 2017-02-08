@@ -11,7 +11,7 @@ import CommunicationLocationOn from 'material-ui/svg-icons/communication/locatio
 import MapsLayers from 'material-ui/svg-icons/maps/layers';
 import NotificationWc from 'material-ui/svg-icons/notification/wc';
 
-import EmployeeTabDetails from "./EmployeeTabDetails"
+import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
 import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
 import EmployeeTabHistory from "./EmployeeTabHistory"
@@ -75,10 +75,7 @@ class EmployeeTab extends Component {
             <div className="menu-tab">
                 <Tabs value={this.props.currentTabLocation}>
                     <Tab icon={<ActionAccountBox />} value="details" onActive={this.employeeTabClick}>
-                        <EmployeeTabDetails
-                            viewMode={this.props.viewMode}
-                            currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                        <EmployeeTabDetails/>
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
                         <EmployeeTabHistory

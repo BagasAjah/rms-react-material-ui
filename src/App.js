@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 import storeFactory from './store'
 
-import EmployeeDetails from "./component/containers/employee/EmployeeDetails"
-import EmployeeToolbar from "./component/employee/EmployeeToolbar"
-import EmployeeTab from "./component/employee/EmployeeTab"
-import EmployeeTabDetails from "./component/employee/EmployeeTabDetails"
-import EmployeeTabFamilyMember from "./component/employee/EmployeeTabFamilyMember"
-import EmployeeTabGradeHistory from "./component/employee/EmployeeTabGradeHistory"
-import EmployeeTabHistory from "./component/employee/EmployeeTabHistory"
-import EmployeeTabAddress from "./component/employee/EmployeeTabAddress"
-import EmployeeTabLocation from "./component/employee/EmployeeTabLocation"
+import RouterApp from "./router"
 import sampleData from "./initialState"
 
 injectTapEventPlugin();
@@ -40,19 +31,6 @@ store.subscribe(saveState)
 
 render((
     <Provider store={store}>
-        <Router history={hashHistory}>
-            <Route path='/employee' component={EmployeeDetails}>
-                <IndexRoute component={EmployeeToolbar}/>
-                    <Route components={EmployeeTab}>
-                        <IndexRoute component={EmployeeTabDetails}/>
-                        <Route path='/employee/details' components={EmployeeTabDetails} />
-                        <Route path='/employee/history' components={EmployeeTabHistory} />
-                        <Route path='/employee/grade' components={EmployeeTabGradeHistory} />
-                        <Route path='/employee/family' components={EmployeeTabFamilyMember} />
-                        <Route path='/employee/address' components={EmployeeTabAddress} />
-                        <Route path='/employee/location' components={EmployeeTabLocation} />
-                    </Route>
-            </Route>
-        </Router>
+        <RouterApp/>
     </Provider>
 ), document.getElementById('root'))

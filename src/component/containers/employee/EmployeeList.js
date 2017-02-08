@@ -1,13 +1,11 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import EmployeeList from "../component/employee/EmployeeList"
+import EmployeeList from "../../employee/EmployeeList"
+import { setEmployee } from "../../action/EmployeeActions"
 
-function mapStateToProps(state, props) {
-	return {
-	    console.dir(state);
-		employees: state.employees,
-	}
-}
+const mapStateToProps = (state) => ({
+    employees: state.employees
+})
 
-const employeeList = connect(null, null)(EmployeeList);
+const employeeList = connect(mapStateToProps)(EmployeeList);
 export default withRouter(employeeList)

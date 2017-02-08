@@ -8,7 +8,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Constants from "../styles/Constants"
-import EmployeeListDetail from "./EmployeeListDetail"
+//import EmployeeListDetail from "./EmployeeListDetail"
+import EmployeeListDetail from "../containers/employee/EmployeeListDetail"
 import NewEmployeeDialog from "./NewEmployeeDialog"
 
 class EmployeeList extends Component {
@@ -20,9 +21,7 @@ class EmployeeList extends Component {
             <EmployeeListDetail
                 key={index}
                 index={index}
-                employee={employee}
-                setCurrentEmployee={this.props.setEmployees}
-                />
+                employee={employee}/>
         );
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
@@ -39,8 +38,8 @@ class EmployeeList extends Component {
                     <NewEmployeeDialog
                         newEmployee={this.props.newEmployee}
                         openDialog={this.props.openDialog}
-                        addCurrentEmployee={this.props.addCurrentEmployee.bind(this)}
-                        handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}/>
+                        addCurrentEmployee={this.props.addCurrentEmployee}
+                        handleOpenDialogChanged={this.props.handleOpenDialogChanged}/>
                 </div>
             </MuiThemeProvider>
         )

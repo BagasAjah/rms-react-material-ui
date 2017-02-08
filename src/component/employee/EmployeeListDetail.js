@@ -13,6 +13,10 @@ import {partial} from "../lib/utils"
 
 
 class EmployeeListDetail extends Component {
+    constructor(props){
+        super(props);
+    }
+
 
     render = () => {
         var employee = this.props.employee;

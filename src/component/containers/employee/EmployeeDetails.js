@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeDetails from "../../../layout/EmployeeDetails"
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
 	return {
-		employees: state.employees,
+		employees: state.employees
 	}
 }
 
