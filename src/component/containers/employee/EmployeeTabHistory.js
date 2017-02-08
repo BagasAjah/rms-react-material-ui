@@ -3,13 +3,14 @@ import { withRouter } from 'react-router'
 import EmployeeTabHistory from "../../employee/EmployeeTabHistory"
 import { changeEditEmployees, changeNewEmployee, changeStateValue } from "../../action/EmployeeActions"
 
-const mapStateToProps = (state) => ({
-    currentEmployee: state.editedEmployee,
+const mapStateToProps = (state, props) => ({
+    currentEmployee: props.editedEmployee,
     newEmployee: state.newEmployee,
     openDialog: state.openDialog,
     selectedIndex: state.selectedIndex,
     selectedJobDescIndex: state.selectedJobDescIndex,
-    viewMode: state.viewMode
+    pageMode: props.pageMode,
+    viewMode: props.viewMode
 })
 
 const mapDispatchToProps = (dispatch) => ({
