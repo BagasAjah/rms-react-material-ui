@@ -81,7 +81,10 @@ class EmployeeTab extends Component {
                             viewMode = {this.props.viewMode}/>
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
-                        <EmployeeTabHistory />
+                        <EmployeeTabHistory
+                            currentEmployee={this.props.editedEmployee}
+                            pageMode ={'EDIT'}
+                            viewMode = {this.props.viewMode}/>
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory

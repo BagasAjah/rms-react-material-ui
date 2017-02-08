@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTabHistory from "../../employee/EmployeeTabHistory"
-import { changeEditEmployees, changeStateValue } from "../../action/EmployeeActions"
+import { changeEditEmployees, changeNewEmployee, changeStateValue } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({
     currentEmployee: state.editedEmployee,
@@ -12,13 +12,18 @@ const mapStateToProps = (state) => ({
     viewMode: state.viewMode
 })
 
-
 const mapDispatchToProps = (dispatch) => ({
-	setSavedEmployee(employeesData){
-	    dispatch(
-            changeEditEmployees(employeesData)
-        )
-	},
+	setSavedEmployee(employeesData, pageMode){
+        if (pageMode === 'EDIT'){
+            dispatch(
+                changeEditEmployees(employeesData)
+            )
+        } else {
+            dispatch(
+                changeNewEmployee(employeesData)
+            )
+        }
+    },
 	handleOpenDialogChanged(type, value){
         dispatch(
             changeStateValue(type, value)

@@ -73,7 +73,7 @@ class EmployeeTabHistory extends Component {
                 }
             });
         }
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
         this.props.handleStateChanged('selectedIndex', null);
         this.props.handleStateChanged('selectedJobDescIndex', null);
     }
@@ -88,7 +88,7 @@ class EmployeeTabHistory extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     addNewJobDesc = (index, jobDescIndex) => {
@@ -101,7 +101,7 @@ class EmployeeTabHistory extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     addNewHistoryJobDesc = () => {
@@ -152,7 +152,7 @@ class EmployeeTabHistory extends Component {
                 }]
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
         this.props.handleOpenDialogChanged('historyDialog', false);
     }
 
