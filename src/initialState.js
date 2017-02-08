@@ -1,5 +1,5 @@
 import DummyData from "./dummy_data/sampleEmployeeData"
-import {setDefaultEmployee} from "./component/lib/employee/employeeHelper"
+import { setDefaultEmployee } from "./component/lib/employee/employeeHelper"
 
 const initialState = {
     "allEmployee": DummyData,

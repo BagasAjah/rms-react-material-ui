@@ -1,6 +1,6 @@
 import C from '../constants'
 import { combineReducers } from 'redux'
-import {setDefaultEmployee} from "../component/lib/employee/employeeHelper"
+import { setDefaultEmployee } from "../component/lib/employee/employeeHelper"
 
 const currentEmployee = (state = {}, action) => {
     switch (action.type) {
@@ -20,6 +20,17 @@ const editedEmployee = (state = {}, action) => {
         default:
             return state;
     }
+}
+
+const newEmployee = (state = {}, action) => {
+    switch (action.type) {
+        default:
+            return setDefaultEmployee();
+    }
+}
+
+const openDialog = (state = {}, action) => {
+    return state;
 }
 
 const selectedIndex = (state = null, action) => {
@@ -43,6 +54,8 @@ const viewMode = (state = true, action) => {
 export default combineReducers({
     currentEmployee,
     editedEmployee,
+    newEmployee,
+    openDialog,
     selectedIndex,
     viewMode
 })

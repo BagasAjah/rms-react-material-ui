@@ -1,15 +1,28 @@
 import C from '../../constants'
 
-export function setEmployees(currentEmployee) {
+export const setEmployees = (currentEmployee) => {
     return {
         type: C.SET_EMPLOYEE,
         currentEmployee
     }
 }
 
-export function changeEditEmployees(currentEmployee) {
+export const changeEditEmployees = (fieldName, value) => {
     return {
         type: C.CHANGE_EDIT_EMPLOYEE,
-        currentEmployee
+        payload: {
+            fieldName: fieldName,
+            value: value
+        }
+    }
+}
+
+export const changeStateValue = (fieldName, value) => {
+    return {
+        type: C.CHANGE_STATE_VALUE,
+        payload: {
+            fieldName: fieldName,
+            value: value
+        }
     }
 }

@@ -14,7 +14,7 @@ import NotificationWc from 'material-ui/svg-icons/notification/wc';
 import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
 import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
-import EmployeeTabHistory from "./EmployeeTabHistory"
+import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
 import EmployeeTabLocation from "./EmployeeTabLocation"
 
@@ -78,16 +78,7 @@ class EmployeeTab extends Component {
                         <EmployeeTabDetails/>
                     </Tab>
                     <Tab icon={<ActionHistory />} value="history" onActive={this.employeeTabClick}>
-                        <EmployeeTabHistory
-                            viewMode={this.props.viewMode}
-                            currentEmployee={this.props.editedEmployee}
-                            newEmployee={this.props.newEmployee}
-                            openDialog={this.props.openDialog}
-                            selectedJobDescIndex={this.props.selectedJobDescIndex}
-                            selectedIndex={this.props.selectedIndex}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}
-                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
-                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
+                        <EmployeeTabHistory />
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory

@@ -3,53 +3,50 @@ import update from 'react-addons-update';
 
 const KEYS_TO_FILTERS = ['firstName', 'lastName'];
 
-export const setDefaultEmployee = () => {
-    const employee = new Object;
-    return {
-        id: 0,
-        firstName: '',
-        lastName: '',
-        gender: '',
-        dob: new Object,
-        nationality: '',
-        maritalStatus: '',
-        phone: '',
-        subDivision: '',
-        status: '',
-        suspendDate: new Object,
-        hireDate: new Object,
+export const setDefaultEmployee = () => ({
+    id: 0,
+    firstName: '',
+    lastName: '',
+    gender: '',
+    dob: new Object,
+    nationality: '',
+    maritalStatus: '',
+    phone: '',
+    subDivision: '',
+    status: '',
+    suspendDate: new Object,
+    hireDate: new Object,
+    grade: '',
+    division: '',
+    email: '',
+    office: '',
+    history:[{
+        historyStartDate: new Object,
+        historyEndDate: new Object,
+        company: '',
+        position: '',
+        jobDesc: []
+    }],
+    gradeHistory: [{
+        ds: '',
         grade: '',
-        division: '',
-        email: '',
-        office: '',
-        history:[{
-            historyStartDate: new Object,
-            historyEndDate: new Object,
-            company: '',
-            position: '',
-            jobDesc: []
-        }],
-        gradeHistory: [{
-            ds: '',
-            grade: '',
-            startDate: new Object,
-            endDate: new Object
-        }],
-        familyMember: [{
-            familyName: '',
-            familyGender: '',
-            familyDob: new Object,
-            familyType: '',
-            isActive: false
-        }],
-        location: [{
-            officeStartDate: new Object,
-            officeEndDate: new Object,
-            officeLocation: '',
-            officeAddress: ''
-        }]
-    }
-}
+        startDate: new Object,
+        endDate: new Object
+    }],
+    familyMember: [{
+        familyName: '',
+        familyGender: '',
+        familyDob: new Object,
+        familyType: '',
+        isActive: false
+    }],
+    location: [{
+        officeStartDate: new Object,
+        officeEndDate: new Object,
+        officeLocation: '',
+        officeAddress: ''
+    }]
+})
 
 export const searchEmployee = (employees, searchingText) => {
     var filterMode = false;
