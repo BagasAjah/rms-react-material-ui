@@ -1,7 +1,7 @@
-import C from '../constants'
-import { combineReducers } from 'redux'
+import C from '../constants';
+import { combineReducers } from 'redux';
 import update from 'react-addons-update';
-import { setDefaultEmployee, searchEmployee } from "../component/lib/employee/employeeHelper"
+import { setDefaultEmployee, searchEmployee } from "../component/lib/employee/employeeHelper";
 
 const allEmployee = (state = {}, action) => {
     switch (action.type) {
@@ -10,9 +10,18 @@ const allEmployee = (state = {}, action) => {
                 ...state,
                 action.employeeData
             ];
+        case C.UPDATE_CURRENT_EMPLOYEE:
+            const index = state.findIndex(s => s.id === action.employeeData.id);
+            const updatedState = update(state, {
+                [index] : {$set: action.employeeData}
+            });
+            return updatedState;
+        case C.DELETE_CURRENT_EMPLOYEE:
+            return state.filter(employeeData => employeeData.id !== action.employeeData.id)
         default:
             return state;
     }
+    return state;
 }
 
 const currentEmployee = (state = {}, action) => {
@@ -21,9 +30,24 @@ const currentEmployee = (state = {}, action) => {
             return action.employeeData;
         case C.SET_EMPLOYEE:
             return action.currentEmployee;
+        case C.DELETE_CURRENT_EMPLOYEE:
+            return setDefaultEmployee();
+        case C.UPDATE_CURRENT_EMPLOYEE:
+            return action.employeeData;
         default:
             return state;
     }
+    return state;
+}
+
+const currentTabLocation = (state = {}, action) => {
+    switch (action.type) {
+        case C.CHANGE_PATH_VALUE:
+            return action.value;
+        default:
+            return '';
+    }
+    return '';
 }
 
 const editedEmployee = (state = {}, action) => {
@@ -32,9 +56,12 @@ const editedEmployee = (state = {}, action) => {
             return action.currentEmployee;
         case C.CHANGE_EDIT_EMPLOYEE:
             return action.currentEmployee;
+        case C.DELETE_CURRENT_EMPLOYEE:
+            return setDefaultEmployee();
         default:
             return state;
     }
+    return state;
 }
 
 const employees = (state = {}, action) => {
@@ -47,9 +74,18 @@ const employees = (state = {}, action) => {
         case C.FILTERING:
             var employees = searchEmployee(action.allEmployee, action.searchText);
             return employees;
+        case C.DELETE_CURRENT_EMPLOYEE:
+            return state.filter(employeeData => employeeData.id !== action.employeeData.id);
+        case C.UPDATE_CURRENT_EMPLOYEE:
+            const index = state.findIndex(s => s.id === action.employeeData.id);
+            const updatedState = update(state, {
+                [index] : {$set: action.employeeData}
+            });
+            return updatedState;
         default:
             return state;
     }
+    return state;
 }
 
 const newEmployee = (state = {}, action) => {
@@ -59,6 +95,7 @@ const newEmployee = (state = {}, action) => {
         default:
             return setDefaultEmployee();
     }
+    return setDefaultEmployee();
 }
 
 const openDialog = (state = {}, action) => {
@@ -71,6 +108,7 @@ const openDialog = (state = {}, action) => {
         default:
             return state;
     }
+    return state;
 }
 
 const searchingText = (state = {}, action) => {
@@ -80,6 +118,7 @@ const searchingText = (state = {}, action) => {
         default:
             return state;
     }
+    return state;
 }
 
 const selectedIndex = (state = null, action) => {
@@ -89,15 +128,19 @@ const selectedIndex = (state = null, action) => {
         default:
             return state;
     }
+    return state;
 }
 
 const viewMode = (state = true, action) => {
     switch (action.type) {
         case C.SET_EMPLOYEE:
             return true;
+        case C.CHANGE_VIEW_MODE_VALUE:
+            return action.value;
         default:
             return state;
     }
+    return state;
 }
 
 export default combineReducers({

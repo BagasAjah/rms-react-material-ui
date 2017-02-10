@@ -4,7 +4,7 @@ import EmployeeTabHistory from "../../employee/EmployeeTabHistory"
 import { changeEditEmployees, changeNewEmployee, changeStateValue } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
-    currentEmployee: props.editedEmployee,
+    currentEmployee: props.currentEmployee,
     newEmployee: state.newEmployee,
     openDialog: state.openDialog,
     selectedIndex: state.selectedIndex,

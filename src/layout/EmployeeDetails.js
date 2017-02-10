@@ -16,9 +16,6 @@ class EmployeeDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.addEmployeeList = this.addEmployeeList.bind(this);
-        this.updateEmployeeList = this.updateEmployeeList.bind(this);
-        this.deleteCurrentEmployee = this.deleteCurrentEmployee.bind(this);
         this.setSearchingTextProps = this.setSearchingTextProps.bind(this);
     }
 
@@ -40,58 +37,6 @@ class EmployeeDetails extends Component {
             selectedIndex: null,
             viewMode: true
         });
-    }
-
-    addCurrentEmployee = (newEmployee) => {
-        this.setState({
-            allEmployee: this.addEmployeeList(newEmployee, this.state.allEmployee),
-            employees: this.addEmployeeList(newEmployee, this.state.employees),
-            currentEmployee: newEmployee
-        });
-    }
-
-    updateCurrentEmployee = (updatedEmployee) => {
-        this.setState({
-            allEmployee: this.updateEmployeeList(updatedEmployee, this.state.allEmployee),
-            employees: this.updateEmployeeList(updatedEmployee, this.state.employees),
-            currentEmployee: updatedEmployee
-        });
-    }
-
-    deleteCurrentEmployee = (deletedEmployee) => {
-        this.setState({
-            allEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee),
-            employees: this.deleteEmployeeOnList(deletedEmployee, this.state.employees),
-            currentEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee)[0],
-            editedEmployee: this.deleteEmployeeOnList(deletedEmployee, this.state.allEmployee)[0]
-        });
-    }
-
-    addEmployeeList = (employee, employees) => {
-        var newEmployee = update(employees, {$push:[employee]});
-        return newEmployee;
-    }
-
-    updateEmployeeList = (employee, employees) => {
-        var newEmployeeList = [];
-        for(var i=0; i< employees.length; i++){
-            if(employees[i].id == employee.id){
-                newEmployeeList.push(employee);
-            } else {
-                newEmployeeList.push(employees[i]);
-            }
-        }
-        return newEmployeeList;
-    }
-
-    deleteEmployeeOnList = (employee, employees) => {
-        var newEmployeeList = [];
-        for(var i=0; i< employees.length; i++){
-            if(employees[i].id != employee.id){
-                newEmployeeList.push(employees[i]);
-            }
-        }
-        return newEmployeeList;
     }
 
     handleStateChanged = (type, value) => {
@@ -129,8 +74,6 @@ class EmployeeDetails extends Component {
                     selectedIndex={this.state.selectedIndex}
                     viewMode={this.state.viewMode}
                     setFilteringProps={this.setFilteringProps.bind(this)}
-                    updateCurrentEmployee={this.updateCurrentEmployee.bind(this)}
-                    deleteCurrentEmployee={this.deleteCurrentEmployee.bind(this)}
                     handleOpenDialogChanged={this.handleOpenDialogChanged.bind(this)}
                     handleOpenValidationMessage={this.handleOpenValidationMessage.bind(this)}
                     handleStateChanged={this.handleStateChanged.bind(this)}/>

@@ -48,7 +48,6 @@ class EmployeeTab extends Component {
 
     editButtonClick = () => {
         this.props.handleStateChanged('viewMode', false);
-        this.setSavedEmployee(this.props.currentEmployee);
     }
 
     deleteButtonClick = () => {

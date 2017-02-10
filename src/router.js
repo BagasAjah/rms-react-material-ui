@@ -3,11 +3,11 @@ import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import EmployeeDetails from "./component/containers/employee/EmployeeDetails"
 import EmployeeToolbar from "./component/employee/EmployeeToolbar"
-import EmployeeTab from "./component/employee/EmployeeTab"
+import EmployeeTab from "./component/containers/employee/EmployeeTab"
 import EmployeeTabDetails from "./component/containers/employee/EmployeeTabDetails"
 import EmployeeTabFamilyMember from "./component/employee/EmployeeTabFamilyMember"
 import EmployeeTabGradeHistory from "./component/employee/EmployeeTabGradeHistory"
-import EmployeeTabHistory from "./component/employee/EmployeeTabHistory"
+import EmployeeTabHistory from "./component/containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./component/employee/EmployeeTabAddress"
 import EmployeeTabLocation from "./component/employee/EmployeeTabLocation"
 
