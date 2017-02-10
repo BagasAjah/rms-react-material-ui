@@ -5,11 +5,11 @@ import EmployeeDetails from "./component/containers/employee/EmployeeDetails"
 import EmployeeToolbar from "./component/employee/EmployeeToolbar"
 import EmployeeTab from "./component/containers/employee/EmployeeTab"
 import EmployeeTabDetails from "./component/containers/employee/EmployeeTabDetails"
-import EmployeeTabFamilyMember from "./component/employee/EmployeeTabFamilyMember"
-import EmployeeTabGradeHistory from "./component/employee/EmployeeTabGradeHistory"
+import EmployeeTabFamilyMember from "./component/containers/employee/EmployeeTabFamilyMember"
+import EmployeeTabGradeHistory from "./component/containers/employee/EmployeeTabGradeHistory"
 import EmployeeTabHistory from "./component/containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./component/employee/EmployeeTabAddress"
-import EmployeeTabLocation from "./component/employee/EmployeeTabLocation"
+import EmployeeTabLocation from "./component/containers/employee/EmployeeTabLocation"
 
 class RouterApp extends Component {
     render(){

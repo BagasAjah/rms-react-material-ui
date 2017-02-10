@@ -42,7 +42,7 @@ class EmployeeTabLocation extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     handleStartDateChanged = (e, value) => {
@@ -100,7 +100,7 @@ class EmployeeTabLocation extends Component {
                     officeAddress: location.officeAddress
                 }]
             }});
-            this.props.setSavedEmployee(updatedEmployee);
+            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
             this.closeDialogClick();
         }
     }
@@ -111,7 +111,7 @@ class EmployeeTabLocation extends Component {
 
     deleteClick = (index) => {
         var updatedEmployee = update(this.props.currentEmployee, {'location': {$splice: [[index,1]]}});
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     render = () => {

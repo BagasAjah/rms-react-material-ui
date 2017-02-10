@@ -16,7 +16,7 @@ import EmployeeTabGradeHistory from "../containers/employee/EmployeeTabGradeHist
 import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
 import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
-import EmployeeTabLocation from "./EmployeeTabLocation"
+import EmployeeTabLocation from "../containers/employee/EmployeeTabLocation"
 
 class EmployeeTab extends Component {
 
@@ -99,22 +99,15 @@ class EmployeeTab extends Component {
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
                         <EmployeeTabAddress
-                            viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            pageMode ={'EDIT'}
+                            viewMode={this.props.viewMode}/>
                     </Tab>
                     <Tab icon={<CommunicationLocationOn />} value="location" onActive={this.employeeTabClick}>
                         <EmployeeTabLocation
-                            viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
-                            newEmployee={this.props.newEmployee}
-                            openDialog={this.props.openDialog}
-                            openValidationMessage={this.props.openValidationMessage}
-                            selectedIndex={this.props.selectedIndex}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}
-                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
-                            handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}
-                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
+                            pageMode ={'EDIT'}
+                            viewMode={this.props.viewMode}/>
                     </Tab>
 
                 </Tabs>

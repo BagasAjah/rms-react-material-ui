@@ -16,13 +16,7 @@ class EmployeeToolbar extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(Constants.themeIndigo400)}>
           <Toolbar style={Constants.toolBarColor}>
             <EmployeeSearch />
-            <EmployeeTab
-                newEmployee={this.props.newEmployee}
-                openDialog={this.props.openDialog}
-                openValidationMessage={this.props.openValidationMessage}
-                selectedIndex={this.props.selectedIndex}
-                handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
-                handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}/>
+            <EmployeeTab />
           </Toolbar>
         </MuiThemeProvider>
     );
