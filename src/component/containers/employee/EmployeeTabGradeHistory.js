@@ -15,9 +15,15 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	setSavedEmployee(employeesData, pageMode){
-        dispatch(
-            changeEditEmployees(employeesData)
-        )
+        if (pageMode === 'EDIT'){
+            dispatch(
+                changeEditEmployees(employeesData)
+            )
+        } else {
+            dispatch(
+                changeNewEmployee(employeesData)
+            )
+        }
     },
 	handleOpenDialogChanged(type, value){
         dispatch(

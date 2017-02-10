@@ -1,6 +1,9 @@
 import {createFilter} from 'react-search-input'
 import update from 'react-addons-update';
-import { changeViewModeValue, changePathValue, changeNewEmployee, changeSelectecIndex, changeSelectecJobDescIndex } from "../../action/EmployeeActions"
+import {
+        changeViewModeValue, changePathValue, changeNewEmployee,
+        changeSelectecIndex, changeSelectecJobDescIndex
+       } from "../../action/EmployeeActions"
 
 const KEYS_TO_FILTERS = ['firstName', 'lastName'];
 

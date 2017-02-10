@@ -86,7 +86,7 @@ class EmployeeTabGradeHistory extends Component {
                 }]
             }});
             updatedEmployee.gradeHistory.reverse();
-            this.props.setSavedEmployee(updatedEmployee);
+            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
             this.closeDialogClick();
         }
     }
@@ -95,7 +95,7 @@ class EmployeeTabGradeHistory extends Component {
         if(!this.props.viewMode){
             var currentGradeHistory = this.props.currentEmployee.gradeHistory[0];
             var updatedEmployee = update(this.props.currentEmployee, {'gradeHistory': {$splice: [[0,1]]}});
-            this.props.setSavedEmployee(updatedEmployee);
+            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
         }
     }
 
