@@ -111,6 +111,19 @@ const openDialog = (state = {}, action) => {
     return state;
 }
 
+const openValidationMessage = (state = {}, action) => {
+    switch (action.type) {
+        case C.CHANGE_VALIDATION:
+            var nextState = update(state, {
+                [action.fieldName] : {$set: action.value}
+            });
+            return nextState;
+        default:
+            return state;
+    }
+    return state;
+}
+
 const searchingText = (state = {}, action) => {
     switch (action.type) {
         case C.FILTERING:
@@ -162,6 +175,7 @@ export default combineReducers({
     editedEmployee,
     newEmployee,
     openDialog,
+    openValidationMessage,
     searchingText,
     selectedIndex,
     selectedJobDescIndex,

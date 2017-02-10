@@ -12,7 +12,7 @@ import MapsLayers from 'material-ui/svg-icons/maps/layers';
 import NotificationWc from 'material-ui/svg-icons/notification/wc';
 
 import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
-import EmployeeTabGradeHistory from "./EmployeeTabGradeHistory"
+import EmployeeTabGradeHistory from "../containers/employee/EmployeeTabGradeHistory"
 import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
 import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
@@ -87,15 +87,9 @@ class EmployeeTab extends Component {
                     </Tab>
                     <Tab icon={<MapsLayers />} value="grade" onActive={this.employeeTabClick}>
                         <EmployeeTabGradeHistory
-                            viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
-                            newEmployee={this.props.newEmployee}
-                            openDialog={this.props.openDialog}
-                            openValidationMessage={this.props.openValidationMessage}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}
-                            handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
-                            handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}
-                            handleStateChanged={this.props.handleStateChanged.bind(this)}/>
+                            pageMode ={'EDIT'}
+                            viewMode={this.props.viewMode}/>
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember

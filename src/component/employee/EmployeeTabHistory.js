@@ -117,7 +117,8 @@ class EmployeeTabHistory extends Component {
                     key={historyIndex}
                     index={historyIndex}
                     history={historyList}
-                    currentEmployee={this.props.currentEmployee}/>
+                    currentEmployee={this.props.currentEmployee}
+                    pageMode={this.props.pageMode}/>
             ));
         }
         var jobDescList = this.props.newEmployee.history[0].jobDesc;

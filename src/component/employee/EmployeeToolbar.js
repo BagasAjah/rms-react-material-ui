@@ -20,7 +20,6 @@ class EmployeeToolbar extends Component {
                 newEmployee={this.props.newEmployee}
                 openDialog={this.props.openDialog}
                 openValidationMessage={this.props.openValidationMessage}
-                selectedJobDescIndex={this.props.selectedJobDescIndex}
                 selectedIndex={this.props.selectedIndex}
                 handleOpenDialogChanged={this.props.handleOpenDialogChanged.bind(this)}
                 handleOpenValidationMessage={this.props.handleOpenValidationMessage.bind(this)}/>

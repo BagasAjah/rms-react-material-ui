@@ -45,6 +45,12 @@ export const changeSelectecJobDescIndex = (value) => ({
     value: value
 })
 
+export const changeOpenValidationMessage = (fieldName, value) => ({
+    type: C.CHANGE_VALIDATION,
+    fieldName: fieldName,
+    value: value
+})
+
 export const deleteCurrentEmployee = (employeeData) => ({
     type: C.DELETE_CURRENT_EMPLOYEE,
     employeeData
