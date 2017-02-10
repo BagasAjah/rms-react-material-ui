@@ -45,7 +45,7 @@ class EmployeeTabFamilyMember extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     handleFamilyGenderChanged = (e, index, value, familyIndex) => {
@@ -56,7 +56,7 @@ class EmployeeTabFamilyMember extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     handleFamilyDobChanged = (e, value, familyIndex) => {
@@ -67,7 +67,7 @@ class EmployeeTabFamilyMember extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     handleFamilyTypeChanged = (e, index, value, familyIndex) => {
@@ -78,7 +78,7 @@ class EmployeeTabFamilyMember extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     handleFamilyIsActiveChanged = (e, isInputChecked, familyIndex) => {
@@ -89,7 +89,7 @@ class EmployeeTabFamilyMember extends Component {
                 }
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     addFamilyMemberClick = () => {
@@ -105,7 +105,7 @@ class EmployeeTabFamilyMember extends Component {
                 }]
             }
         });
-        this.props.setSavedEmployee(updatedEmployee);
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     updateClick = (index) => {
@@ -117,7 +117,7 @@ class EmployeeTabFamilyMember extends Component {
     deleteClick = (index) => {
         if(!this.props.viewMode){
             var updatedEmployee = update(this.props.currentEmployee, {'familyMember': {$splice: [[index,1]]}});
-            this.props.setSavedEmployee(updatedEmployee);
+            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
         }
     }
 

@@ -13,7 +13,7 @@ import NotificationWc from 'material-ui/svg-icons/notification/wc';
 
 import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 import EmployeeTabGradeHistory from "../containers/employee/EmployeeTabGradeHistory"
-import EmployeeTabFamilyMember from "./EmployeeTabFamilyMember"
+import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
 import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
 import EmployeeTabLocation from "./EmployeeTabLocation"
@@ -93,12 +93,9 @@ class EmployeeTab extends Component {
                     </Tab>
                     <Tab icon={<NotificationWc />} value="family" onActive={this.employeeTabClick}>
                         <EmployeeTabFamilyMember
-                            viewMode={this.props.viewMode}
                             currentEmployee={this.props.editedEmployee}
-                            newEmployee={this.props.newEmployee}
-                            selectedIndex={this.props.selectedIndex}
-                            handleStateChanged={this.props.handleStateChanged.bind(this)}
-                            setSavedEmployee={this.setSavedEmployee.bind(this)}/>
+                            pageMode ={'EDIT'}
+                            viewMode={this.props.viewMode}/>
                     </Tab>
                     <Tab icon={<ActionHome />} value="address" onActive={this.employeeTabClick}>
                         <EmployeeTabAddress

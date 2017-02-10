@@ -45,7 +45,7 @@ const currentTabLocation = (state = {}, action) => {
         case C.CHANGE_PATH_VALUE:
             return action.value;
         default:
-            return '';
+            return state;
     }
     return '';
 }
