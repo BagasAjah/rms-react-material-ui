@@ -171,6 +171,7 @@ const viewMode = (state = true, action) => {
 export default combineReducers({
     allEmployee,
     currentEmployee,
+    currentTabLocation,
     employees,
     editedEmployee,
     newEmployee,
