@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import update from 'react-addons-update';
 import moment from 'moment';
 import {List, ListItem} from 'material-ui/List';
 import TextField from 'material-ui/TextField';
@@ -14,28 +15,73 @@ class EmployeeHistoryDetail extends Component {
     constructor(props) {
         super(props);
         this.handleJobDescChanged = this.handleJobDescChanged.bind(this);
+        this.handleDeleteClick = this.handleDeleteClick.bind(this);
         this.addNewJobDesc = this.addNewJobDesc.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
     }
 
     updateClick = (jobDescIndex) => {
-        this.props.updateClick(this.props.index, jobDescIndex);
+        this.props.handleStateChanged('selectedIndex', this.props.index);
+        this.props.handleStateChanged('selectedJobDescIndex', jobDescIndex);
     }
 
     deleteJobDescClick = (jobDescIndex) => {
-        this.props.deleteClick(this.props.index, jobDescIndex);
+        this.handleDeleteClick(this.props.index, jobDescIndex);
     }
 
     deleteClick = () => {
-        this.props.deleteClick(this.props.index, null);
+        this.handleDeleteClick(this.props.index, null);
+    }
+
+    handleDeleteClick = (index, jobDescIndex) => {
+        var updatedEmployee = [];
+        if (jobDescIndex != null){
+            updatedEmployee = update(this.props.currentEmployee, {
+                'history': {
+                    [index]: {
+                        "jobDesc": {
+                            $splice: [[jobDescIndex,1]]
+                        }
+                    }
+                }
+            });
+        } else {
+            updatedEmployee = update(this.props.currentEmployee, {
+                'history': {
+                    $splice: [[index,1]]
+                }
+            });
+        }
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+        this.props.handleStateChanged('selectedIndex', null);
+        this.props.handleStateChanged('selectedJobDescIndex', null);
     }
 
     handleJobDescChanged = (jobDescValue, jobDescIndex) => {
-        this.props.handleEditJobDescChanged(this.props.index, jobDescIndex, jobDescValue);
+        var updatedEmployee = update(this.props.currentEmployee, {
+            'history': {
+                [this.props.index]: {
+                    "jobDesc": {
+                        [jobDescIndex]: {$set: jobDescValue}
+                    }
+                }
+            }
+        });
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
-    addNewJobDesc = () => {
-        this.props.addNewJobDesc(this.props.index);
+    addNewJobDesc = (index) => {
+        var updatedEmployee = update(this.props.currentEmployee, {
+            'history': {
+                [this.props.index]: {
+                    "jobDesc": {
+                        $push: [['']]
+                    }
+                }
+            }
+        });
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+        this.props.handleStateChanged('selectedJobDescIndex', null);
     }
 
     render(){

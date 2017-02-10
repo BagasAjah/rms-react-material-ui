@@ -1,5 +1,6 @@
 import {createFilter} from 'react-search-input'
 import update from 'react-addons-update';
+import { changeViewModeValue, changePathValue, changeNewEmployee, changeSelectecIndex, changeSelectecJobDescIndex } from "../../action/EmployeeActions"
 
 const KEYS_TO_FILTERS = ['firstName', 'lastName'];
 
@@ -73,4 +74,19 @@ export const handleEmployeeDetailsInfo = (type, field, value, employee) => {
         }
     });
     return updatedEmployee;
+}
+
+export const handleStateChanged = (type, value) => {
+    if (type === 'viewMode') {
+        return changeViewModeValue(value);
+    } else if (type === 'currentTabLocation') {
+        return changePathValue(value);
+    } else if (type === 'selectedIndex') {
+        return changeSelectecIndex(value);
+    } else if (type === 'selectedJobDescIndex') {
+        return changeSelectecJobDescIndex(value);
+    } else if (type === 'newEmployee') {
+        return changeNewEmployee(value);
+    }
+
 }

@@ -125,6 +125,18 @@ const selectedIndex = (state = null, action) => {
     switch (action.type) {
         case C.SET_EMPLOYEE:
             return null;
+        case C.CHANGE_SELECTED_INDEX:
+            return action.value;
+        default:
+            return state;
+    }
+    return state;
+}
+
+const selectedJobDescIndex = (state = null, action) => {
+    switch (action.type) {
+        case C.CHANGE_SELECTED_JOBDESC_INDEX:
+            return action.value;
         default:
             return state;
     }
@@ -152,5 +164,6 @@ export default combineReducers({
     openDialog,
     searchingText,
     selectedIndex,
+    selectedJobDescIndex,
     viewMode
 })

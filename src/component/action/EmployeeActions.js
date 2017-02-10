@@ -35,6 +35,16 @@ export const changePathValue = (value) => ({
     value: value
 })
 
+export const changeSelectecIndex = (value) => ({
+    type: C.CHANGE_SELECTED_INDEX,
+    value: value
+})
+
+export const changeSelectecJobDescIndex = (value) => ({
+    type: C.CHANGE_SELECTED_JOBDESC_INDEX,
+    value: value
+})
+
 export const deleteCurrentEmployee = (employeeData) => ({
     type: C.DELETE_CURRENT_EMPLOYEE,
     employeeData

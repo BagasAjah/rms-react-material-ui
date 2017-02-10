@@ -8,7 +8,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {List} from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 
-import EmployeeHistoryDetail from "./EmployeeHistoryDetail"
+import EmployeeHistoryDetail from "../containers/employee/EmployeeHistoryDetail"
 
 import ActionAdd from 'material-ui/svg-icons/content/add-circle';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -47,61 +47,6 @@ class EmployeeTabHistory extends Component {
 
     closeDialogClick = () => {
         this.props.handleOpenDialogChanged('historyDialog', false);
-    }
-
-    updateClick = (index, jobDescIndex) => {
-        this.props.handleStateChanged('selectedIndex', index);
-        this.props.handleStateChanged('selectedJobDescIndex', jobDescIndex);
-    }
-
-    deleteClick = (index, jobDescIndex) => {
-        var updatedEmployee = [];
-        if (jobDescIndex != null){
-            updatedEmployee = update(this.props.currentEmployee, {
-                'history': {
-                    [index]: {
-                        "jobDesc": {
-                            $splice: [[jobDescIndex,1]]
-                        }
-                    }
-                }
-            });
-        } else {
-            updatedEmployee = update(this.props.currentEmployee, {
-                'history': {
-                    $splice: [[index,1]]
-                }
-            });
-        }
-        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
-        this.props.handleStateChanged('selectedIndex', null);
-        this.props.handleStateChanged('selectedJobDescIndex', null);
-    }
-
-    handleEditJobDescChanged = (index, jobDescIndex, selectedJobDescValue) => {
-        var updatedEmployee = update(this.props.currentEmployee, {
-            'history': {
-                [index]: {
-                    "jobDesc": {
-                        [jobDescIndex]: {$set: selectedJobDescValue}
-                    }
-                }
-            }
-        });
-        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
-    }
-
-    addNewJobDesc = (index, jobDescIndex) => {
-        var updatedEmployee = update(this.props.currentEmployee, {
-            'history': {
-                [index]: {
-                    "jobDesc": {
-                        $push: [['']]
-                    }
-                }
-            }
-        });
-        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     addNewHistoryJobDesc = () => {
@@ -172,13 +117,7 @@ class EmployeeTabHistory extends Component {
                     key={historyIndex}
                     index={historyIndex}
                     history={historyList}
-                    viewMode={this.props.viewMode}
-                    selectedIndex={this.props.selectedIndex}
-                    selectedJobDescIndex={this.props.selectedJobDescIndex}
-                    deleteClick={this.deleteClick.bind(this)}
-                    updateClick={this.updateClick.bind(this)}
-                    handleEditJobDescChanged={this.handleEditJobDescChanged.bind(this)}
-                    addNewJobDesc={this.addNewJobDesc.bind(this)}/>
+                    currentEmployee={this.props.currentEmployee}/>
             ));
         }
         var jobDescList = this.props.newEmployee.history[0].jobDesc;

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTab from "../../employee/EmployeeTab"
+import { handleStateChanged } from "../../../component/lib/employee/employeeHelper";
 import { changeViewModeValue, changePathValue, deleteCurrentEmployee, updateCurrentEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({
@@ -14,15 +15,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	handleStateChanged(fieldName, value){
-        if (fieldName === 'viewMode') {
-            dispatch(
-                changeViewModeValue(value)
-            )
-        } else if(fieldName === 'currentTabLocation') {
-            dispatch(
-                changePathValue(value)
-            )
-        }
+        dispatch(
+            handleStateChanged(fieldName, value)
+        )
 	},
 	updateCurrentEmployee(employeeData){
         dispatch(

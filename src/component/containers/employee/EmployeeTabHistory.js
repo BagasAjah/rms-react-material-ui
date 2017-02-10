@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTabHistory from "../../employee/EmployeeTabHistory"
-import { changeEditEmployees, changeNewEmployee, changeStateValue } from "../../action/EmployeeActions"
+import { handleStateChanged } from "../../../component/lib/employee/employeeHelper";
+import { changeEditEmployees, changeNewEmployee, changeOpenDialogValue, changeStateValue } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
     currentEmployee: props.currentEmployee,
     newEmployee: state.newEmployee,
     openDialog: state.openDialog,
-    selectedIndex: state.selectedIndex,
-    selectedJobDescIndex: state.selectedJobDescIndex,
     pageMode: props.pageMode,
     viewMode: props.viewMode
 })
@@ -27,15 +26,15 @@ const mapDispatchToProps = (dispatch) => ({
     },
 	handleOpenDialogChanged(type, value){
         dispatch(
-            changeStateValue(type, value)
+            changeOpenDialogValue(type, value)
         )
     },
 	handleStateChanged(type, value){
         dispatch(
-            changeStateValue(type, value)
+            handleStateChanged(type, value)
         )
     }
 })
 
-const employeeTabHistory = connect(mapStateToProps)(EmployeeTabHistory);
+const employeeTabHistory = connect(mapStateToProps, mapDispatchToProps)(EmployeeTabHistory);
 export default withRouter(employeeTabHistory)
