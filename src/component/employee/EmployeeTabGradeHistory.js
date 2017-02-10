@@ -17,7 +17,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import {grey500} from 'material-ui/styles/colors';
 
 import lookupData from "../../dummy_data/lookupData"
-import {handleEmployeeDetailsInfo} from "../lib/employee/employeeHelper"
+import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
 
 const styles = {
   customWidthDialog: {

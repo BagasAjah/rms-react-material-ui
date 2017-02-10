@@ -15,7 +15,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import EmployeeLocationDetail from "./EmployeeLocationDetail"
 import lookupData from "../../dummy_data/lookupData"
 
-import {handleEmployeeDetailsInfo} from "../lib/employee/employeeHelper"
+import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
 
 const validationErrorMessage = "This field is required!";
 

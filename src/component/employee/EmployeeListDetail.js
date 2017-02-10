@@ -9,7 +9,7 @@ import ToogleRadioButtonChecked from 'material-ui/svg-icons/toggle/radio-button-
 
 import moment from 'moment'
 
-import {partial} from "../lib/utils"
+import {partial} from "../../lib/utils"
 
 
 class EmployeeListDetail extends Component {

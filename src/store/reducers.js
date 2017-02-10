@@ -1,7 +1,7 @@
 import C from '../constants';
 import { combineReducers } from 'redux';
 import update from 'react-addons-update';
-import { setDefaultEmployee, searchEmployee } from "../component/lib/employee/employeeHelper";
+import { setDefaultEmployee, searchEmployee } from "../lib/employee/employeeHelper";
 
 const allEmployee = (state = {}, action) => {
     switch (action.type) {

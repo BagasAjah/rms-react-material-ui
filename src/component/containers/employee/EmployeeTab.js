@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTab from "../../employee/EmployeeTab"
-import { handleStateChanged } from "../../../component/lib/employee/employeeHelper";
+import { handleStateChanged } from "../../../lib/employee/employeeHelper";
 import { changeViewModeValue, changePathValue, deleteCurrentEmployee, updateCurrentEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({

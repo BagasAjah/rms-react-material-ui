@@ -13,7 +13,7 @@ import EmployeeHistoryDetail from "../containers/employee/EmployeeHistoryDetail"
 import ActionAdd from 'material-ui/svg-icons/content/add-circle';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import {handleEmployeeDetailsInfo} from "../lib/employee/employeeHelper"
+import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
 
 class EmployeeTabHistory extends Component {
     constructor(props) {

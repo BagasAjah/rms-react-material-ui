@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTabLocation from "../../employee/EmployeeTabLocation"
-import { handleStateChanged } from "../../../component/lib/employee/employeeHelper";
+import { handleStateChanged } from "../../../lib/employee/employeeHelper";
 import { changeEditEmployees, changeNewEmployee, changeOpenDialogValue, changeOpenValidationMessage } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
