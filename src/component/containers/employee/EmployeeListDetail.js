@@ -4,7 +4,7 @@ import EmployeeListDetail from "../../employee/EmployeeListDetail"
 import { setEmployees } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
-    key: props.index,
+    key: props.key,
     index: props.index,
     employee: props.employee
 })

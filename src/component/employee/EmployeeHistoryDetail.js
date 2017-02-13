@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import update from 'react-addons-update';
 import moment from 'moment';
 import {List, ListItem} from 'material-ui/List';
@@ -152,6 +152,18 @@ class EmployeeHistoryDetail extends Component {
             </div>
         )
     }
+}
+
+EmployeeHistoryDetail.propTypes = {
+    index: PropTypes.number.isRequired,
+    history: PropTypes.object,
+    currentEmployee: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    viewMode: PropTypes.bool,
+    selectedIndex: PropTypes.number,
+    selectedJobDescIndex: PropTypes.number,
+    setSavedEmployee: PropTypes.func,
+    handleStateChanged: PropTypes.func
 }
 
 export default EmployeeHistoryDetail;

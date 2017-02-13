@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import {List, ListItem} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
@@ -38,10 +38,15 @@ class EmployeeList extends Component {
                             <span>We couldn't find what you were looking for</span>
                         </div>)
                     }
-                    <NewEmployeeDialog />
+                    <NewEmployeeDialog pageMode={'NEW'} />
                 </div>
             </MuiThemeProvider>
         )
     }
 }
+
+EmployeeList.propTypes = {
+    employees: PropTypes.array
+}
+
 export default EmployeeList;

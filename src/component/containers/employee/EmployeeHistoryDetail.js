@@ -6,7 +6,7 @@ import { changeEditEmployees} from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
     key: props.key,
-    historyIndex: props.historyIndex,
+    index: props.index,
     history: props.history,
     currentEmployee: props.currentEmployee,
     pageMode: props.pageMode,

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import update from 'react-addons-update';
 
 import Checkbox from 'material-ui/Checkbox';
@@ -229,6 +229,18 @@ class EmployeeTabFamilyMember extends Component {
             </div>
         )
     }
+}
+
+EmployeeTabFamilyMember.propTypes = {
+    currentEmployee: PropTypes.object,
+    newEmployee: PropTypes.object,
+    openDialog: PropTypes.object,
+    openValidationMessage: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    selectedIndex: PropTypes.number,
+    viewMode: PropTypes.bool,
+    setSavedEmployee: PropTypes.func,
+    handleStateChanged: PropTypes.func
 }
 
 export default EmployeeTabFamilyMember;

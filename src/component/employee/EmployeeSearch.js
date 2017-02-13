@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
@@ -51,4 +51,12 @@ class EmployeeSearch extends Component {
         )
     }
 }
+
+EmployeeSearch.propTypes = {
+    allEmployee: PropTypes.array,
+    employees: PropTypes.array,
+    searchingText: PropTypes.string,
+    setFilteringProps: PropTypes.func
+}
+
 export default EmployeeSearch;

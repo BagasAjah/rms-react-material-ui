@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import Avatar from 'material-ui/Avatar';
 import {ListItem} from 'material-ui/List';
@@ -48,6 +48,12 @@ class EmployeeListDetail extends Component {
         )
     }
 
+}
+
+EmployeeListDetail.propTypes = {
+    index: PropTypes.number.isRequired,
+    employee: PropTypes.object,
+    setCurrentEmployee: PropTypes.func
 }
 
 export default EmployeeListDetail;

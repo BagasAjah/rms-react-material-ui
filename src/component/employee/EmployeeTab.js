@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import { Link,browserHistory } from 'react-router'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {ToolbarGroup} from 'material-ui/Toolbar';
@@ -145,6 +145,17 @@ class EmployeeTab extends Component {
             </div>
         )
     }
+}
+
+EmployeeTab.propTypes = {
+    allEmployee: PropTypes.array,
+    currentEmployee: PropTypes.object,
+    editedEmployee: PropTypes.object,
+    currentTabLocation: PropTypes.string.isRequired,
+    viewMode: PropTypes.bool,
+    handleStateChanged: PropTypes.func,
+    updateCurrentEmployee: PropTypes.func,
+    deleteCurrentEmployee: PropTypes.func
 }
 
 export default EmployeeTab;

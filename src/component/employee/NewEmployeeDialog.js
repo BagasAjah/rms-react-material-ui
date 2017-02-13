@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 import Dialog from 'material-ui/Dialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -133,4 +133,13 @@ class NewEmployeeDialog extends Component {
         )
     }
 }
+
+NewEmployeeDialog.propTypes = {
+    openDialog: PropTypes.object,
+    newEmployee: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    addCurrentEmployee: PropTypes.func,
+    handleOpenDialogChanged: PropTypes.func
+}
+
 export default NewEmployeeDialog;

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import update from 'react-addons-update';
 
 import DatePicker from 'material-ui/DatePicker';
@@ -203,6 +203,20 @@ class EmployeeTabLocation extends Component {
             </div>
         )
     }
+}
+
+EmployeeTabLocation.propTypes = {
+    currentEmployee: PropTypes.object,
+    newEmployee: PropTypes.object,
+    openDialog: PropTypes.object,
+    openValidationMessage: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    selectedIndex: PropTypes.number,
+    viewMode: PropTypes.bool,
+    setSavedEmployee: PropTypes.func,
+    handleOpenDialogChanged: PropTypes.func,
+    handleOpenValidationMessage: PropTypes.func,
+    handleStateChanged: PropTypes.func
 }
 
 export default EmployeeTabLocation;

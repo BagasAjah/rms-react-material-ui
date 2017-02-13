@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import update from 'react-addons-update';
 
 import DatePicker from 'material-ui/DatePicker';
@@ -193,6 +193,17 @@ class EmployeeTabHistory extends Component {
             </div>
         )
     }
+}
+
+EmployeeTabHistory.propTypes = {
+    currentEmployee: PropTypes.object,
+    newEmployee: PropTypes.object,
+    openDialog: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    viewMode: PropTypes.bool,
+    setSavedEmployee: PropTypes.func,
+    handleOpenDialogChanged: PropTypes.func,
+    handleStateChanged: PropTypes.func
 }
 
 export default EmployeeTabHistory;

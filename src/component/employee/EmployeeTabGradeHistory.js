@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import moment from 'moment'
 import update from 'react-addons-update';
 
@@ -278,4 +278,18 @@ class EmployeeTabGradeHistory extends Component {
     }
 
 }
+
+EmployeeTabGradeHistory.propTypes = {
+    currentEmployee: PropTypes.object,
+    newEmployee: PropTypes.object,
+    openDialog: PropTypes.object,
+    openValidationMessage: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    viewMode: PropTypes.bool,
+    setSavedEmployee: PropTypes.func,
+    handleOpenDialogChanged: PropTypes.func,
+    handleOpenValidationMessage: PropTypes.func,
+    handleStateChanged: PropTypes.func
+}
+
 export default EmployeeTabGradeHistory;

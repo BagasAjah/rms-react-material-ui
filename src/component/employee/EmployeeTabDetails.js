@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import update from 'react-addons-update';
 
 import Avatar from 'material-ui/Avatar';
@@ -238,6 +238,13 @@ class EmployeeTabDetails extends Component {
         </div>
         )
     }
+}
+
+EmployeeTabDetails.propTypes = {
+    currentEmployee: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    viewMode: PropTypes.bool,
+    setSavedEmployee: PropTypes.func
 }
 
 export default EmployeeTabDetails;
