@@ -1,4 +1,5 @@
 import C from '../../constants';
+import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
 
 const currentEmployee = (state = {}, action) => {
    switch (action.type) {
