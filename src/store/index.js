@@ -1,5 +1,5 @@
 import C from '../constants'
-import appReducer from './reducers'
+import appReducer from './employeeReducers'
 import { createStore, applyMiddleware } from 'redux'
 
 const consoleMessages = store => next => action => {
@@ -18,7 +18,6 @@ const consoleMessages = store => next => action => {
 	console.groupEnd()
 
 	return result
-
 }
 
 
