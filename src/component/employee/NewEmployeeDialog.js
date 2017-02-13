@@ -13,6 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
+import EmployeeHistoryDetailDialog from "../containers/employee/EmployeeHistoryDetailDialog"
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -71,7 +72,8 @@ class NewEmployeeDialog extends Component {
                     pageMode ={'NEW'}
                     viewMode = {false}/>);
           case 1:
-            return 'History';
+            return (
+                <EmployeeHistoryDetailDialog />);
           case 2:
             return 'Grade';
           default:
