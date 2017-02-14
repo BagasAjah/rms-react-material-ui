@@ -16,6 +16,7 @@ import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 import EmployeeHistoryDetailDialog from "../containers/employee/EmployeeHistoryDetailDialog"
 import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
+import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
 import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
 
@@ -53,9 +54,9 @@ class NewEmployeeDialog extends Component {
         const {stepIndex} = this.state;
         this.setState({
           stepIndex: stepIndex + 1,
-          finished: stepIndex >= 3,
+          finished: stepIndex >= 5,
         });
-        if(stepIndex > 3){
+        if(stepIndex > 5){
             this.props.addCurrentEmployee(this.props.newEmployee);
             this.props.handleOpenDialogChanged('newEmployeeDialog', false);
         }
@@ -99,6 +100,25 @@ class NewEmployeeDialog extends Component {
                     currentEmployee={this.props.newEmployee}
                     pageMode ={'NEW'}
                     viewMode={false}/>);
+          case 4:
+            return (
+                <div>
+                    <h2>Employee Address</h2>
+                </div>);
+          case 5:
+            return (
+                <div>
+                    <h2>Employee Location Details</h2>
+                    <EmployeeLocationDetailDialog
+                        pageMode={'NEW'} />
+                </div>);
+          case 6:
+            return (
+                <div>
+                    <h2>Employee Location Details</h2>
+                    <EmployeeLocationDetailDialog
+                        pageMode={'NEW'} />
+                </div>);
           default:
             return 'You\'re a long way from home sonny jim!';
         }
@@ -136,6 +156,12 @@ class NewEmployeeDialog extends Component {
                 </Step>
                 <Step>
                     <StepLabel>Family</StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Address</StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Location</StepLabel>
                 </Step>
             </Stepper>
         ];

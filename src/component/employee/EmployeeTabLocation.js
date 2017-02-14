@@ -1,31 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import update from 'react-addons-update';
 
-import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {List} from 'material-ui/List';
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
-import TextField from 'material-ui/TextField';
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import EmployeeLocationDetail from "./EmployeeLocationDetail"
-import lookupData from "../../dummy_data/lookupData"
-
-import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
-
-const validationErrorMessage = "This field is required!";
+import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
 class EmployeeTabLocation extends Component {
     constructor(props) {
         super(props);
-        this.handleStartDateChanged = this.handleStartDateChanged.bind(this);
-        this.handleEndDateChanged = this.handleEndDateChanged.bind(this);
-        this.handleOfficeLocationChanged = this.handleOfficeLocationChanged.bind(this);
-        this.handleOfficeAddressChanged = this.handleOfficeAddressChanged.bind(this);
         this.addOfficeLocationClick = this.addOfficeLocationClick.bind(this);
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
@@ -43,26 +31,6 @@ class EmployeeTabLocation extends Component {
             }
         });
         this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
-    }
-
-    handleStartDateChanged = (e, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeStartDate', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
-    }
-
-    handleEndDateChanged = (e, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeEndDate', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
-    }
-
-    handleOfficeLocationChanged = (e, index, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeLocation', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
-    }
-
-    handleOfficeAddressChanged = (e, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('location', 'officeAddress', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     openDialogClick = () => {
@@ -125,9 +93,6 @@ class EmployeeTabLocation extends Component {
         var employeeLocationDetail = [];
         if (this.props.currentEmployee) {
             var locationList = this.props.currentEmployee.location;
-            var lookupLocationMenuItem = lookupData.location.map(lookupLocation =>
-                <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
-            );
             employeeLocationDetail = locationList.map((locationList, locationIndex) => (
                 <EmployeeLocationDetail
                     key={locationIndex}
@@ -164,41 +129,8 @@ class EmployeeTabLocation extends Component {
                     modal={false}
                     open={this.props.openDialog.locationDialog}
                     onRequestClose={this.closeDialogClick}>
-                        <DatePicker
-                            className='detail-dialog'
-                            floatingLabelText="Office Start Date"
-                            name="Office Start Date"
-                            ref="a"
-                            value={this.props.newEmployee.location[0].officeStartDate}
-                            errorText={this.props.openValidationMessage.locationValidation && (this.props.newEmployee.location[0].officeStartDate==null)?validationErrorMessage:""}
-                            onChange={(e, value) => this.handleStartDateChanged(e, value)}
-                            autoOk={true} />
-                        <DatePicker
-                            className='detail-dialog'
-                            floatingLabelText="Office End Date"
-                            value={this.props.newEmployee.location[0].officeEndDate}
-                            onChange={(e, value) => this.handleEndDateChanged(e, value)}
-                            autoOk={true} />
-                        <br />
-                        <SelectField
-                            className='detail-dialog'
-                            floatingLabelText="Office Location"
-                            maxHeight={200}
-                            value={this.props.newEmployee.location[0].officeLocation}
-                            errorText={this.props.openValidationMessage.locationValidation && (this.props.newEmployee.location[0].officeLocation=='')?validationErrorMessage:""}
-                            onChange={(e, index, value) => this.handleOfficeLocationChanged(e, index, value)}>
-                            {lookupLocationMenuItem}
-                        </SelectField>
-                        <TextField
-                            className='detail-dialog'
-                            floatingLabelText="Office Address"
-                            value={this.props.newEmployee.location[0].officeAddress}
-                            errorText={this.props.openValidationMessage.locationValidation && (this.props.newEmployee.location[0].officeAddress=='')?validationErrorMessage:""}
-                            onChange={(e, value) => this.handleOfficeAddressChanged(e, value)}
-                            multiLine={true}
-                            rows={2}
-                            rowsMax={2}
-                            underlineShow={false}/>
+                        <EmployeeLocationDetailDialog
+                            pageMode={'NEW'}/>
                 </Dialog>
             </div>
         )
@@ -209,7 +141,6 @@ EmployeeTabLocation.propTypes = {
     currentEmployee: PropTypes.object,
     newEmployee: PropTypes.object,
     openDialog: PropTypes.object,
-    openValidationMessage: PropTypes.object,
     pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
     selectedIndex: PropTypes.number,
     viewMode: PropTypes.bool,
