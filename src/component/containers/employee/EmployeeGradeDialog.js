@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import EmployeeHistoryDetailDialog from "../../employee/EmployeeHistoryDetailDialog"
+import EmployeeGradeDialog from "../../employee/EmployeeGradeDialog"
 import { handleStateChanged } from "../../../lib/employee/employeeHelper";
 import { changeEditEmployees, changeNewEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
+    currentEmployee: props.currentEmployee,
     newEmployee: state.newEmployee,
+    openValidationMessage: state.openValidationMessage,
     pageMode: props.pageMode
 })
 
@@ -28,5 +30,5 @@ const mapDispatchToProps = (dispatch) => ({
     }
 })
 
-const employeeHistoryDetailDialog = connect(mapStateToProps, mapDispatchToProps)(EmployeeHistoryDetailDialog);
-export default withRouter(employeeHistoryDetailDialog)
+const employeeGradeDialog = connect(mapStateToProps, mapDispatchToProps)(EmployeeGradeDialog);
+export default withRouter(employeeGradeDialog)

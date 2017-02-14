@@ -8,7 +8,6 @@ const mapStateToProps = (state, props) => ({
     currentEmployee: props.currentEmployee,
     newEmployee: state.newEmployee,
     openDialog: state.openDialog,
-    openValidationMessage: state.openValidationMessage,
     pageMode: props.pageMode,
     viewMode: props.viewMode
 })

@@ -14,6 +14,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 import EmployeeHistoryDetailDialog from "../containers/employee/EmployeeHistoryDetailDialog"
+import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -73,9 +74,12 @@ class NewEmployeeDialog extends Component {
                     viewMode = {false}/>);
           case 1:
             return (
-                <EmployeeHistoryDetailDialog />);
+                <EmployeeHistoryDetailDialog
+                    pageMode={'NEW'}/>);
           case 2:
-            return 'Grade';
+            return (
+                <EmployeeGradeDialog
+                    pageMode={'NEW'}/>);
           default:
             return 'You\'re a long way from home sonny jim!';
         }

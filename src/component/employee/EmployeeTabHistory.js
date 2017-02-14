@@ -100,7 +100,8 @@ class EmployeeTabHistory extends Component {
                     open={this.props.openDialog.historyDialog}
                     autoScrollBodyContent={true}
                     onRequestClose={this.closeDialogClick}>
-                        <EmployeeHistoryDetailDialog />
+                        <EmployeeHistoryDetailDialog
+                            pageMode={'NEW'}/>
                 </Dialog>
             </div>
         )
@@ -109,7 +110,6 @@ class EmployeeTabHistory extends Component {
 
 EmployeeTabHistory.propTypes = {
     currentEmployee: PropTypes.object,
-    newEmployee: PropTypes.object,
     openDialog: PropTypes.object,
     pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
     viewMode: PropTypes.bool,

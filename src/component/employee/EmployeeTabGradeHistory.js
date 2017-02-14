@@ -16,6 +16,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import {grey500} from 'material-ui/styles/colors';
 
+import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import lookupData from "../../dummy_data/lookupData"
 import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
 
@@ -23,17 +24,8 @@ const styles = {
   customWidthDialog: {
       width: '50%',
       maxWidth: 'none',
-  },
-  customWidthField: {
-    width: 150
-  },
-  customWidthDate: {
-    width: 200
   }
-
 };
-
-const validationErrorMessage = "This field is required!";
 
 class EmployeeTabGradeHistory extends Component {
 
@@ -43,10 +35,6 @@ class EmployeeTabGradeHistory extends Component {
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
-        this.handleDsChange = this.handleDsChange.bind(this);
-        this.handleGradeChange = this.handleGradeChange.bind(this);
-        this.handleStartDateChange = this.handleStartDateChange.bind(this);
-        this.handleEndDateChange = this.handleEndDateChange.bind(this);
     }
 
     openDialogClick = () => {
@@ -70,6 +58,14 @@ class EmployeeTabGradeHistory extends Component {
         this.props.handleOpenValidationMessage('gradeValidation', false);
     }
 
+    deleteClick = () => {
+        if(!this.props.viewMode){
+            var currentGradeHistory = this.props.currentEmployee.gradeHistory[0];
+            var updatedEmployee = update(this.props.currentEmployee, {'gradeHistory': {$splice: [[0,1]]}});
+            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+        }
+    }
+
     addGradeHistoryClick = () => {
         var gradeHistory = this.props.newEmployee.gradeHistory[0];
         if(gradeHistory.ds == '' || gradeHistory.grade =='' || gradeHistory.startDate == null) {
@@ -89,34 +85,6 @@ class EmployeeTabGradeHistory extends Component {
             this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
             this.closeDialogClick();
         }
-    }
-
-    deleteClick = () => {
-        if(!this.props.viewMode){
-            var currentGradeHistory = this.props.currentEmployee.gradeHistory[0];
-            var updatedEmployee = update(this.props.currentEmployee, {'gradeHistory': {$splice: [[0,1]]}});
-            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
-        }
-    }
-
-    handleDsChange = (e, index, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','ds', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
-    }
-
-    handleGradeChange = (e, index, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','grade', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
-    }
-
-    handleStartDateChange = (e, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','startDate', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
-    }
-
-    handleEndDateChange = (e, value) => {
-        var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','endDate', value, this.props.newEmployee);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     render = () => {
@@ -141,18 +109,6 @@ class EmployeeTabGradeHistory extends Component {
         var employeeNotFound = true;
         if (this.props.currentEmployee) {
             var gradeHistory = this.props.currentEmployee.gradeHistory;
-
-            var dsData = [];
-            for(var i=1; i<23; i++){
-                dsData.push(i);
-            }
-            for(var i=0; i<gradeHistory.length; i++){
-                delete dsData[dsData.indexOf(gradeHistory[i].ds)];
-            }
-
-            var lookupDS = dsData.map( dsData =>
-                <MenuItem key= {dsData} value={dsData} primaryText={"DS"+dsData} />
-            );
 
             var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
                 <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
@@ -237,41 +193,9 @@ class EmployeeTabGradeHistory extends Component {
                     modal={false}
                     open={this.props.openDialog.gradeDialog}
                     onRequestClose={this.closeDialogClick}>
-                        <SelectField
-                            className="grade-history-width"
-                            style={styles.customWidthField}
-                            floatingLabelText="DS"
-                            maxHeight={200}
-                            value={this.props.newEmployee.gradeHistory[0].ds}
-                            errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].ds=='')?validationErrorMessage:""}
-                            onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
-                            {lookupDS}
-                        </SelectField>
-                        <SelectField
-                            className="grade-history-width"
-                            style={styles.customWidthField}
-                            floatingLabelText="Grade"
-                            maxHeight={200}
-                            value={this.props.newEmployee.gradeHistory[0].grade}
-                            errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].grade=='')?validationErrorMessage:""}
-                            onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
-                            {lookupGradeMenuItem}
-                        </SelectField>
-                        <DatePicker
-                            className="grade-history-width"
-                            style={styles.customWidthDate}
-                            floatingLabelText="Start Date"
-                            value={this.props.newEmployee.gradeHistory[0].startDate}
-                            errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].startDate==null)?validationErrorMessage:""}
-                            onChange={(e, value) => this.handleStartDateChange(e, value)}
-                            autoOk={true} />
-                        <DatePicker
-                            className="grade-history-width"
-                            style={styles.customWidthDate}
-                            floatingLabelText="End Date"
-                            value={this.props.newEmployee.gradeHistory[0].endDate}
-                            onChange={(e, value) => this.handleEndDateChange(e, value)}
-                            autoOk={true} />
+                        <EmployeeGradeDialog
+                            currentEmployee = {this.props.currentEmployee}
+                            pageMode={'NEW'}/>
                 </Dialog>
             </div>
         )
@@ -281,9 +205,7 @@ class EmployeeTabGradeHistory extends Component {
 
 EmployeeTabGradeHistory.propTypes = {
     currentEmployee: PropTypes.object,
-    newEmployee: PropTypes.object,
     openDialog: PropTypes.object,
-    openValidationMessage: PropTypes.object,
     pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
     viewMode: PropTypes.bool,
     setSavedEmployee: PropTypes.func,
