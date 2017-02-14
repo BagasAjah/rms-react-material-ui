@@ -49,16 +49,18 @@ class EmployeeGradeDialog extends Component {
     }
 
     render = () => {
-        var gradeHistory = this.props.currentEmployee.gradeHistory;
-
         var dsData = [];
         for(var i=1; i<23; i++){
             dsData.push(i);
         }
 
-        for(var i=0; i<gradeHistory.length; i++){
-            delete dsData[dsData.indexOf(gradeHistory[i].ds)];
+        if(typeof this.props.currentEmployee !== 'undefined') {
+            var gradeHistory = this.props.currentEmployee.gradeHistory;
+            for(var i=0; i<gradeHistory.length; i++){
+                delete dsData[dsData.indexOf(gradeHistory[i].ds)];
+            }
         }
+
         var lookupDS = dsData.map( dsData =>
             <MenuItem key= {dsData} value={dsData} primaryText={"DS"+dsData} />
         );

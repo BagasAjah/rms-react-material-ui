@@ -79,7 +79,6 @@ class NewEmployeeDialog extends Component {
           case 2:
             return (
                 <EmployeeGradeDialog
-                    currentEmployee = {this.props.newEmployee}
                     pageMode={'NEW'}/>);
           default:
             return 'You\'re a long way from home sonny jim!';
