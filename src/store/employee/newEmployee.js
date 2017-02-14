@@ -6,9 +6,9 @@ const newEmployee = (state = {}, action) => {
         case C.CHANGE_NEW_EMPLOYEE:
             return action.employeeData;
         default:
-            return setDefaultEmployee();
+            return state
     }
-    return setDefaultEmployee();
+    return state;
 }
 
 export default newEmployee;
