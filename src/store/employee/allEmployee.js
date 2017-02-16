@@ -1,7 +1,7 @@
 import C from '../../constants';
 import update from 'react-addons-update';
 
-const allEmployee = (state = {}, action) => {
+const allEmployee = (state = [], action) => {
     switch (action.type) {
         case C.ADD_NEW_EMPLOYEE:
             return [
