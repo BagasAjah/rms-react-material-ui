@@ -20,6 +20,8 @@ const employees = (state = [], action) => {
                 [index] : {$set: action.employeeData}
             });
             return updatedState;
+        case C.LOAD_EMLOYEE_DATA:
+            return action.employees;
         default:
             return state;
     }

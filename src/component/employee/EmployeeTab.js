@@ -22,8 +22,6 @@ class EmployeeTab extends Component {
 
     constructor(props) {
         super(props);
-        this.props.editedEmployee.gradeHistory.sort();
-        this.props.editedEmployee.gradeHistory.reverse();
         this.updateButtonClick = this.updateButtonClick.bind(this);
         this.editButtonClick = this.editButtonClick.bind(this);
         this.cancelButtonClick = this.cancelButtonClick.bind(this);

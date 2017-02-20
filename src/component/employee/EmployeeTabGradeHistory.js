@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import moment from 'moment'
 import update from 'react-addons-update';
 
 import DatePicker from 'material-ui/DatePicker';
@@ -18,7 +17,7 @@ import {grey500} from 'material-ui/styles/colors';
 
 import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import lookupData from "../../dummy_data/lookupData"
-import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
+import { handleEmployeeDetailsInfo, parseStringToDate } from "../../lib/employee/employeeHelper"
 
 const styles = {
   customWidthDialog: {
@@ -113,6 +112,10 @@ class EmployeeTabGradeHistory extends Component {
             var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
                 <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
             );
+
+            var startDate = parseStringToDate(gradeHistory.startDate);
+            var endDate = parseStringToDate(gradeHistory.endDate);
+
             var gradeHistoryListDetail = gradeHistory.map( (gradeHistory, index) =>
                 (<TableRow key={index}>
                     <TableRowColumn>
@@ -136,7 +139,7 @@ class EmployeeTabGradeHistory extends Component {
                     <TableRowColumn>
                         <DatePicker
                             id={"start-date-"+gradeHistory.ds}
-                            value={gradeHistory.startDate}
+                            value={startDate}
                             autoOk={true}
                             disabled={true}
                             underlineShow={false}
@@ -145,7 +148,7 @@ class EmployeeTabGradeHistory extends Component {
                     <TableRowColumn>
                         <DatePicker
                             id={"end-date-"+gradeHistory.ds}
-                            value={gradeHistory.endDate}
+                            value={endDate}
                             autoOk={true}
                             disabled={true}
                             underlineShow={false}

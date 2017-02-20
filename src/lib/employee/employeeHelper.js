@@ -1,5 +1,6 @@
 import {createFilter} from 'react-search-input'
 import update from 'react-addons-update';
+import moment from 'moment';
 import {
         changeViewModeValue, changePathValue, changeNewEmployee,
         changeSelectecIndex, changeSelectecJobDescIndex
@@ -91,5 +92,8 @@ export const handleStateChanged = (type, value) => {
     } else if (type === 'newEmployee') {
         return changeNewEmployee(value);
     }
-
 }
+
+export const parseStringToDate = (dateStr) => (
+    dateStr !== null ? new Date(moment(dateStr).format("YYYY-MM-DD").toString()) : new Object
+)
