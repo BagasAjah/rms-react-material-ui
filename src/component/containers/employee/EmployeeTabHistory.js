@@ -6,6 +6,7 @@ import { changeEditEmployees, changeNewEmployee, changeOpenDialogValue } from ".
 
 const mapStateToProps = (state, props) => ({
     currentEmployee: props.currentEmployee,
+    newEmployee: state.newEmployee,
     openDialog: state.openDialog,
     pageMode: props.pageMode,
     viewMode: props.viewMode
