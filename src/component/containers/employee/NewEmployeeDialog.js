@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import NewEmployeeDialog from "../../employee/NewEmployeeDialog"
+import { handleStateChanged } from "../../../lib/employee/employeeHelper";
 import { addEmployee, changeOpenDialogValue } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
@@ -18,6 +19,11 @@ const mapDispatchToProps = (dispatch) => ({
 	handleOpenDialogChanged(type, value){
         dispatch(
             changeOpenDialogValue(type, value)
+        )
+    },
+	handleStateChanged(type, value){
+        dispatch(
+            handleStateChanged(type, value)
         )
     }
 })

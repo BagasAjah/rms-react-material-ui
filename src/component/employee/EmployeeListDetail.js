@@ -17,10 +17,16 @@ class EmployeeListDetail extends Component {
         super(props);
     }
 
+    componentDidMount = () => {
+        this.actionClick = this.actionClick.bind(this);
+    }
+
+    actionClick = () => {
+        this.props.setCurrentEmployee(this.props.employee.id)
+    }
 
     render = () => {
         var employee = this.props.employee;
-        const employeeClick = partial(this.props.setCurrentEmployee, employee);
         var hireDateStr = moment(this.props.employee.hireDate).format("DD MMM YYYY").toString();
         return(
             <Paper key={this.props.index} className="employee-list-container" zDepth={1}>
@@ -43,11 +49,10 @@ class EmployeeListDetail extends Component {
                     }
                     secondaryTextLines={2}
                     leftAvatar={<Avatar>A</Avatar>}
-                    onClick={employeeClick}/>
+                    onClick={this.actionClick}/>
             </Paper>
         )
     }
-
 }
 
 EmployeeListDetail.propTypes = {

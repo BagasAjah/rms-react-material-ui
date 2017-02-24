@@ -10,9 +10,9 @@ const mapStateToProps = (state, props) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	setCurrentEmployee(employeesData){
-	    dispatch(
-            setEmployees(employeesData)
+	setCurrentEmployee(employeeID){
+        dispatch(
+            setEmployees(employeeID)
         )
 	}
 })

@@ -2,11 +2,11 @@ import DummyData from "./dummy_data/sampleEmployeeData"
 import { setDefaultEmployee } from "./lib/employee/employeeHelper"
 
 const initialState = {
-    "allEmployee": DummyData,
-    "employees" : DummyData,
-    "currentEmployee": DummyData[0],
+    "allEmployee": [],
+    "employees" : [],
+    "currentEmployee": null,
     "currentTabLocation": '',
-    "editedEmployee": DummyData[0],
+    "editedEmployee": null,
     "newEmployee": setDefaultEmployee(),
     "openDialog": {
         "gradeDialog": false,

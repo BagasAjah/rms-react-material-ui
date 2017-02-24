@@ -1,15 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import EmployeeTabHistory from "../../employee/EmployeeTabHistory"
+import EmployeeLocationDetailDialog from "../../employee/EmployeeLocationDetailDialog"
 import { handleStateChanged } from "../../../lib/employee/employeeHelper";
-import { changeEditEmployees, changeNewEmployee, changeOpenDialogValue } from "../../action/EmployeeActions"
+import { changeEditEmployees, changeNewEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
-    currentEmployee: props.currentEmployee,
+    openValidationMessage: state.openValidationMessage,
     newEmployee: state.newEmployee,
-    openDialog: state.openDialog,
-    pageMode: props.pageMode,
-    viewMode: props.viewMode
+    pageMode: props.pageMode
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -23,12 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
                 changeNewEmployee(employeesData)
             )
         }
-    },
-	handleOpenDialogChanged(type, value){
-        dispatch(
-            changeOpenDialogValue(type, value)
-        )
-    },
+	},
 	handleStateChanged(type, value){
         dispatch(
             handleStateChanged(type, value)
@@ -36,5 +29,5 @@ const mapDispatchToProps = (dispatch) => ({
     }
 })
 
-const employeeTabHistory = connect(mapStateToProps, mapDispatchToProps)(EmployeeTabHistory);
-export default withRouter(employeeTabHistory)
+const employeeLocationDetailDialog = connect(mapStateToProps, mapDispatchToProps)(EmployeeLocationDetailDialog);
+export default withRouter(employeeLocationDetailDialog)

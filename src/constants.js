@@ -13,7 +13,8 @@ const constants = {
 	CHANGE_VIEW_MODE_VALUE:             "CHANGE_VIEW_MODE_VALUE",
 	DELETE_CURRENT_EMPLOYEE:            "DELETE_CURRENT_EMPLOYEE",
 	UPDATE_CURRENT_EMPLOYEE:            "UPDATE_CURRENT_EMPLOYEE",
-	FILTERING:                          "FILTERING"
+	FILTERING:                          "FILTERING",
+	LOAD_EMLOYEE_DATA:                  "LOAD_EMLOYEE_DATA"
 }
 
 export default constants

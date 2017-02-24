@@ -15,6 +15,8 @@ import ContentUpdate from 'material-ui/svg-icons/content/create';
 
 import {grey500} from 'material-ui/styles/colors';
 
+import { parseStringToDate } from  "../../lib/employee/employeeHelper"
+
 import lookupData from "../../dummy_data/lookupData"
 
 const style = {
@@ -142,6 +144,7 @@ class EmployeeTabFamilyMember extends Component {
         var employeeNotFound = true;
         if (this.props.currentEmployee) {
             var familyMember = this.props.currentEmployee.familyMember;
+            var familyDob = parseStringToDate(familyMember.familyDob);
             var familyMemberListDetail = familyMember.map( (familyMember, familyIndex) =>
                 (<TableRow key={familyIndex}>
                     <TableRowColumn width={"25%"}>
@@ -166,7 +169,7 @@ class EmployeeTabFamilyMember extends Component {
                     <TableRowColumn width={"25%"}>
                         <DatePicker
                             id={"family-dob-"+familyMember.familyId}
-                            value={familyMember.familyDob}
+                            value={familyDob}
                             autoOk={true}
                             disabled={familyIndex==this.props.selectedIndex?false:true}
                             onChange={(event, value) =>  this.handleFamilyDobChanged(event, value, familyIndex)}

@@ -1,7 +1,9 @@
 import C from '../../constants';
 import update from 'react-addons-update';
 
-const allEmployee = (state = {}, action) => {
+
+
+const allEmployee = (state = [], action) => {
     switch (action.type) {
         case C.ADD_NEW_EMPLOYEE:
             return [
@@ -16,6 +18,8 @@ const allEmployee = (state = {}, action) => {
             return updatedState;
         case C.DELETE_CURRENT_EMPLOYEE:
             return state.filter(employeeData => employeeData.id !== action.employeeData.id)
+        case C.LOAD_EMLOYEE_DATA:
+            return action.employees;
         default:
             return state;
     }

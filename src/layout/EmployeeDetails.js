@@ -14,6 +14,10 @@ class EmployeeDetails extends Component {
         super(props);
     }
 
+    componentDidMount = () => {
+        this.props.loadEmployeeData();
+    }
+
     render = () => {
         return(
             <div>

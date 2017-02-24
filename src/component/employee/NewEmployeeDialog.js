@@ -15,6 +15,10 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import EmployeeTabDetails from "../containers/employee/EmployeeTabDetails"
 import EmployeeHistoryDetailDialog from "../containers/employee/EmployeeHistoryDetailDialog"
 import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
+import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
+import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
+
+import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -35,6 +39,7 @@ class NewEmployeeDialog extends Component {
 
     openDialogClick = () => {
         this.props.handleOpenDialogChanged('newEmployeeDialog', true);
+        this.props.handleStateChanged('newEmployee', setDefaultEmployee());
         this.setState({
             stepIndex: 0,
             finished: false
@@ -49,9 +54,9 @@ class NewEmployeeDialog extends Component {
         const {stepIndex} = this.state;
         this.setState({
           stepIndex: stepIndex + 1,
-          finished: stepIndex >= 2,
+          finished: stepIndex >= 5,
         });
-        if(stepIndex > 2){
+        if(stepIndex > 5){
             this.props.addCurrentEmployee(this.props.newEmployee);
             this.props.handleOpenDialogChanged('newEmployeeDialog', false);
         }
@@ -60,7 +65,10 @@ class NewEmployeeDialog extends Component {
     handlePrev = () => {
         const {stepIndex} = this.state;
         if (stepIndex > 0) {
-          this.setState({stepIndex: stepIndex - 1});
+          this.setState({
+            stepIndex: stepIndex - 1,
+            finished: false
+          });
         }
     }
 
@@ -74,12 +82,43 @@ class NewEmployeeDialog extends Component {
                     viewMode = {false}/>);
           case 1:
             return (
-                <EmployeeHistoryDetailDialog
-                    pageMode={'NEW'}/>);
+                <div>
+                    <h2>Employee History Details</h2>
+                    <EmployeeHistoryDetailDialog
+                        pageMode={'NEW'}/>
+                </div>);
           case 2:
             return (
-                <EmployeeGradeDialog
-                    pageMode={'NEW'}/>);
+                <div>
+                    <h2>Employee Grade Details</h2>
+                    <EmployeeGradeDialog
+                        pageMode={'NEW'}/>
+                </div>);
+          case 3:
+            return (
+                <EmployeeTabFamilyMember
+                    currentEmployee={this.props.newEmployee}
+                    pageMode ={'NEW'}
+                    viewMode={false}/>);
+          case 4:
+            return (
+                <div>
+                    <h2>Employee Address</h2>
+                </div>);
+          case 5:
+            return (
+                <div>
+                    <h2>Employee Location Details</h2>
+                    <EmployeeLocationDetailDialog
+                        pageMode={'NEW'} />
+                </div>);
+          case 6:
+            return (
+                <div>
+                    <h2>Employee Location Details</h2>
+                    <EmployeeLocationDetailDialog
+                        pageMode={'NEW'} />
+                </div>);
           default:
             return 'You\'re a long way from home sonny jim!';
         }
@@ -114,6 +153,15 @@ class NewEmployeeDialog extends Component {
                 </Step>
                 <Step>
                     <StepLabel>Grade</StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Family</StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Address</StepLabel>
+                </Step>
+                <Step>
+                    <StepLabel>Location</StepLabel>
                 </Step>
             </Stepper>
         ];

@@ -1,7 +1,8 @@
 import C from '../../constants';
+import update from 'react-addons-update';
 import { searchEmployee } from "../../lib/employee/employeeHelper";
 
-const employees = (state = {}, action) => {
+const employees = (state = [], action) => {
     switch (action.type) {
         case C.ADD_NEW_EMPLOYEE:
             return [
@@ -19,6 +20,8 @@ const employees = (state = {}, action) => {
                 [index] : {$set: action.employeeData}
             });
             return updatedState;
+        case C.LOAD_EMLOYEE_DATA:
+            return action.employees;
         default:
             return state;
     }

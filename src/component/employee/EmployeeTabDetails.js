@@ -9,6 +9,8 @@ import TextField from 'material-ui/TextField';
 
 import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 
+import { parseStringToDate } from  "../../lib/employee/employeeHelper"
+
 import lookupData from "../../dummy_data/lookupData"
 
 class EmployeeTabDetails extends Component {
@@ -107,6 +109,16 @@ class EmployeeTabDetails extends Component {
     }
 
     render = () => {
+        var dob,hireDate,suspendDate;
+        if (this.props.currentEmployee) {
+            dob = parseStringToDate(this.props.currentEmployee.dob);
+            hireDate = parseStringToDate(this.props.currentEmployee.dob);
+            suspendDate = parseStringToDate(this.props.currentEmployee.dob);
+        } else {
+            dob = new Object;
+            hireDate = new Object;
+            suspendDate = new Object;
+        }
         var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
             <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
         );
@@ -150,7 +162,7 @@ class EmployeeTabDetails extends Component {
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Date of Birth"
-                    value={this.props.currentEmployee ? this.props.currentEmployee.dob : new Object}
+                    value={dob}
                     onChange={(e, value) => this.handleDobChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
@@ -194,14 +206,14 @@ class EmployeeTabDetails extends Component {
                 </SelectField><br />
                 <DatePicker
                     floatingLabelText="Suspend Date"
-                    value={this.props.currentEmployee ? this.props.currentEmployee.suspendDate : new Object}
+                    value={suspendDate}
                     onChange={(e, value) => this.handleSuspendDateChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}
                 />
                 <DatePicker
                     floatingLabelText="Hire Date"
-                    value={this.props.currentEmployee ? this.props.currentEmployee.hireDate : new Object}
+                    value={hireDate}
                     onChange={(e, value) => this.handleHireDateChange(e, value)}
                     autoOk={true}
                     disabled={this.props.viewMode}

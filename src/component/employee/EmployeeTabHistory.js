@@ -64,7 +64,7 @@ class EmployeeTabHistory extends Component {
             />
         ];
         var employeeHistoryDetail = [];
-        if (this.props.currentEmployee) {
+        if (this.props.currentEmployee || this.props.currentEmployee !== null) {
             var historyList = this.props.currentEmployee.history;
             employeeHistoryDetail = historyList.map((historyList, historyIndex) => (
                 <EmployeeHistoryDetail

@@ -1,12 +1,9 @@
 import C from '../../constants'
+import fetch from 'isomorphic-fetch'
 
 export const addEmployee = (employeeData) => ({
     type: C.ADD_NEW_EMPLOYEE,
     employeeData
-})
-export const setEmployees = (currentEmployee) => ({
-    type: C.SET_EMPLOYEE,
-    currentEmployee
 })
 
 export const changeEditEmployees = (currentEmployee) => ({
@@ -66,3 +63,33 @@ export const setFilteringParam = (searchText, allEmployee) => ({
     searchText: searchText,
     allEmployee: allEmployee
 })
+
+const fetchingEmployee = () => {
+    return fetch("http://localhost:3333/api/employee")
+}
+
+const fetchingById = id => {
+    return fetch("http://localhost:3333/api/employee/" + id)
+}
+
+export const loadEmployeeData = () => (dispatch, getState) => (
+        fetchingEmployee()
+            .then(response => response.json())
+            .then(employees => {
+                dispatch({
+                    type : C.LOAD_EMLOYEE_DATA,
+                    employees
+                })
+            })
+)
+
+export const setEmployees = (employeeID) => dispatch => (
+    fetchingById(employeeID)
+        .then(response => response.json())
+        .then(currentEmployee => {
+            dispatch({
+                type: C.SET_EMPLOYEE,
+                currentEmployee
+            })
+        }, (currentEmployee) => console.dir(currentEmployee))
+)
