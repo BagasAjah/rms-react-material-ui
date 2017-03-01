@@ -9,25 +9,25 @@ import {
 const KEYS_TO_FILTERS = ['firstName', 'lastName'];
 
 export const setDefaultEmployee = () => ({
-    id: 0,
+    employeeGuid: '',
     firstName: '',
     lastName: '',
     gender: '',
-    dob: new Object,
+    dob: null,
     nationality: '',
     maritalStatus: '',
     phone: '',
     subDivision: '',
     status: '',
-    suspendDate: new Object,
-    hireDate: new Object,
+    suspendDate: null,
+    hireDate: null,
     grade: '',
     division: '',
     email: '',
     office: '',
     history:[{
-        historyStartDate: new Object,
-        historyEndDate: new Object,
+        historyStartDate: null,
+        historyEndDate: null,
         company: '',
         position: '',
         jobDesc: []
@@ -35,22 +35,45 @@ export const setDefaultEmployee = () => ({
     gradeHistory: [{
         ds: '',
         grade: '',
-        startDate: new Object,
-        endDate: new Object
+        startDate: null,
+        endDate: null
     }],
     familyMember: [{
         familyName: '',
         familyGender: '',
-        familyDob: new Object,
+        familyDob: null,
         familyType: '',
         isActive: false
     }],
     location: [{
-        officeStartDate: new Object,
-        officeEndDate: new Object,
+        officeStartDate: null,
+        officeEndDate: null,
         officeLocation: '',
         officeAddress: ''
     }]
+})
+
+export const setNewEmployee = () => ({
+    employeeGuid: '',
+    firstName: '',
+    lastName: '',
+    gender: '',
+    dob: null,
+    nationality: '',
+    maritalStatus: '',
+    phone: '',
+    subDivision: '',
+    status: '',
+    suspendDate: null,
+    hireDate: null,
+    grade: '',
+    division: '',
+    email: '',
+    office: '',
+    history:[],
+    gradeHistory: [],
+    familyMember: [],
+    location: []
 })
 
 export const searchEmployee = (employees, searchingText) => {
@@ -94,6 +117,59 @@ export const handleStateChanged = (type, value) => {
     }
 }
 
-export const parseStringToDate = (dateStr) => (
+export const parseStringToDate = dateStr => (
     dateStr !== null ? new Date(moment(dateStr).format("YYYY-MM-DD").toString()) : new Object
 )
+
+export const handleDataBeforeSaveOrUpdate = employeeData => {
+    let grade = employeeData.gradeHistory;
+    for (var i = 0; i < grade.length; i++) {
+        if (isEmpty(grade[i].ds) && isEmpty(grade[i].grade) && isEmpty(grade[i].startDate) && isEmpty(grade[i].endDate)) {
+            delete grade[i];
+        }
+    }
+    if (grade.length = 0) {
+        employeeData.gradeHistory = [];
+    }
+
+    let history = employeeData.history;
+    for (var i = 0; i < history.length; i++) {
+        let jobdesc = history.jobDesc;
+        if (isEmpty(history[i].historyStartDate) && isEmpty(history[i].historyEndDate) && isEmpty(history[i].company)
+            && isEmpty(history[i].position && jobdesc.length == 0)) {
+            delete history[i];
+        }
+    }
+    if (history.length = 0) {
+        employeeData.history = [];
+    }
+
+    let familyMember = employeeData.familyMember;
+    for (var i = 0; i < familyMember.length; i++) {
+        if (isEmpty(familyMember[i].familyName) && isEmpty(familyMember[i].familyGender) && isEmpty(familyMember[i].familyDob) && isEmpty(familyMember[i].familyType)) {
+            delete familyMember[i];
+        }
+    }
+    if (familyMember.length = 0) {
+        employeeData.familyMember = [];
+    }
+
+    let location = employeeData.location;
+    for (var i = 0; i < grade.length; i++) {
+        if (isEmpty(location[i].officeStartDate) && isEmpty(location[i].officeEndDate) && isEmpty(location[i].officeLocation) && isEmpty(location[i].officeAddress)) {
+            delete location[i];
+        }
+    }
+    if (location.length = 0) {
+        employeeData.location = [];
+    }
+
+    return employeeData;
+}
+
+export const isEmpty = data => {
+    if (data === '' || data == null) {
+        return true;
+    }
+    return false;
+}

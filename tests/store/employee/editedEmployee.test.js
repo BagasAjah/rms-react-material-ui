@@ -35,15 +35,4 @@ describe('editedEmployee reducer', () => {
             reducer(state, action)
         ).toEqual(expectedResult)
     })
-
-    it('should handle delete existing employee process', () => {
-        const state = setDefaultEmployee();
-        const expectedResult = setDefaultEmployee();
-        const action = {
-            type : C.DELETE_CURRENT_EMPLOYEE
-        }
-        expect(
-            reducer(state, action)
-        ).toEqual(expectedResult)
-    })
 })

@@ -9,20 +9,6 @@ describe('currentEmployee reducer', () => {
         ).toEqual({})
     })
 
-    it('should handle add new employee process', () => {
-        const state = setDefaultEmployee();
-        const expectedResult = setDefaultEmployee();
-        expectedResult.firstName = "testName";
-
-        const action = {
-            type : C.ADD_NEW_EMPLOYEE,
-            employeeData: expectedResult,
-        }
-        expect(
-            reducer(state, action)
-        ).toEqual(expectedResult)
-    })
-
     it('should handle set employee process', () => {
         const state = setDefaultEmployee();
         const expectedResult = setDefaultEmployee();
@@ -44,17 +30,6 @@ describe('currentEmployee reducer', () => {
         const action = {
             type : C.UPDATE_CURRENT_EMPLOYEE,
             employeeData: expectedResult
-        }
-        expect(
-            reducer(state, action)
-        ).toEqual(expectedResult)
-    })
-
-    it('should handle delete existing employee process', () => {
-        const state = setDefaultEmployee();
-        const expectedResult = setDefaultEmployee();
-        const action = {
-            type : C.DELETE_CURRENT_EMPLOYEE
         }
         expect(
             reducer(state, action)

@@ -18,7 +18,7 @@ import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
-import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
+import { handleDataBeforeSaveOrUpdate, setDefaultEmployee } from "../../lib/employee/employeeHelper";
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -31,6 +31,12 @@ class NewEmployeeDialog extends Component {
         this.closeDialogClick = this.closeDialogClick.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
+    }
+
+
+    addNewEmployee = (employeeData) => {
+
+        this.props.addCurrentEmployee(handleDataBeforeSaveOrUpdate(employeeData));
     }
 
     setSavedEmployee = (employee) => {
@@ -57,7 +63,7 @@ class NewEmployeeDialog extends Component {
           finished: stepIndex >= 5,
         });
         if(stepIndex > 5){
-            this.props.addCurrentEmployee(this.props.newEmployee);
+            this.addNewEmployee(this.props.newEmployee);
             this.props.handleOpenDialogChanged('newEmployeeDialog', false);
         }
     }

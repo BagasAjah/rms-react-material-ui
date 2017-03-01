@@ -24,9 +24,9 @@ const mapDispatchToProps = (dispatch) => ({
             updateCurrentEmployee(employeeData)
         )
 	},
-	deleteCurrentEmployee(employeeData){
+	deleteCurrentEmployee(employeeGuid){
         dispatch(
-            deleteCurrentEmployee(employeeData)
+            deleteCurrentEmployee(employeeGuid)
         )
 	}
 })

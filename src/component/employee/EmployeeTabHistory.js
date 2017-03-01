@@ -23,8 +23,8 @@ class EmployeeTabHistory extends Component {
         var updatedEmployee = update(this.props.newEmployee, {
             'history': {
                 0: {
-                    'historyStartDate':  {$set: new Object},
-                    'historyEndDate': {$set: new Object},
+                    'historyStartDate':  {$set: null},
+                    'historyEndDate': {$set: null},
                     'company': {$set: ''},
                     'position': {$set: ''},
                     'jobDesc': {$set: []}

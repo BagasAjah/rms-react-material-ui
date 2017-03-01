@@ -1,11 +1,6 @@
 import C from '../../constants'
 import fetch from 'isomorphic-fetch'
 
-export const addEmployee = (employeeData) => ({
-    type: C.ADD_NEW_EMPLOYEE,
-    employeeData
-})
-
 export const changeEditEmployees = (currentEmployee) => ({
     type: C.CHANGE_EDIT_EMPLOYEE,
     currentEmployee
@@ -48,16 +43,6 @@ export const changeOpenValidationMessage = (fieldName, value) => ({
     value: value
 })
 
-export const deleteCurrentEmployee = (employeeData) => ({
-    type: C.DELETE_CURRENT_EMPLOYEE,
-    employeeData
-})
-
-export const updateCurrentEmployee = (employeeData) => ({
-    type: C.UPDATE_CURRENT_EMPLOYEE,
-    employeeData
-})
-
 export const setFilteringParam = (searchText, allEmployee) => ({
     type: C.FILTERING,
     searchText: searchText,
@@ -65,31 +50,104 @@ export const setFilteringParam = (searchText, allEmployee) => ({
 })
 
 const fetchingEmployee = () => {
-    return fetch("http://localhost:3333/api/employee")
+    return fetch("http://localhost:8080/api/employees")
 }
 
 const fetchingById = id => {
-    return fetch("http://localhost:3333/api/employee/" + id)
+    return fetch("http://localhost:8080/api/employee/" + id)
 }
 
-export const loadEmployeeData = () => (dispatch, getState) => (
-        fetchingEmployee()
-            .then(response => response.json())
-            .then(employees => {
-                dispatch({
-                    type : C.LOAD_EMLOYEE_DATA,
-                    employees
-                })
+const fetchDeleteEmployee = employeeGuid => {
+    return fetch("http://localhost:8080/api/employee/" + employeeGuid, {method: 'DELETE'})
+}
+
+const fetchPostEmployee = employee => {
+    return fetch("http://localhost:8080/api/employee/", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(employee)
+    })
+}
+
+const fetchPutEmployee = employee => {
+    return fetch("http://localhost:8080/api/employee/", {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(employee)
+    })
+}
+
+const loadData = () => dispatch => (
+    fetchingEmployee()
+        .then(response => response.json())
+        .then(employees => {
+            dispatch({
+                type : C.LOAD_EMLOYEE_DATA,
+                employees
             })
+        })
 )
 
-export const setEmployees = (employeeID) => dispatch => (
-    fetchingById(employeeID)
+export const loadEmployeeData = () => dispatch => (
+    fetchingEmployee()
+        .then(response => response.json())
+        .then(employees => {
+            dispatch({
+                type : C.LOAD_AND_SET_EMLOYEE_DATA,
+                employees
+            })
+        })
+)
+
+export const setEmployees = employeeGuid => dispatch => (
+    fetchingById(employeeGuid)
         .then(response => response.json())
         .then(currentEmployee => {
             dispatch({
                 type: C.SET_EMPLOYEE,
                 currentEmployee
             })
-        }, (currentEmployee) => console.dir(currentEmployee))
+        })
+)
+
+export const deleteCurrentEmployee = employeeGuid => dispatch => (
+    fetchDeleteEmployee(employeeGuid)
+        .then(response => {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            dispatch(loadEmployeeData());
+        })
+)
+
+export const addEmployee = employeeData => dispatch => (
+    fetchPostEmployee(employeeData)
+        .then((response) => {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            return response.json();
+        })
+        .then(response => {
+            dispatch(loadData(response.data))
+        })
+)
+
+export const updateCurrentEmployee = employeeData => dispatch => (
+    fetchPutEmployee(employeeData)
+        .then((response) => {
+            if (response.status >= 400) {
+                throw new Error("Bad response from server");
+            }
+            return response.json();
+        })
+        .then(response => {
+            dispatch(loadData(response.data))
+        })
 )

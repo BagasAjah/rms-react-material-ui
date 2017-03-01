@@ -112,8 +112,8 @@ class EmployeeTabDetails extends Component {
         var dob,hireDate,suspendDate;
         if (this.props.currentEmployee) {
             dob = parseStringToDate(this.props.currentEmployee.dob);
-            hireDate = parseStringToDate(this.props.currentEmployee.dob);
-            suspendDate = parseStringToDate(this.props.currentEmployee.dob);
+            hireDate = parseStringToDate(this.props.currentEmployee.hireDate);
+            suspendDate = parseStringToDate(this.props.currentEmployee.suspendDate);
         } else {
             dob = new Object;
             hireDate = new Object;

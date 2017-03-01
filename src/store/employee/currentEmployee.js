@@ -3,16 +3,12 @@ import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
 
 const currentEmployee = (state = {}, action) => {
    switch (action.type) {
-       case C.ADD_NEW_EMPLOYEE:
-           return action.employeeData;
        case C.SET_EMPLOYEE:
-           return action.currentEmployee[0];
-       case C.DELETE_CURRENT_EMPLOYEE:
-           return setDefaultEmployee();
+           return action.currentEmployee;
        case C.UPDATE_CURRENT_EMPLOYEE:
            return action.employeeData;
-        case C.LOAD_EMLOYEE_DATA:
-            return action.employees[0];
+        case C.LOAD_AND_SET_EMLOYEE_DATA:
+            return action.employees.length > 0 ? action.employees[0]: setDefaultEmployee();
        default:
            return state;
    }

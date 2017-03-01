@@ -18,6 +18,8 @@ import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
 import EmployeeTabLocation from "../containers/employee/EmployeeTabLocation"
 
+import { handleDataBeforeSaveOrUpdate } from  "../../lib/employee/employeeHelper"
+
 class EmployeeTab extends Component {
 
     constructor(props) {
@@ -41,7 +43,7 @@ class EmployeeTab extends Component {
     updateButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
         this.props.handleStateChanged('selectedIndex', null);
-        this.props.updateCurrentEmployee(this.props.editedEmployee);
+        this.props.updateCurrentEmployee(handleDataBeforeSaveOrUpdate(this.props.editedEmployee));
     }
 
     editButtonClick = () => {
@@ -50,7 +52,7 @@ class EmployeeTab extends Component {
 
     deleteButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
-        this.props.deleteCurrentEmployee(this.props.editedEmployee);
+        this.props.deleteCurrentEmployee(this.props.editedEmployee.employeeGuid);
     }
 
     cancelButtonClick = () => {

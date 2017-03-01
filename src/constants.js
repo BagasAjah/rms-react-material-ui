@@ -1,5 +1,4 @@
 const constants = {
-    ADD_NEW_EMPLOYEE:                   "ADD_NEW_EMPLOYEE",
 	CHANGE_EMPLOYEE_VALUE:              "CHANGE_EMPLOYEE_VALUE",
 	CHANGE_PATH_VALUE:                  "CHANGE_PATH_VALUE",
 	SET_EMPLOYEE:                       "SET_EMPLOYEE",
@@ -11,10 +10,10 @@ const constants = {
 	CHANGE_STATE_VALUE:                 "CHANGE_STATE_VALUE",
 	CHANGE_VALIDATION:                  "CHANGE_VALIDATION",
 	CHANGE_VIEW_MODE_VALUE:             "CHANGE_VIEW_MODE_VALUE",
-	DELETE_CURRENT_EMPLOYEE:            "DELETE_CURRENT_EMPLOYEE",
 	UPDATE_CURRENT_EMPLOYEE:            "UPDATE_CURRENT_EMPLOYEE",
 	FILTERING:                          "FILTERING",
-	LOAD_EMLOYEE_DATA:                  "LOAD_EMLOYEE_DATA"
+	LOAD_EMLOYEE_DATA:                  "LOAD_EMLOYEE_DATA",
+	LOAD_AND_SET_EMLOYEE_DATA:          "LOAD_AND_SET_EMLOYEE_DATA"
 }
 
 export default constants
