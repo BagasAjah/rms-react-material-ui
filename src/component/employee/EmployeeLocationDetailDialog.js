@@ -5,8 +5,6 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 
-import lookupData from "../../dummy_data/lookupData"
-
 import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
 
 const validationErrorMessage = "This field is required!"
@@ -42,9 +40,11 @@ class EmployeeLocationDetailDialog extends Component {
     }
 
     render = () => {
-        var lookupLocationMenuItem = lookupData.location.map(lookupLocation =>
-            <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
-        );
+        if (this.props.lookUpData.location.length >0 ) {
+            var lookupLocationMenuItem = this.props.lookUpData.location.map(lookupLocation =>
+                <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
+            );
+        }
         return(
             <div>
                 <DatePicker
@@ -87,6 +87,7 @@ class EmployeeLocationDetailDialog extends Component {
 }
 
 EmployeeLocationDetailDialog.propTypes = {
+    lookUpData : PropTypes.object,
     currentEmployee: PropTypes.object,
     setSavedEmployee: PropTypes.func,
     handleStateChanged: PropTypes.func

@@ -11,8 +11,6 @@ import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 
 import { parseStringToDate } from  "../../lib/employee/employeeHelper"
 
-import lookupData from "../../dummy_data/lookupData"
-
 class EmployeeTabDetails extends Component {
 
     constructor(props) {
@@ -119,21 +117,32 @@ class EmployeeTabDetails extends Component {
             hireDate = new Object;
             suspendDate = new Object;
         }
-        var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
-            <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
-        );
-        var lookupMaritalStatusMenuItem = lookupData.statusMarital.map(lookupMaritalStatus =>
-            <MenuItem key= {lookupMaritalStatus.lookupCode} value={lookupMaritalStatus.lookupCode} primaryText={lookupMaritalStatus.lookupValue} />
-        );
-        var lookupStatusMenuItem = lookupData.status.map(lookupStatus =>
-            <MenuItem key= {lookupStatus.lookupCode} value={lookupStatus.lookupCode} primaryText={lookupStatus.lookupValue} />
-        );
-        var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
-            <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
-        );
-        var lookupDivisionMenuItem = lookupData.division.map(lookupDivision =>
-            <MenuItem key= {lookupDivision.lookupCode} value={lookupDivision.lookupCode} primaryText={lookupDivision.lookupValue} />
-        );
+
+        if (this.props.lookUpData.gender.length >0 ) {
+            var lookupGenderMenuItem = this.props.lookUpData.gender.map(lookupGender =>
+                <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
+            );
+        }
+        if (this.props.lookUpData.statusMarital.length >0 ) {
+            var lookupMaritalStatusMenuItem = this.props.lookUpData.statusMarital.map(lookupMaritalStatus =>
+                <MenuItem key= {lookupMaritalStatus.lookupCode} value={lookupMaritalStatus.lookupCode} primaryText={lookupMaritalStatus.lookupValue} />
+            );
+        }
+        if (this.props.lookUpData.status.length >0 ) {
+            var lookupStatusMenuItem = this.props.lookUpData.status.map(lookupStatus =>
+                <MenuItem key= {lookupStatus.lookupCode} value={lookupStatus.lookupCode} primaryText={lookupStatus.lookupValue} />
+            );
+        }
+        if (this.props.lookUpData.grade.length >0 ) {
+            var lookupGradeMenuItem = this.props.lookUpData.grade.map(lookupGrade =>
+                <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
+            );
+        }
+        if (this.props.lookUpData.division.length >0 ) {
+            var lookupDivisionMenuItem = this.props.lookUpData.division.map(lookupDivision =>
+                <MenuItem key= {lookupDivision.lookupCode} value={lookupDivision.lookupCode} primaryText={lookupDivision.lookupValue} />
+            );
+        }
         return(
         <div className="menu-content">
             <h2>Employee Details</h2>
@@ -254,6 +263,7 @@ class EmployeeTabDetails extends Component {
 
 EmployeeTabDetails.propTypes = {
     currentEmployee: PropTypes.object,
+    lookUpData : PropTypes.object,
     pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
     viewMode: PropTypes.bool,
     setSavedEmployee: PropTypes.func

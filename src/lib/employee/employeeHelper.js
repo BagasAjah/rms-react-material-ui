@@ -125,43 +125,31 @@ export const handleDataBeforeSaveOrUpdate = employeeData => {
     let grade = employeeData.gradeHistory;
     for (var i = 0; i < grade.length; i++) {
         if (isEmpty(grade[i].ds) && isEmpty(grade[i].grade) && isEmpty(grade[i].startDate) && isEmpty(grade[i].endDate)) {
-            delete grade[i];
+            employeeData.gradeHistory.splice(i,1);
         }
-    }
-    if (grade.length = 0) {
-        employeeData.gradeHistory = [];
     }
 
     let history = employeeData.history;
     for (var i = 0; i < history.length; i++) {
         let jobdesc = history.jobDesc;
         if (isEmpty(history[i].historyStartDate) && isEmpty(history[i].historyEndDate) && isEmpty(history[i].company)
-            && isEmpty(history[i].position && jobdesc.length == 0)) {
-            delete history[i];
+            && isEmpty(history[i].position) && (jobdesc && jobdesc.length == 0)) {
+            employeeData.history.splice(i,1);
         }
-    }
-    if (history.length = 0) {
-        employeeData.history = [];
     }
 
     let familyMember = employeeData.familyMember;
     for (var i = 0; i < familyMember.length; i++) {
         if (isEmpty(familyMember[i].familyName) && isEmpty(familyMember[i].familyGender) && isEmpty(familyMember[i].familyDob) && isEmpty(familyMember[i].familyType)) {
-            delete familyMember[i];
+            employeeData.familyMember.splice(i,1);
         }
-    }
-    if (familyMember.length = 0) {
-        employeeData.familyMember = [];
     }
 
     let location = employeeData.location;
-    for (var i = 0; i < grade.length; i++) {
+    for (var i = 0; i < location.length; i++) {
         if (isEmpty(location[i].officeStartDate) && isEmpty(location[i].officeEndDate) && isEmpty(location[i].officeLocation) && isEmpty(location[i].officeAddress)) {
-            delete location[i];
+            employeeData.location.splice(i,1);
         }
-    }
-    if (location.length = 0) {
-        employeeData.location = [];
     }
 
     return employeeData;

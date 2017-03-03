@@ -6,7 +6,7 @@ const newEmployee = (state = {}, action) => {
         case C.CHANGE_NEW_EMPLOYEE:
             return action.employeeData;
         default:
-            return state
+            return state;
     }
     return state;
 }

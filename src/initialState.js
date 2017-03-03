@@ -7,6 +7,16 @@ const initialState = {
     "currentEmployee": null,
     "currentTabLocation": '',
     "editedEmployee": null,
+    "fetchingEmployee": false,
+    "lookUpData": {
+        "gender": [],
+        "statusMarital": [],
+        "status":[],
+        "grade": [],
+        "division": [],
+        "familyType": [],
+        "location": []
+    },
     "newEmployee": setDefaultEmployee(),
     "openDialog": {
         "gradeDialog": false,

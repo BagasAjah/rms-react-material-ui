@@ -17,8 +17,6 @@ import {grey500} from 'material-ui/styles/colors';
 
 import { parseStringToDate } from  "../../lib/employee/employeeHelper"
 
-import lookupData from "../../dummy_data/lookupData"
-
 const style = {
     headerStyle:{
         font: "bold"
@@ -135,12 +133,16 @@ class EmployeeTabFamilyMember extends Component {
                 </TableRowColumn>
             </TableRow>
         ];
-        var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
-            <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
-        );
-        var lookupTypeMenuItem = lookupData.familyType.map(lookupType =>
-            <MenuItem key= {lookupType.lookupCode} value={lookupType.lookupCode} primaryText={lookupType.lookupValue} />
-        );
+        if (this.props.lookUpData.gender.length >0 ) {
+            var lookupGenderMenuItem = this.props.lookUpData.gender.map(lookupGender =>
+                <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
+            );
+        }
+        if (this.props.lookUpData.familyType.length >0 ) {
+            var lookupTypeMenuItem = this.props.lookUpData.familyType.map(lookupType =>
+                <MenuItem key= {lookupType.lookupCode} value={lookupType.lookupCode} primaryText={lookupType.lookupValue} />
+            );
+        }
         var employeeNotFound = true;
         if (this.props.currentEmployee) {
             var familyMember = this.props.currentEmployee.familyMember;
@@ -236,6 +238,7 @@ class EmployeeTabFamilyMember extends Component {
 
 EmployeeTabFamilyMember.propTypes = {
     currentEmployee: PropTypes.object,
+    lookUpData : PropTypes.object,
     newEmployee: PropTypes.object,
     openDialog: PropTypes.object,
     openValidationMessage: PropTypes.object,

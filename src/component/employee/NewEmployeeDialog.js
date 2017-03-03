@@ -33,9 +33,12 @@ class NewEmployeeDialog extends Component {
         this.handlePrev = this.handlePrev.bind(this);
     }
 
+    componentDidMount = () => {
+        this.addNewEmployee = this.addNewEmployee.bind(this);
+    }
+
 
     addNewEmployee = (employeeData) => {
-
         this.props.addCurrentEmployee(handleDataBeforeSaveOrUpdate(employeeData));
     }
 
@@ -64,7 +67,6 @@ class NewEmployeeDialog extends Component {
         });
         if(stepIndex > 5){
             this.addNewEmployee(this.props.newEmployee);
-            this.props.handleOpenDialogChanged('newEmployeeDialog', false);
         }
     }
 
@@ -112,13 +114,8 @@ class NewEmployeeDialog extends Component {
                     <h2>Employee Address</h2>
                 </div>);
           case 5:
-            return (
-                <div>
-                    <h2>Employee Location Details</h2>
-                    <EmployeeLocationDetailDialog
-                        pageMode={'NEW'} />
-                </div>);
           case 6:
+          case 7:
             return (
                 <div>
                     <h2>Employee Location Details</h2>

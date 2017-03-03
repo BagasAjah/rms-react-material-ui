@@ -16,7 +16,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import {grey500} from 'material-ui/styles/colors';
 
 import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
-import lookupData from "../../dummy_data/lookupData"
 import { handleEmployeeDetailsInfo, parseStringToDate } from "../../lib/employee/employeeHelper"
 
 const styles = {
@@ -108,11 +107,11 @@ class EmployeeTabGradeHistory extends Component {
         var employeeNotFound = true;
         if (this.props.currentEmployee) {
             var gradeHistory = this.props.currentEmployee.gradeHistory;
-
-            var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
-                <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
-            );
-
+            if (this.props.lookUpData.grade.length >0 ) {
+                var lookupGradeMenuItem = this.props.lookUpData.grade.map(lookupGrade =>
+                    <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
+                );
+            }
             var startDate = parseStringToDate(gradeHistory.startDate);
             var endDate = parseStringToDate(gradeHistory.endDate);
 
@@ -209,6 +208,7 @@ class EmployeeTabGradeHistory extends Component {
 EmployeeTabGradeHistory.propTypes = {
     currentEmployee: PropTypes.object,
     openDialog: PropTypes.object,
+    lookUpData : PropTypes.object,
     pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
     viewMode: PropTypes.bool,
     setSavedEmployee: PropTypes.func,

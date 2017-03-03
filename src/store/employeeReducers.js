@@ -5,6 +5,8 @@ import currentEmployee from './employee/currentEmployee'
 import currentTabLocation from './employee/currentTabLocation'
 import employees from './employee/employees'
 import editedEmployee from './employee/editedEmployee'
+import fetchingEmployee from './employee/fetchingEmployee'
+import lookUpData from './employee/lookUpData'
 import newEmployee from './employee/newEmployee'
 import openDialog from './employee/openDialog'
 import openValidationMessage from './employee/openValidationMessage'
@@ -19,6 +21,8 @@ export default combineReducers({
     currentTabLocation,
     employees,
     editedEmployee,
+    fetchingEmployee,
+    lookUpData,
     newEmployee,
     openDialog,
     openValidationMessage,

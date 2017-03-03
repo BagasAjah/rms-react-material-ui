@@ -5,7 +5,6 @@ import DatePicker from 'material-ui/DatePicker';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
-import lookupData from "../../dummy_data/lookupData"
 import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
 
 const styles = {
@@ -65,9 +64,11 @@ class EmployeeGradeDialog extends Component {
             <MenuItem key= {dsData} value={dsData} primaryText={"DS"+dsData} />
         );
 
-        var lookupGradeMenuItem = lookupData.grade.map(lookupGrade =>
-            <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
-        );
+        if (this.props.lookUpData.grade.length >0 ) {
+            var lookupGradeMenuItem = this.props.lookUpData.grade.map(lookupGrade =>
+                <MenuItem key= {lookupGrade.lookupCode} value={lookupGrade.lookupCode} primaryText={lookupGrade.lookupValue} />
+            );
+        }
         return(
             <div>
                 <SelectField
@@ -112,6 +113,7 @@ class EmployeeGradeDialog extends Component {
 
 EmployeeGradeDialog.propTypes = {
     currentEmployee: PropTypes.object,
+    lookUpData : PropTypes.object,
     newEmployee: PropTypes.object,
     openValidationMessage: PropTypes.object,
     pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
