@@ -5,6 +5,7 @@ import currentEmployee from './employee/currentEmployee'
 import currentTabLocation from './employee/currentTabLocation'
 import employees from './employee/employees'
 import editedEmployee from './employee/editedEmployee'
+import enableToggle from './employee/enableToggle'
 import fetchingEmployee from './employee/fetchingEmployee'
 import lookUpData from './employee/lookUpData'
 import newEmployee from './employee/newEmployee'
@@ -21,6 +22,7 @@ export default combineReducers({
     currentTabLocation,
     employees,
     editedEmployee,
+    enableToggle,
     fetchingEmployee,
     lookUpData,
     newEmployee,

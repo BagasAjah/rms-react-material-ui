@@ -22,6 +22,12 @@ export const changeOpenDialogValue = (fieldName, value) => ({
     value: value
 })
 
+export const changeToggleValue = (fieldName, value) => ({
+    type: C.CHANGE_TOGGLE_VALUE,
+    fieldName: fieldName,
+    value: value
+})
+
 export const changePathValue = (value) => ({
     type: C.CHANGE_PATH_VALUE,
     value: value

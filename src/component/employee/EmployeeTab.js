@@ -18,7 +18,7 @@ import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
 import EmployeeTabLocation from "../containers/employee/EmployeeTabLocation"
 
-import { handleDataBeforeSaveOrUpdate } from  "../../lib/employee/employeeHelper"
+import { handleDataBeforeSaveOrUpdate, validateEmployeeDetails } from  "../../lib/employee/employeeHelper"
 
 class EmployeeTab extends Component {
 
@@ -41,9 +41,15 @@ class EmployeeTab extends Component {
     }
 
     updateButtonClick = () => {
-        this.props.handleStateChanged('viewMode', true);
-        this.props.handleStateChanged('selectedIndex', null);
-        this.props.updateCurrentEmployee(handleDataBeforeSaveOrUpdate(this.props.editedEmployee));
+        if (validateEmployeeDetails(this.props.editedEmployee)) {
+            this.props.handleOpenValidationMessage('detailValidation', true);
+            this.props.handleStateChanged('currentTabLocation', 'details');
+        } else {
+            this.props.handleStateChanged('viewMode', true);
+            this.props.handleStateChanged('selectedIndex', null);
+            this.props.handleOpenValidationMessage('detailValidation', false);
+            this.props.updateCurrentEmployee(handleDataBeforeSaveOrUpdate(this.props.editedEmployee));
+        }
     }
 
     editButtonClick = () => {

@@ -145,6 +145,9 @@ body {
     padding-left: 10px;
     padding-top: 10px;
 }
+.toggle-position{
+    text-align: right;
+}
 .footer-content{
     width: 100%;
     background: #5c6bc0;

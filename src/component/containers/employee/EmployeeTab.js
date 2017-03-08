@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTab from "../../employee/EmployeeTab"
 import { handleStateChanged } from "../../../lib/employee/employeeHelper";
-import { changeViewModeValue, changePathValue, deleteCurrentEmployee, updateCurrentEmployee } from "../../action/EmployeeActions"
+import { changeOpenValidationMessage, changeViewModeValue, changePathValue, deleteCurrentEmployee, updateCurrentEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({
     allEmployee: state.allEmployee,
@@ -28,7 +28,12 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(
             deleteCurrentEmployee(employeeGuid)
         )
-	}
+	},
+    handleOpenValidationMessage(type, value) {
+        dispatch(
+            changeOpenValidationMessage(type, value)
+        )
+    },
 })
 
 const employeeTab = connect(mapStateToProps, mapDispatchToProps)(EmployeeTab);

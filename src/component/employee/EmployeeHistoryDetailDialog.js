@@ -3,9 +3,12 @@ import update from 'react-addons-update';
 
 import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
 
 import ActionAdd from 'material-ui/svg-icons/content/add-circle';
-import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
+import {handleEmployeeDetailsInfo, isEmpty} from "../../lib/employee/employeeHelper"
+
+const validationErrorMessage = "This field is required!";
 
 class EmployeeHistoryDetailDialog extends Component {
     constructor(props) {
@@ -16,6 +19,8 @@ class EmployeeHistoryDetailDialog extends Component {
         this.handleCompanyChanged = this.handleCompanyChanged.bind(this);
         this.handlePositionChanged = this.handlePositionChanged.bind(this);
         this.handleJobDescChanged = this.handleJobDescChanged.bind(this);
+        this.handleToggleChanged = this.handleToggleChanged.bind(this);
+        this.showErrorMessage = this.showErrorMessage.bind(this);
     }
 
     handleStartDateChanged = (e, value) => {
@@ -49,9 +54,21 @@ class EmployeeHistoryDetailDialog extends Component {
     }
 
     addNewHistoryJobDesc = () => {
-        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {$push: [['']]});
+        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {$push: ['']});
         var updatedEmployee = handleEmployeeDetailsInfo('history', 'jobDesc', updatedJobDesc, this.props.newEmployee);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
+    }
+
+    handleToggleChanged = (e, isInputChecked) => {
+        this.props.handleToggleChanged('enableHistoryToggle', isInputChecked);
+    }
+
+    showErrorMessage = (validator, fieldValue, toggle) => {
+        if (validator && isEmpty(fieldValue) && toggle) {
+            return validationErrorMessage;
+        } else {
+            return '';
+        }
     }
 
     render = () => {
@@ -67,39 +84,60 @@ class EmployeeHistoryDetailDialog extends Component {
         ));
         return(
             <div>
+                <Toggle
+                  label="Enable History"
+                  defaultToggled={true}
+                  className='toggle-position'
+                  onToggle={(e, isInputChecked) => this.handleToggleChanged(e, isInputChecked)}
+                />
                 <DatePicker
                     className='detail-dialog'
                     floatingLabelText="History Start Date"
-                    value={this.props.newEmployee.history[0].historyStartDate}
+                    disabled={!this.props.enableToggle.enableHistoryToggle}
+                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].historyStartDate : ''}
                     onChange={(e, value) => this.handleStartDateChanged(e, value)}
+                    errorText={this.showErrorMessage(
+                        this.props.openValidationMessage.historyValidation, this.props.newEmployee.history[0].historyStartDate, this.props.enableToggle.enableHistoryToggle
+                    )}
                     autoOk={true} />
                 <DatePicker
                     className='detail-dialog'
                     floatingLabelText="History End Date"
-                    value={this.props.newEmployee.history[0].historyEndDate}
+                    disabled={!this.props.enableToggle.enableHistoryToggle}
+                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].historyEndDate : ''}
                     onChange={(e, value) => this.handleEndDateChanged(e, value)}
                     autoOk={true} />
                 <TextField
                     className='detail-dialog'
                     floatingLabelText="Company Name"
-                    value={this.props.newEmployee.history[0].company}
+                    disabled={!this.props.enableToggle.enableHistoryToggle}
+                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].company : ''}
                     onChange={(e, value) => this.handleCompanyChanged(e, value)}
+                    errorText={this.showErrorMessage(
+                        this.props.openValidationMessage.historyValidation, this.props.newEmployee.history[0].company, this.props.enableToggle.enableHistoryToggle
+                    )}
                     underlineShow={true}/>
                 <TextField
                     className='detail-dialog'
                     style={{paddingLeft:10}}
                     floatingLabelText="Position"
-                    value={this.props.newEmployee.history[0].position}
+                    disabled={!this.props.enableToggle.enableHistoryToggle}
+                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].position : ''}
                     onChange={(e, value) => this.handlePositionChanged(e, value)}
+                    errorText={this.showErrorMessage(
+                        this.props.openValidationMessage.historyValidation, this.props.newEmployee.history[0].position, this.props.enableToggle.enableHistoryToggle
+                    )}
                     underlineShow={true}/><br />
                 <div className="detail-dialog" style={{width:'100%'}}>
                     <div className="detail-dialog" style={{paddingLeft:0}}>Job Description</div>
                     <div className="detail-dialog" style={{paddingLeft:10}}>
-                        <ActionAdd onClick={this.addNewHistoryJobDesc}/>
+                        <ActionAdd
+                            onClick={this.addNewHistoryJobDesc}
+                            disabled={!this.props.enableToggle.enableHistoryToggle}/>
                     </div>
                 </div>
                 <div className="detail-dialog" style={{width:'100%'}}>
-                    {(jobDescListRender.length>0)? jobDescListRender : ''}
+                    {(jobDescListRender.length>0 && this.props.enableToggle.enableHistoryToggle)? jobDescListRender : ''}
                 </div>
             </div>
         )

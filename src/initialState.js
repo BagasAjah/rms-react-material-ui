@@ -25,8 +25,13 @@ const initialState = {
         "newEmployeeDialog": false,
     },
     "openValidationMessage": {
+        "detailValidation": false,
+        "historyValidation": false,
         "gradeValidation": false,
         "locationValidation": false,
+    },
+    "enableToggle" : {
+        "enableHistoryToggle": true,
     },
     "searchingText": '',
     "selectedJobDescIndex": null,

@@ -11,6 +11,8 @@ import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 
 import { parseStringToDate } from  "../../lib/employee/employeeHelper"
 
+const validationErrorMessage = "This field is required!";
+
 class EmployeeTabDetails extends Component {
 
     constructor(props) {
@@ -153,6 +155,7 @@ class EmployeeTabDetails extends Component {
                     ref={(input) => this.firstNameInput = input}
                     onChange={this.handleFirstNameChange}
                     value={this.props.currentEmployee ? this.props.currentEmployee.firstName : ''}
+                    errorText={this.props.openValidationMessage.detailValidation && (this.props.currentEmployee.firstName =='') ? validationErrorMessage:""}
                     disabled={this.props.viewMode}
                 /><br />
                 <TextField
@@ -166,6 +169,7 @@ class EmployeeTabDetails extends Component {
                     floatingLabelText="Gender"
                     value={this.props.currentEmployee ? this.props.currentEmployee.gender : ''}
                     onChange={(e, i, value) => this.handleGenderChange(e, i, value)}
+                    errorText={this.props.openValidationMessage.detailValidation && (this.props.currentEmployee.gender =='') ? validationErrorMessage:""}
                     disabled={this.props.viewMode}>
                     {lookupGenderMenuItem}
                 </SelectField><br />
@@ -174,6 +178,7 @@ class EmployeeTabDetails extends Component {
                     value={dob}
                     onChange={(e, value) => this.handleDobChange(e, value)}
                     autoOk={true}
+                    errorText={this.props.openValidationMessage.detailValidation && (dob =='') ? validationErrorMessage:""}
                     disabled={this.props.viewMode}
                 />
                 <TextField

@@ -131,9 +131,10 @@ export const handleDataBeforeSaveOrUpdate = employeeData => {
 
     let history = employeeData.history;
     for (var i = 0; i < history.length; i++) {
-        let jobdesc = history.jobDesc;
+        let jobdesc = history[i].jobDesc;
+        let isJobdescEmpty = isJobDescEmpty(jobdesc);
         if (isEmpty(history[i].historyStartDate) && isEmpty(history[i].historyEndDate) && isEmpty(history[i].company)
-            && isEmpty(history[i].position) && (jobdesc && jobdesc.length == 0)) {
+            && isEmpty(history[i].position) && isJobdescEmpty) {
             employeeData.history.splice(i,1);
         }
     }
@@ -153,6 +154,32 @@ export const handleDataBeforeSaveOrUpdate = employeeData => {
     }
 
     return employeeData;
+}
+
+export const validateEmployeeDetails = employee => {
+    if (isEmpty(employee.firstName) || isEmpty(employee.gender) || isEmpty(employee.dob)){
+        return true;
+    }
+    return false;
+}
+
+export const validateEmployeeHistory = history => {
+    if (isEmpty(history.historyStartDate) || isEmpty(history.company) || isEmpty(history.position)){
+        return true;
+    }
+    return false;
+}
+
+export const isJobDescEmpty = jobDesc => {
+    if (jobDesc && jobDesc.length > 0) {
+        for (var i = 0; i < jobDesc.length; i++) {
+            console.dir(jobDesc[i]);
+            if(!isEmpty(jobDesc[i])){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 export const isEmpty = data => {

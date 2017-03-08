@@ -11,6 +11,8 @@ import EmployeeHistoryDetailDialog from "../containers/employee/EmployeeHistoryD
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import { handleDataBeforeSaveOrUpdate, validateEmployeeHistory } from  "../../lib/employee/employeeHelper"
+
 class EmployeeTabHistory extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +35,7 @@ class EmployeeTabHistory extends Component {
         });
         this.props.handleOpenDialogChanged('historyDialog', true);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
+        this.props.handleOpenValidationMessage('historyValidation', false);
     }
 
     closeDialogClick = () => {
@@ -40,19 +43,23 @@ class EmployeeTabHistory extends Component {
     }
 
     addNewHistory = () => {
-        var updatedEmployee = update(this.props.currentEmployee, {
-            'history': {
-                $push: [{
-                    historyStartDate: this.props.newEmployee.history[0].historyStartDate,
-                    historyEndDate: this.props.newEmployee.history[0].historyEndDate,
-                    company: this.props.newEmployee.history[0].company,
-                    position: this.props.newEmployee.history[0].position,
-                    jobDesc: this.props.newEmployee.history[0].jobDesc
-                }]
-            }
-        });
-        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
-        this.props.handleOpenDialogChanged('historyDialog', false);
+        if (validateEmployeeHistory(this.props.newEmployee.history[0]) && this.props.enableToggle.enableHistoryToggle) {
+            this.props.handleOpenValidationMessage('historyValidation', true);
+        } else {
+            var updatedEmployee = update(this.props.currentEmployee, {
+                'history': {
+                    $push: [{
+                        historyStartDate: this.props.newEmployee.history[0].historyStartDate,
+                        historyEndDate: this.props.newEmployee.history[0].historyEndDate,
+                        company: this.props.newEmployee.history[0].company,
+                        position: this.props.newEmployee.history[0].position,
+                        jobDesc: this.props.newEmployee.history[0].jobDesc
+                    }]
+                }
+            });
+            this.props.setSavedEmployee(handleDataBeforeSaveOrUpdate(updatedEmployee), this.props.pageMode);
+            this.props.handleOpenDialogChanged('historyDialog', false);
+        }
     }
 
     render = () => {
