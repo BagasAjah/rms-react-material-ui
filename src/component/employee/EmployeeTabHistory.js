@@ -11,7 +11,7 @@ import EmployeeHistoryDetailDialog from "../containers/employee/EmployeeHistoryD
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import { handleDataBeforeSaveOrUpdate, validateEmployeeHistory } from  "../../lib/employee/employeeHelper"
+import { setDefaultEmployee, handleDataBeforeSaveOrUpdate, validateEmployeeHistory } from  "../../lib/employee/employeeHelper"
 
 class EmployeeTabHistory extends Component {
     constructor(props) {
@@ -22,19 +22,8 @@ class EmployeeTabHistory extends Component {
     }
 
     openDialogClick = () => {
-        var updatedEmployee = update(this.props.newEmployee, {
-            'history': {
-                0: {
-                    'historyStartDate':  {$set: null},
-                    'historyEndDate': {$set: null},
-                    'company': {$set: ''},
-                    'position': {$set: ''},
-                    'jobDesc': {$set: []}
-                }
-            }
-        });
         this.props.handleOpenDialogChanged('historyDialog', true);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
+        this.props.handleStateChanged('newEmployee', setDefaultEmployee());
         this.props.handleOpenValidationMessage('historyValidation', false);
     }
 

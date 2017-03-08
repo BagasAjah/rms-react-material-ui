@@ -16,7 +16,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import {grey500} from 'material-ui/styles/colors';
 
 import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
-import { handleEmployeeDetailsInfo, parseStringToDate } from "../../lib/employee/employeeHelper"
+import { setDefaultEmployee, handleEmployeeDetailsInfo, parseStringToDate } from "../../lib/employee/employeeHelper"
 
 const styles = {
   customWidthDialog: {
@@ -36,19 +36,9 @@ class EmployeeTabGradeHistory extends Component {
     }
 
     openDialogClick = () => {
-        var updatedEmployee = update(this.props.newEmployee, {
-            'gradeHistory': {
-                0: {
-                    'ds':  {$set: ''},
-                    'grade': {$set: ''},
-                    'startDate': {$set: null},
-                    'endDate': {$set: new Object}
-                }
-            }
-        });
         this.props.handleOpenDialogChanged('gradeDialog', true);
         this.props.handleOpenValidationMessage('gradeValidation', false);
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
+        this.props.handleStateChanged('newEmployee', setDefaultEmployee());
     }
 
     closeDialogClick = () => {

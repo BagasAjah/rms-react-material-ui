@@ -6,9 +6,7 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 
 import ActionAdd from 'material-ui/svg-icons/content/add-circle';
-import {handleEmployeeDetailsInfo, isEmpty} from "../../lib/employee/employeeHelper"
-
-const validationErrorMessage = "This field is required!";
+import {handleEmployeeDetailsInfo, showErrorMessage} from "../../lib/employee/employeeHelper"
 
 class EmployeeHistoryDetailDialog extends Component {
     constructor(props) {
@@ -20,7 +18,6 @@ class EmployeeHistoryDetailDialog extends Component {
         this.handlePositionChanged = this.handlePositionChanged.bind(this);
         this.handleJobDescChanged = this.handleJobDescChanged.bind(this);
         this.handleToggleChanged = this.handleToggleChanged.bind(this);
-        this.showErrorMessage = this.showErrorMessage.bind(this);
     }
 
     handleStartDateChanged = (e, value) => {
@@ -63,14 +60,6 @@ class EmployeeHistoryDetailDialog extends Component {
         this.props.handleToggleChanged('enableHistoryToggle', isInputChecked);
     }
 
-    showErrorMessage = (validator, fieldValue, toggle) => {
-        if (validator && isEmpty(fieldValue) && toggle) {
-            return validationErrorMessage;
-        } else {
-            return '';
-        }
-    }
-
     render = () => {
         var jobDescList = this.props.newEmployee.history[0].jobDesc;
         var jobDescListRender = jobDescList.map((jobDescList, index) => (
@@ -86,7 +75,7 @@ class EmployeeHistoryDetailDialog extends Component {
             <div>
                 <Toggle
                   label="Enable History"
-                  defaultToggled={true}
+                  defaultToggled={this.props.enableToggle.enableHistoryToggle}
                   className='toggle-position'
                   onToggle={(e, isInputChecked) => this.handleToggleChanged(e, isInputChecked)}
                 />
@@ -94,9 +83,9 @@ class EmployeeHistoryDetailDialog extends Component {
                     className='detail-dialog'
                     floatingLabelText="History Start Date"
                     disabled={!this.props.enableToggle.enableHistoryToggle}
-                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].historyStartDate : ''}
+                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].historyStartDate : null}
                     onChange={(e, value) => this.handleStartDateChanged(e, value)}
-                    errorText={this.showErrorMessage(
+                    errorText={showErrorMessage(
                         this.props.openValidationMessage.historyValidation, this.props.newEmployee.history[0].historyStartDate, this.props.enableToggle.enableHistoryToggle
                     )}
                     autoOk={true} />
@@ -104,7 +93,7 @@ class EmployeeHistoryDetailDialog extends Component {
                     className='detail-dialog'
                     floatingLabelText="History End Date"
                     disabled={!this.props.enableToggle.enableHistoryToggle}
-                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].historyEndDate : ''}
+                    value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].historyEndDate : null}
                     onChange={(e, value) => this.handleEndDateChanged(e, value)}
                     autoOk={true} />
                 <TextField
@@ -113,7 +102,7 @@ class EmployeeHistoryDetailDialog extends Component {
                     disabled={!this.props.enableToggle.enableHistoryToggle}
                     value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].company : ''}
                     onChange={(e, value) => this.handleCompanyChanged(e, value)}
-                    errorText={this.showErrorMessage(
+                    errorText={showErrorMessage(
                         this.props.openValidationMessage.historyValidation, this.props.newEmployee.history[0].company, this.props.enableToggle.enableHistoryToggle
                     )}
                     underlineShow={true}/>
@@ -124,7 +113,7 @@ class EmployeeHistoryDetailDialog extends Component {
                     disabled={!this.props.enableToggle.enableHistoryToggle}
                     value={this.props.enableToggle.enableHistoryToggle ? this.props.newEmployee.history[0].position : ''}
                     onChange={(e, value) => this.handlePositionChanged(e, value)}
-                    errorText={this.showErrorMessage(
+                    errorText={showErrorMessage(
                         this.props.openValidationMessage.historyValidation, this.props.newEmployee.history[0].position, this.props.enableToggle.enableHistoryToggle
                     )}
                     underlineShow={true}/><br />

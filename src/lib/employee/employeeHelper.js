@@ -157,7 +157,7 @@ export const handleDataBeforeSaveOrUpdate = employeeData => {
 }
 
 export const validateEmployeeDetails = employee => {
-    if (isEmpty(employee.firstName) || isEmpty(employee.gender) || isEmpty(employee.dob)){
+    if (isEmpty(employee.firstName) || isEmpty(employee.gender) || isEmpty(employee.dob) || isEmpty(employee.hireDate)){
         return true;
     }
     return false;
@@ -170,6 +170,13 @@ export const validateEmployeeHistory = history => {
     return false;
 }
 
+export const showErrorMessage = (validator, fieldValue, toggle) => {
+    if (validator && isEmpty(fieldValue) && toggle) {
+        return "This field is required!";
+    } else {
+        return '';
+    }
+}
 export const isJobDescEmpty = jobDesc => {
     if (jobDesc && jobDesc.length > 0) {
         for (var i = 0; i < jobDesc.length; i++) {

@@ -11,6 +11,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import EmployeeLocationDetail from "../containers/employee/EmployeeLocationDetail"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
+import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
+
 class EmployeeTabLocation extends Component {
     constructor(props) {
         super(props);
@@ -20,17 +22,7 @@ class EmployeeTabLocation extends Component {
     }
 
     openDialogClick = () => {
-        var updatedEmployee = update(this.props.newEmployee, {
-            'location': {
-                0: {
-                    'officeStartDate':  {$set: null},
-                    'officeEndDate': {$set: new Object},
-                    'officeLocation': {$set: ''},
-                    'officeAddress': {$set: ''}
-                }
-            }
-        });
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
+        this.props.handleStateChanged('newEmployee', setDefaultEmployee());
         this.props.handleStateChanged('selectedIndex', null);
         this.props.handleOpenDialogChanged('locationDialog', true);
         this.props.handleOpenValidationMessage('locationValidation', false);

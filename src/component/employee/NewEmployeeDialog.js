@@ -18,7 +18,7 @@ import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
-import { handleDataBeforeSaveOrUpdate, setDefaultEmployee } from "../../lib/employee/employeeHelper";
+import { handleDataBeforeSaveOrUpdate, setDefaultEmployee, validateEmployeeDetails, validateEmployeeHistory } from "../../lib/employee/employeeHelper";
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -61,6 +61,20 @@ class NewEmployeeDialog extends Component {
 
     handleNext = () => {
         const {stepIndex} = this.state;
+        if (stepIndex == 0) {
+            if (validateEmployeeDetails(this.props.newEmployee)) {
+                this.props.handleOpenValidationMessage('detailValidation', true);
+                return;
+            }
+            this.props.handleOpenValidationMessage('detailValidation', false);
+            this.props.handleOpenValidationMessage('historyValidation', false);
+        } else if (stepIndex == 1) {
+            if (validateEmployeeHistory(this.props.newEmployee.history[0]) && this.props.enableToggle.enableHistoryToggle) {
+                this.props.handleOpenValidationMessage('historyValidation', true);
+                return;
+            }
+            this.props.handleOpenValidationMessage('historyValidation', false);
+        }
         this.setState({
           stepIndex: stepIndex + 1,
           finished: stepIndex >= 5,

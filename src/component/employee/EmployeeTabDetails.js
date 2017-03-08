@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 
 import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
 
-import { parseStringToDate } from  "../../lib/employee/employeeHelper"
+import { parseStringToDate, showErrorMessage } from  "../../lib/employee/employeeHelper"
 
 const validationErrorMessage = "This field is required!";
 
@@ -111,13 +111,13 @@ class EmployeeTabDetails extends Component {
     render = () => {
         var dob,hireDate,suspendDate;
         if (this.props.currentEmployee) {
-            dob = parseStringToDate(this.props.currentEmployee.dob);
-            hireDate = parseStringToDate(this.props.currentEmployee.hireDate);
-            suspendDate = parseStringToDate(this.props.currentEmployee.suspendDate);
+            dob = this.props.currentEmployee.dob == null ? null : parseStringToDate(this.props.currentEmployee.dob);
+            hireDate = this.props.currentEmployee.hireDate == null ? null : parseStringToDate(this.props.currentEmployee.hireDate);
+            suspendDate = this.props.currentEmployee.suspendDate == null ? null : parseStringToDate(this.props.currentEmployee.suspendDate);
         } else {
-            dob = new Object;
-            hireDate = new Object;
-            suspendDate = new Object;
+            dob = null;
+            hireDate = null;
+            suspendDate = null;
         }
 
         if (this.props.lookUpData.gender.length >0 ) {
@@ -155,7 +155,8 @@ class EmployeeTabDetails extends Component {
                     ref={(input) => this.firstNameInput = input}
                     onChange={this.handleFirstNameChange}
                     value={this.props.currentEmployee ? this.props.currentEmployee.firstName : ''}
-                    errorText={this.props.openValidationMessage.detailValidation && (this.props.currentEmployee.firstName =='') ? validationErrorMessage:""}
+                    errorText={showErrorMessage(this.props.openValidationMessage.detailValidation,
+                        this.props.currentEmployee == null ? '' : this.props.currentEmployee.firstName, true)}
                     disabled={this.props.viewMode}
                 /><br />
                 <TextField
@@ -169,7 +170,8 @@ class EmployeeTabDetails extends Component {
                     floatingLabelText="Gender"
                     value={this.props.currentEmployee ? this.props.currentEmployee.gender : ''}
                     onChange={(e, i, value) => this.handleGenderChange(e, i, value)}
-                    errorText={this.props.openValidationMessage.detailValidation && (this.props.currentEmployee.gender =='') ? validationErrorMessage:""}
+                    errorText={showErrorMessage(this.props.openValidationMessage.detailValidation,
+                        this.props.currentEmployee == null ? '' : this.props.currentEmployee.gender, true)}
                     disabled={this.props.viewMode}>
                     {lookupGenderMenuItem}
                 </SelectField><br />
@@ -178,7 +180,7 @@ class EmployeeTabDetails extends Component {
                     value={dob}
                     onChange={(e, value) => this.handleDobChange(e, value)}
                     autoOk={true}
-                    errorText={this.props.openValidationMessage.detailValidation && (dob =='') ? validationErrorMessage:""}
+                    errorText={showErrorMessage(this.props.openValidationMessage.detailValidation, dob , true)}
                     disabled={this.props.viewMode}
                 />
                 <TextField
@@ -230,6 +232,7 @@ class EmployeeTabDetails extends Component {
                     value={hireDate}
                     onChange={(e, value) => this.handleHireDateChange(e, value)}
                     autoOk={true}
+                    errorText={showErrorMessage(this.props.openValidationMessage.detailValidation, hireDate, true)}
                     disabled={this.props.viewMode}
                 />
                 <SelectField
