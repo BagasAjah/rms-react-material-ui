@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeTabFamilyMember from "../../employee/EmployeeTabFamilyMember"
 import { handleStateChanged } from "../../../lib/employee/employeeHelper";
-import { changeEditEmployees, changeNewEmployee, changeOpenDialogValue, changeOpenValidationMessage } from "../../action/EmployeeActions"
+import { changeEditEmployees, changeNewEmployee, changeOpenValidationMessage } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
+    enableToggle: state.enableToggle,
     currentEmployee: props.currentEmployee,
     lookUpData : state.lookUpData,
     newEmployee: state.newEmployee,
@@ -26,6 +27,11 @@ const mapDispatchToProps = (dispatch) => ({
                 changeNewEmployee(employeesData)
             )
         }
+    },
+    handleOpenValidationMessage(type, value) {
+        dispatch(
+            changeOpenValidationMessage(type, value)
+        )
     },
 	handleStateChanged(type, value){
         dispatch(

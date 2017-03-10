@@ -11,7 +11,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import EmployeeLocationDetail from "../containers/employee/EmployeeLocationDetail"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
-import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
+import { handleDataBeforeSaveOrUpdate, setDefaultEmployee, validateEmployeeLocation } from "../../lib/employee/employeeHelper";
 
 class EmployeeTabLocation extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class EmployeeTabLocation extends Component {
 
     addOfficeLocationClick = () => {
         var location = this.props.newEmployee.location[0];
-        if(location.officeAddress == '' || location.officeLocation =='' || location.officeStartDate == null) {
+        if(validateEmployeeLocation(location) && this.props.enableToggle.enableLocationToggle) {
             this.props.handleOpenValidationMessage('locationValidation', true);
         } else {
             var currentEmployee = this.props.currentEmployee;
@@ -46,7 +46,7 @@ class EmployeeTabLocation extends Component {
                     officeAddress: location.officeAddress
                 }]
             }});
-            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+            this.props.setSavedEmployee(handleDataBeforeSaveOrUpdate(updatedEmployee), this.props.pageMode);
             this.closeDialogClick();
         }
     }

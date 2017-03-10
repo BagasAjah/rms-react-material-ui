@@ -16,14 +16,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import {grey500} from 'material-ui/styles/colors';
 
 import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
-import { setDefaultEmployee, handleEmployeeDetailsInfo, parseStringToDate } from "../../lib/employee/employeeHelper"
-
-const styles = {
-  customWidthDialog: {
-      width: '50%',
-      maxWidth: 'none',
-  }
-};
+import { setDefaultEmployee, handleEmployeeDetailsInfo, handleDataBeforeSaveOrUpdate, parseStringToDate, validateEmployeeGrade } from "../../lib/employee/employeeHelper"
 
 class EmployeeTabGradeHistory extends Component {
 
@@ -56,11 +49,10 @@ class EmployeeTabGradeHistory extends Component {
 
     addGradeHistoryClick = () => {
         var gradeHistory = this.props.newEmployee.gradeHistory[0];
-        if(gradeHistory.ds == '' || gradeHistory.grade =='' || gradeHistory.startDate == null) {
+        if(validateEmployeeGrade(gradeHistory) && this.props.enableToggle.enableGradeToggle) {
             this.props.handleOpenValidationMessage('gradeValidation', true);
         } else {
             var currentEmployee = this.props.currentEmployee;
-            currentEmployee.gradeHistory.reverse();
             var updatedEmployee = update(currentEmployee, {'gradeHistory': {
                 $push: [{
                     ds: gradeHistory.ds,
@@ -69,8 +61,7 @@ class EmployeeTabGradeHistory extends Component {
                     endDate: gradeHistory.endDate
                 }]
             }});
-            updatedEmployee.gradeHistory.reverse();
-            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+            this.props.setSavedEmployee(handleDataBeforeSaveOrUpdate(updatedEmployee), this.props.pageMode);
             this.closeDialogClick();
         }
     }
@@ -173,14 +164,14 @@ class EmployeeTabGradeHistory extends Component {
                 </Table>
                 }
                 <FloatingActionButton className="btn-add-tab-position"
-                    backgroundColor={grey500}
+                    secondary={true}
                     onClick={this.openDialogClick}
                     disabled={this.props.viewMode}>
                     <ContentAdd />
                 </FloatingActionButton>
                 <Dialog
                     title="New Grade History"
-                    contentStyle={styles.customWidthDialog}
+                    contentStyle={{width: '65%',maxWidth: 'none'}}
                     actions={actionsButton}
                     modal={false}
                     open={this.props.openDialog.gradeDialog}

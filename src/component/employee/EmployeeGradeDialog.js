@@ -4,25 +4,26 @@ import update from 'react-addons-update';
 import DatePicker from 'material-ui/DatePicker';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import Toggle from 'material-ui/Toggle';
 
-import {handleEmployeeDetailsInfo} from "../../lib/employee/employeeHelper"
+import { handleEmployeeDetailsInfo, showErrorMessage } from "../../lib/employee/employeeHelper"
 
 const styles = {
   customWidthField: {
     width: 150
   },
-  customWidthDate: {
-    width: 200
+  customStyleDate: {
+    width: 200,
+    marginRight: 60
   }
 };
-
-const validationErrorMessage = "This field is required!";
 
 class EmployeeGradeDialog extends Component {
     constructor(props) {
         super(props);
         this.handleDsChange = this.handleDsChange.bind(this);
         this.handleGradeChange = this.handleGradeChange.bind(this);
+        this.handleToggleChanged  = this.handleToggleChanged.bind(this);
         this.handleStartDateChange = this.handleStartDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
     }
@@ -45,6 +46,10 @@ class EmployeeGradeDialog extends Component {
     handleEndDateChange = (e, value) => {
         var updatedEmployee = handleEmployeeDetailsInfo('gradeHistory','endDate', value, this.props.newEmployee);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
+    }
+
+    handleToggleChanged = (e, isInputChecked) => {
+        this.props.handleToggleChanged('enableGradeToggle', isInputChecked);
     }
 
     render = () => {
@@ -71,13 +76,22 @@ class EmployeeGradeDialog extends Component {
         }
         return(
             <div>
+                <Toggle
+                  label="Enable Grade"
+                  defaultToggled={this.props.enableToggle.enableGradeToggle}
+                  className='toggle-position'
+                  onToggle={(e, isInputChecked) => this.handleToggleChanged(e, isInputChecked)}
+                />
                 <SelectField
                     className="grade-history-width"
                     style={styles.customWidthField}
                     floatingLabelText="DS"
                     maxHeight={200}
-                    value={this.props.newEmployee.gradeHistory[0].ds}
-                    errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].ds=='')?validationErrorMessage:""}
+                    disabled={!this.props.enableToggle.enableGradeToggle}
+                    value={this.props.enableToggle.enableGradeToggle ? this.props.newEmployee.gradeHistory[0].ds : ''}
+                    errorText={showErrorMessage(
+                        this.props.openValidationMessage.gradeValidation, this.props.newEmployee.gradeHistory[0].ds, this.props.enableToggle.enableGradeToggle
+                    )}
                     onChange={(e, i, value) => this.handleDsChange(e, i, value)}>
                     {lookupDS}
                 </SelectField>
@@ -86,24 +100,31 @@ class EmployeeGradeDialog extends Component {
                     style={styles.customWidthField}
                     floatingLabelText="Grade"
                     maxHeight={200}
-                    value={this.props.newEmployee.gradeHistory[0].grade}
-                    errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].grade=='')?validationErrorMessage:""}
+                    disabled={!this.props.enableToggle.enableGradeToggle}
+                    value={this.props.enableToggle.enableGradeToggle ? this.props.newEmployee.gradeHistory[0].grade : ''}
+                    errorText={showErrorMessage(
+                        this.props.openValidationMessage.gradeValidation, this.props.newEmployee.gradeHistory[0].grade, this.props.enableToggle.enableGradeToggle
+                    )}
                     onChange={(e, i, value) => this.handleGradeChange(e, i, value)}>
                     {lookupGradeMenuItem}
                 </SelectField>
                 <DatePicker
                     className="grade-history-width"
-                    style={styles.customWidthDate}
+                    style={styles.customStyleDate}
                     floatingLabelText="Start Date"
-                    value={this.props.newEmployee.gradeHistory[0].startDate}
-                    errorText={this.props.openValidationMessage.gradeValidation && (this.props.newEmployee.gradeHistory[0].startDate==null)?validationErrorMessage:""}
+                    disabled={!this.props.enableToggle.enableGradeToggle}
+                    value={this.props.enableToggle.enableGradeToggle ? this.props.newEmployee.gradeHistory[0].startDate : null}
+                    errorText={showErrorMessage(
+                        this.props.openValidationMessage.gradeValidation, this.props.newEmployee.gradeHistory[0].startDate, this.props.enableToggle.enableGradeToggle
+                    )}
                     onChange={(e, value) => this.handleStartDateChange(e, value)}
                     autoOk={true} />
                 <DatePicker
                     className="grade-history-width"
-                    style={styles.customWidthDate}
+                    style={styles.customStyleDate}
                     floatingLabelText="End Date"
-                    value={this.props.newEmployee.gradeHistory[0].endDate}
+                    disabled={!this.props.enableToggle.enableGradeToggle}
+                    value={this.props.enableToggle.enableGradeToggle ? this.props.newEmployee.gradeHistory[0].endDate : null}
                     onChange={(e, value) => this.handleEndDateChange(e, value)}
                     autoOk={true} />
             </div>

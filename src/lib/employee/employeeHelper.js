@@ -118,7 +118,7 @@ export const handleStateChanged = (type, value) => {
 }
 
 export const parseStringToDate = dateStr => (
-    dateStr !== null ? new Date(moment(dateStr).format("YYYY-MM-DD").toString()) : new Object
+    dateStr !== null ? new Date(moment(dateStr).format("YYYY-MM-DD").toString()) : null
 )
 
 export const handleDataBeforeSaveOrUpdate = employeeData => {
@@ -165,6 +165,27 @@ export const validateEmployeeDetails = employee => {
 
 export const validateEmployeeHistory = history => {
     if (isEmpty(history.historyStartDate) || isEmpty(history.company) || isEmpty(history.position)){
+        return true;
+    }
+    return false;
+}
+
+export const validateEmployeeGrade = grade => {
+    if (isEmpty(grade.ds) || isEmpty(grade.grade) || isEmpty(grade.startDate)){
+        return true;
+    }
+    return false;
+}
+
+export const validateEmployeeFamily = family => {
+    if (isEmpty(family.familyName) || isEmpty(family.familyType)){
+        return true;
+    }
+    return false;
+}
+
+export const validateEmployeeLocation = location => {
+    if (isEmpty(location.officeAddress) || isEmpty(location.officeLocation) || isEmpty(location.officeStartDate)){
         return true;
     }
     return false;

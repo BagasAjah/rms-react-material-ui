@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 
 import allEmployee from './employee/allEmployee'
-import currentEmployee from './employee/currentEmployee'
 import currentTabLocation from './employee/currentTabLocation'
 import employees from './employee/employees'
 import editedEmployee from './employee/editedEmployee'
@@ -18,7 +17,6 @@ import viewMode from './employee/viewMode'
 
 export default combineReducers({
     allEmployee,
-    currentEmployee,
     currentTabLocation,
     employees,
     editedEmployee,

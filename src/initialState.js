@@ -4,7 +4,6 @@ import { setDefaultEmployee } from "./lib/employee/employeeHelper"
 const initialState = {
     "allEmployee": [],
     "employees" : [],
-    "currentEmployee": null,
     "currentTabLocation": '',
     "editedEmployee": null,
     "fetchingEmployee": false,
@@ -28,10 +27,13 @@ const initialState = {
         "detailValidation": false,
         "historyValidation": false,
         "gradeValidation": false,
+        "familyValidation": false,
         "locationValidation": false,
     },
     "enableToggle" : {
         "enableHistoryToggle": true,
+        "enableGradeToggle": true,
+        "enableLocationToggle": true,
     },
     "searchingText": '',
     "selectedJobDescIndex": null,

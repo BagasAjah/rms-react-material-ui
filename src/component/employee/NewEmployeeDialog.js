@@ -18,7 +18,9 @@ import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
-import { handleDataBeforeSaveOrUpdate, setDefaultEmployee, validateEmployeeDetails, validateEmployeeHistory } from "../../lib/employee/employeeHelper";
+import { handleDataBeforeSaveOrUpdate, setDefaultEmployee,
+    validateEmployeeDetails, validateEmployeeHistory,
+    validateEmployeeGrade, validateEmployeeFamily } from "../../lib/employee/employeeHelper";
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -74,6 +76,23 @@ class NewEmployeeDialog extends Component {
                 return;
             }
             this.props.handleOpenValidationMessage('historyValidation', false);
+            this.props.handleOpenValidationMessage('gradeValidation', false);
+        } else if (stepIndex == 2) {
+            if (validateEmployeeGrade(this.props.newEmployee.gradeHistory[0]) && this.props.enableToggle.enableGradeToggle) {
+                this.props.handleOpenValidationMessage('gradeValidation', true);
+                return;
+            }
+            this.props.handleOpenValidationMessage('gradeValidation', false);
+            this.props.handleOpenValidationMessage('familyValidation', false);
+        } else if (stepIndex == 3) {
+            var familyMember = this.props.newEmployee.familyMember;
+            for (var i=0; i < familyMember.length; i++) {
+                if(validateEmployeeFamily(familyMember[i])){
+                    this.props.handleOpenValidationMessage('familyValidation', true);
+                    return;
+                }
+            }
+            this.props.handleOpenValidationMessage('familyValidation', false);
         }
         this.setState({
           stepIndex: stepIndex + 1,
@@ -87,10 +106,10 @@ class NewEmployeeDialog extends Component {
     handlePrev = () => {
         const {stepIndex} = this.state;
         if (stepIndex > 0) {
-          this.setState({
-            stepIndex: stepIndex - 1,
-            finished: false
-          });
+            this.setState({
+                stepIndex: stepIndex - 1,
+                finished: false
+            });
         }
     }
 
