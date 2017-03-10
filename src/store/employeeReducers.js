@@ -10,6 +10,7 @@ import lookUpData from './employee/lookUpData'
 import newEmployee from './employee/newEmployee'
 import openDialog from './employee/openDialog'
 import openValidationMessage from './employee/openValidationMessage'
+import totalEmployees from './employee/totalEmployees'
 import searchingText from './employee/searchingText'
 import selectedIndex from './employee/selectedIndex'
 import selectedJobDescIndex from './employee/selectedJobDescIndex'
@@ -26,6 +27,7 @@ export default combineReducers({
     newEmployee,
     openDialog,
     openValidationMessage,
+    totalEmployees,
     searchingText,
     selectedIndex,
     selectedJobDescIndex,

@@ -25,7 +25,7 @@ class EmployeeDetails extends Component {
     }
 
     componentDidMount = () => {
-        this.props.loadEmployeeData();
+        this.props.loadEmployeeData(0);
     }
 
     render = () => {

@@ -16,7 +16,10 @@ const constants = {
 	FECTHING_EMPLOYEE:                  "FECTHING_EMPLOYEE",
 	FILTERING:                          "FILTERING",
 	LOAD_EMLOYEE_DATA:                  "LOAD_EMLOYEE_DATA",
-	LOAD_AND_SET_EMLOYEE_DATA:          "LOAD_AND_SET_EMLOYEE_DATA"
+	LOAD_AND_SET_EMLOYEE_DATA:          "LOAD_AND_SET_EMLOYEE_DATA",
+
+    BASE_URL:                           "http://localhost:8080/api",
+    PAGE_DATA_SIZE:                     7
 }
 
 export default constants

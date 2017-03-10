@@ -35,6 +35,7 @@ const initialState = {
         "enableGradeToggle": true,
         "enableLocationToggle": true,
     },
+    "totalEmployees": 1,
     "searchingText": '',
     "selectedJobDescIndex": null,
     "selectedIndex": null,

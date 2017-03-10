@@ -60,20 +60,20 @@ export const fetchEmployee = value => ({
     value
 })
 
-const fetchingEmployee = () => {
-    return fetch("http://localhost:8080/api/employees")
+const fetchingEmployee = (page) => {
+    return fetch(C.BASE_URL + "/employees?page=" + page + "&size=" + C.PAGE_DATA_SIZE)
 }
 
 const fetchingById = id => {
-    return fetch("http://localhost:8080/api/employee/" + id)
+    return fetch(C.BASE_URL + "/employee/" + id)
 }
 
 const fetchDeleteEmployee = employeeGuid => {
-    return fetch("http://localhost:8080/api/employee/" + employeeGuid, {method: 'DELETE'})
+    return fetch(C.BASE_URL + "/employee/" + employeeGuid, {method: 'DELETE'})
 }
 
 const fetchPostEmployee = employee => {
-    return fetch("http://localhost:8080/api/employee/", {
+    return fetch(C.BASE_URL + "/employee/", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -84,7 +84,7 @@ const fetchPostEmployee = employee => {
 }
 
 const fetchPutEmployee = employee => {
-    return fetch("http://localhost:8080/api/employee/", {
+    return fetch(C.BASE_URL + "/employee/", {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -97,22 +97,28 @@ const fetchPutEmployee = employee => {
 const loadData = () => dispatch => (
     fetchingEmployee()
         .then(response => response.json())
-        .then(employees => {
+        .then(response => {
+            let employees = response.data.result;
+            let total = response.data.total;
             dispatch({
                 type : C.LOAD_EMLOYEE_DATA,
-                employees
+                employees,
+                total
             })
         })
 )
 
-export const loadEmployeeData = () => dispatch => {
+export const loadEmployeeData = (page) => dispatch => {
     dispatch(fetchEmployee(true));
-    return fetchingEmployee()
+    return fetchingEmployee(page)
     .then(response => response.json())
-    .then(employees => {
+    .then(response => {
+        let employees = response.data.result;
+        let total = response.data.total;
         dispatch({
             type : C.LOAD_AND_SET_EMLOYEE_DATA,
-            employees
+            employees,
+            total
         })
     })
     .then(() => (

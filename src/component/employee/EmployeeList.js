@@ -11,11 +11,23 @@ import Constants from "../styles/Constants"
 
 import EmployeeListDetail from "../containers/employee/EmployeeListDetail"
 import NewEmployeeDialog from "../containers/employee//NewEmployeeDialog"
+import SimplePagination from "../common/SimplePagination"
+
+import C from '../../constants'
 
 class EmployeeList extends Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            currentPage: 1
+        }
+        this.onPageChangeFromPagination = this.onPageChangeFromPagination.bind(this);
+    }
+
+    onPageChangeFromPagination(newPage) {
+        this.setState({currentPage: newPage});
+        this.props.loadEmployeeData(newPage-1);
     }
 
     render = () => {
@@ -38,6 +50,12 @@ class EmployeeList extends Component {
                             <span>We couldn't find what you were looking for</span>
                         </div>)
                     }
+                    <SimplePagination
+                        currentPage={this.state.currentPage}
+                        totalPages={Math.ceil(this.props.totalEmployees/C.PAGE_DATA_SIZE)}
+                        boundaryPagesRange={1}
+                        siblingPagesRange={1}
+                        onChange={this.onPageChangeFromPagination}/>
                     <NewEmployeeDialog pageMode={'NEW'} />
                 </div>
             </MuiThemeProvider>
