@@ -1,15 +1,18 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeList from "../../employee/EmployeeList"
-import { loadEmployeeData } from "../../action/EmployeeActions"
+import { changePageDetailValue, loadEmployeeData } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({
     employees: state.employees,
-    totalEmployees: state.totalEmployees
+    pageDetail: state.pageDetail
 })
 const mapDispatchToProps = (dispatch) => ({
-	loadEmployeeData(page){
-        dispatch(loadEmployeeData(page))
+	loadEmployeeData(page, sort){
+        dispatch(loadEmployeeData(page, sort))
+	},
+	changePageDetailValue(fieldName, value){
+	    dispatch(changePageDetailValue(fieldName, value))
 	}
 })
 const employeeList = connect(mapStateToProps, mapDispatchToProps)(EmployeeList);

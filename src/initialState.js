@@ -22,6 +22,7 @@ const initialState = {
         "historyDialog": false,
         "locationDialog": false,
         "newEmployeeDialog": false,
+        "sortingDialog": false,
     },
     "openValidationMessage": {
         "detailValidation": false,
@@ -35,7 +36,11 @@ const initialState = {
         "enableGradeToggle": true,
         "enableLocationToggle": true,
     },
-    "totalEmployees": 1,
+    "pageDetail": {
+        "totalEmployees": 1,
+        "currentPage": 1,
+        "sortCriteria": [],
+    },
     "searchingText": '',
     "selectedJobDescIndex": null,
     "selectedIndex": null,

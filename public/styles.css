@@ -161,3 +161,23 @@ body {
     float: right;
     margin: 5px;
 }
+.content-min-container {
+    display:block;
+    min-height: 350px;
+    height: 350px;
+    overflow: auto;
+}
+.content-min {
+    float: left;
+    min-width: 150px;
+    margin: 5px;
+}
+.content-x {
+    float: left;
+    margin: 5px;
+}
+.sort-criteria-add {
+    position: absolute;
+    right: 5%;
+    bottom: 20%;
+}

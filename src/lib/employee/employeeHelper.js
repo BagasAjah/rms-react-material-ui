@@ -198,6 +198,16 @@ export const showErrorMessage = (validator, fieldValue, toggle) => {
         return '';
     }
 }
+
+export const generateSortCriteria = sortCriteria => {
+    var sortStr = '';
+    for(var i=0; i<sortCriteria.length; i++){
+        var tempSortStr = '&sort=' + sortCriteria[i];
+        sortStr = sortStr + tempSortStr;
+    }
+    return sortStr;
+}
+
 export const isJobDescEmpty = jobDesc => {
     if (jobDesc && jobDesc.length > 0) {
         for (var i = 0; i < jobDesc.length; i++) {

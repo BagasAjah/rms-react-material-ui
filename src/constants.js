@@ -17,6 +17,7 @@ const constants = {
 	FILTERING:                          "FILTERING",
 	LOAD_EMLOYEE_DATA:                  "LOAD_EMLOYEE_DATA",
 	LOAD_AND_SET_EMLOYEE_DATA:          "LOAD_AND_SET_EMLOYEE_DATA",
+	CHANGE_PAGE_DETAIL_VALUE:           "CHANGE_PAGE_DETAIL_VALUE",
 
     BASE_URL:                           "http://localhost:8080/api",
     PAGE_DATA_SIZE:                     7

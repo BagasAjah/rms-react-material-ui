@@ -15,19 +15,19 @@ import SimplePagination from "../common/SimplePagination"
 
 import C from '../../constants'
 
+import { generateSortCriteria } from  "../../lib/employee/employeeHelper"
+
 class EmployeeList extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            currentPage: 1
-        }
         this.onPageChangeFromPagination = this.onPageChangeFromPagination.bind(this);
     }
 
     onPageChangeFromPagination(newPage) {
-        this.setState({currentPage: newPage});
-        this.props.loadEmployeeData(newPage-1);
+        var sortCriteria = generateSortCriteria(this.props.pageDetail.sortCriteria);
+        this.props.loadEmployeeData(newPage-1, sortCriteria);
+        this.props.changePageDetailValue("currentPage", newPage);
     }
 
     render = () => {
@@ -51,8 +51,8 @@ class EmployeeList extends Component {
                         </div>)
                     }
                     <SimplePagination
-                        currentPage={this.state.currentPage}
-                        totalPages={Math.ceil(this.props.totalEmployees/C.PAGE_DATA_SIZE)}
+                        currentPage={this.props.pageDetail.currentPage}
+                        totalPages={Math.ceil(this.props.pageDetail.totalEmployees/C.PAGE_DATA_SIZE)}
                         boundaryPagesRange={1}
                         siblingPagesRange={1}
                         onChange={this.onPageChangeFromPagination}/>

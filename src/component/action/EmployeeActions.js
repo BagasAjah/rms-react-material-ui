@@ -60,8 +60,18 @@ export const fetchEmployee = value => ({
     value
 })
 
-const fetchingEmployee = (page) => {
-    return fetch(C.BASE_URL + "/employees?page=" + page + "&size=" + C.PAGE_DATA_SIZE)
+export const changePageDetailValue = (fieldName, value) => ({
+    type: C.CHANGE_PAGE_DETAIL_VALUE,
+    typeState: fieldName,
+    value: value
+})
+
+const fetchingEmployee = (page, sort) => {
+    let fetchURL = C.BASE_URL + "/employees?page=" + page + "&size=" + C.PAGE_DATA_SIZE;
+    if (sort != null) {
+        fetchURL = fetchURL + sort;
+    }
+    return fetch(fetchURL)
 }
 
 const fetchingById = id => {
@@ -94,31 +104,48 @@ const fetchPutEmployee = employee => {
     })
 }
 
+const fetchLookupByType = lookupType => {
+    return fetch("http://localhost:8080/api/lookup/" + lookupType)
+}
+
 const loadData = () => dispatch => (
-    fetchingEmployee()
+    fetchingEmployee(0, '')
         .then(response => response.json())
         .then(response => {
-            let employees = response.data.result;
-            let total = response.data.total;
+            let employees = response.result;
+            let total = response.total;
             dispatch({
                 type : C.LOAD_EMLOYEE_DATA,
-                employees,
-                total
+                employees
+            })
+            dispatch({
+                type : C.CHANGE_PAGE_DETAIL_VALUE,
+                typeState: "totalEmployees",
+                value : total,
+            })
+            dispatch({
+                type : C.CHANGE_PAGE_DETAIL_VALUE,
+                typeState: "currentPage",
+                value : 1,
             })
         })
 )
 
-export const loadEmployeeData = (page) => dispatch => {
+export const loadEmployeeData = (page, sort) => dispatch => {
     dispatch(fetchEmployee(true));
-    return fetchingEmployee(page)
+    return fetchingEmployee(page,sort)
     .then(response => response.json())
     .then(response => {
-        let employees = response.data.result;
-        let total = response.data.total;
+        let employees = response.result;
+        let total = response.total;
         dispatch({
             type : C.LOAD_AND_SET_EMLOYEE_DATA,
-            employees,
-            total
+            employees
+        })
+        dispatch({
+            type : C.CHANGE_PAGE_DETAIL_VALUE,
+            typeState: "totalEmployees",
+            value : total,
         })
     })
     .then(() => (
@@ -144,8 +171,15 @@ export const deleteCurrentEmployee = employeeGuid => dispatch => {
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
-        dispatch(loadEmployeeData());
+        dispatch(loadEmployeeData(0));
     })
+    .then(() => (
+        dispatch({
+            type : C.CHANGE_PAGE_DETAIL_VALUE,
+            typeState: "currentPage",
+            value : 1,
+        })
+    ))
     .then(() => (
         dispatch(fetchEmployee(false))
     ))
@@ -192,10 +226,6 @@ export const updateCurrentEmployee = employeeData => dispatch => {
     .then(() => (
         dispatch(fetchEmployee(false))
     ))
-}
-
-const fetchLookupByType = lookupType => {
-    return fetch("http://localhost:8080/api/lookup/" + lookupType)
 }
 
 export const getLookupByTpe = lookupType => dispatch => {
