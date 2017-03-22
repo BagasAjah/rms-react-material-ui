@@ -76,22 +76,6 @@ export const setNewEmployee = () => ({
     location: []
 })
 
-export const searchEmployee = (employees, searchingText) => {
-    var filterMode = false;
-    var filteredEmployee = {};
-    if (searchingText.length > 2) {
-        filteredEmployee = employees.filter(createFilter(searchingText, KEYS_TO_FILTERS));
-        filterMode = true;
-    } else {
-        filterMode = false;
-    }
-    if (filterMode) {
-        return filteredEmployee;
-    } else {
-        return employees;
-    }
-}
-
 export const handleEmployeeDetailsInfo = (type, field, value, employee) => {
     var updatedEmployee = update(employee, {
         [type]: {
@@ -199,6 +183,69 @@ export const showErrorMessage = (validator, fieldValue, toggle) => {
     }
 }
 
+export const generatePageDetailParam = pageDetail => {
+    let result = '';
+    let pageStr = '&page=';
+    let searchStr = '&search=';
+    let filterStr = '&filter=';
+    let sortStr = '&sort=';
+    let sizeStr = '&size=';
+    if (pageDetail !== null) {
+        pageStr = pageStr + (pageDetail.currentPage - 1);
+        searchStr = searchStr + generateSearchCriteria(pageDetail.searchText);
+        filterStr = filterStr + generateFilterCriteria(pageDetail.filteringProps);
+        sortStr = sortStr + generateSortCriteria(pageDetail.sortCriteria);
+        sizeStr = sizeStr + pageDetail.pageSize;
+    }
+    result = result + pageStr + searchStr + filterStr + sortStr + sizeStr;
+    return result;
+}
+
+export const generateSearchCriteria = searchText => {
+     if (isEmpty(searchText)) {
+         return '';
+     }
+     var applyFilter = [];
+     applyFilter.push({field: "firstName", operator: "icontains", value: searchText});
+     applyFilter.push({field: "lastName", operator: "icontains", value: searchText});
+     applyFilter = {filters: applyFilter};
+     return encodeURI(JSON.stringify(applyFilter));
+ }
+
+ export const generateFilterCriteria = filteringProps => {
+    var byGrade = filteringProps.byGrade;
+    var byGender = filteringProps.byGender;
+    if (isEmpty(byGrade) || byGrade.length == 0 || isEmpty(byGender) || byGender.length == 0) {
+        return '';
+    }
+    var applyFilter = [];
+
+    var applyGradeFilter = [];
+    for (var i=0; i<byGrade.length;i++) {
+        if (byGrade[i].isChecked) {
+            applyGradeFilter.push({field: "grade", operator: "eq", value: byGrade[i].lookupCode});
+        }
+    }
+    if (applyGradeFilter.length > 0) {
+        applyGradeFilter = {logic: "or", filters: applyGradeFilter};
+        applyFilter.push(applyGradeFilter);
+    }
+
+    var applyGenderFilter = [];
+    for (var i=0; i<byGender.length;i++) {
+        if (byGender[i].isChecked) {
+            applyGenderFilter.push({field: "gender", operator: "eq", value: byGender[i].lookupCode});
+        }
+    }
+    if (applyGenderFilter.length > 0) {
+        applyGenderFilter = {logic: "or", filters: applyGenderFilter};
+        applyFilter.push(applyGenderFilter);
+    }
+
+    applyFilter = {filters: applyFilter};
+    return encodeURI(JSON.stringify(applyFilter));
+ }
+
 export const generateSortCriteria = sortCriteria => {
     var sortStr = '';
     for(var i=0; i<sortCriteria.length; i++){
@@ -211,7 +258,6 @@ export const generateSortCriteria = sortCriteria => {
 export const isJobDescEmpty = jobDesc => {
     if (jobDesc && jobDesc.length > 0) {
         for (var i = 0; i < jobDesc.length; i++) {
-            console.dir(jobDesc[i]);
             if(!isEmpty(jobDesc[i])){
                 return false;
             }

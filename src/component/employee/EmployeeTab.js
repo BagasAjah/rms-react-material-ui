@@ -154,7 +154,6 @@ class EmployeeTab extends Component {
 }
 
 EmployeeTab.propTypes = {
-    allEmployee: PropTypes.array,
     currentEmployee: PropTypes.object,
     editedEmployee: PropTypes.object,
     currentTabLocation: PropTypes.string.isRequired,

@@ -9,28 +9,6 @@ describe('employees reducer', () => {
         ).toEqual([])
     })
 
-    it('should handle searching process', () => {
-        const employee1 = setDefaultEmployee();
-        employee1.id = 1;
-        employee1.lastName = "Test";
-        const employee2 = setDefaultEmployee();
-        const state = [employee1, employee2];
-
-        const expectedEmployee = setDefaultEmployee();
-        expectedEmployee.id = 1;
-        expectedEmployee.lastName = "Test";
-        const expectedResult = [expectedEmployee];
-
-        const action = {
-            type : C.FILTERING,
-            searchText: "Test",
-            allEmployee: state
-        }
-        expect(
-            reducer(state, action)
-        ).toEqual(expectedResult)
-    })
-
     it('should handle change state process', () => {
         const employee = setDefaultEmployee();
         employee.id = 1;

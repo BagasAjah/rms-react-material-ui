@@ -1,12 +1,8 @@
 import C from '../../constants';
 import update from 'react-addons-update';
-import { searchEmployee } from "../../lib/employee/employeeHelper";
 
 const employees = (state = [], action) => {
     switch (action.type) {
-        case C.FILTERING:
-            var employees = searchEmployee(action.allEmployee, action.searchText);
-            return employees;
         case C.UPDATE_CURRENT_EMPLOYEE:
             const index = state.findIndex(s => s.id === action.employeeData.id);
             const updatedState = update(state, {

@@ -110,16 +110,3 @@ describe('actions', () => {
     expect(actions.updateCurrentEmployee(setDefaultEmployee())).toEqual(expectedAction)
   })
 })
-
-describe('actions', () => {
-  it('should create an action to set filtering parameter value', () => {
-    const allEmployee = setDefaultEmployee()
-    const text = 'Test'
-    const expectedAction = {
-      type: C.FILTERING,
-      searchText: text,
-      allEmployee
-    }
-    expect(actions.setFilteringParam(text, setDefaultEmployee())).toEqual(expectedAction)
-  })
-})

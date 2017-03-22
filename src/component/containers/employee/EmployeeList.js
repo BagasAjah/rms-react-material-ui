@@ -8,8 +8,8 @@ const mapStateToProps = (state) => ({
     pageDetail: state.pageDetail
 })
 const mapDispatchToProps = (dispatch) => ({
-	loadEmployeeData(page, sort){
-        dispatch(loadEmployeeData(page, sort))
+	loadEmployeeData(pageDetail){
+        dispatch(loadEmployeeData(pageDetail))
 	},
 	changePageDetailValue(fieldName, value){
 	    dispatch(changePageDetailValue(fieldName, value))

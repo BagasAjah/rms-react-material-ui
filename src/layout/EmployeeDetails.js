@@ -8,6 +8,8 @@ import Header from "../component/common/Header"
 import EmployeeToolbar from "../component/containers/employee/EmployeeToolbar"
 import EmployeeList from "../component/containers/employee/EmployeeList"
 
+import { generatePageDetailParam } from  "../lib/employee/employeeHelper"
+
 class EmployeeDetails extends Component {
 
     constructor(props) {
@@ -25,7 +27,8 @@ class EmployeeDetails extends Component {
     }
 
     componentDidMount = () => {
-        this.props.loadEmployeeData(0,'');
+        var criteria = generatePageDetailParam(this.props.pageDetail);
+        this.props.loadEmployeeData(criteria);
     }
 
     render = () => {

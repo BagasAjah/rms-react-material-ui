@@ -2,7 +2,6 @@ import DummyData from "./dummy_data/sampleEmployeeData"
 import { setDefaultEmployee } from "./lib/employee/employeeHelper"
 
 const initialState = {
-    "allEmployee": [],
     "employees" : [],
     "currentTabLocation": '',
     "editedEmployee": null,
@@ -18,6 +17,7 @@ const initialState = {
     },
     "newEmployee": setDefaultEmployee(),
     "openDialog": {
+        "filteringDialog": false,
         "gradeDialog": false,
         "historyDialog": false,
         "locationDialog": false,
@@ -37,11 +37,17 @@ const initialState = {
         "enableLocationToggle": true,
     },
     "pageDetail": {
+        "searchText": "",
         "totalEmployees": 1,
         "currentPage": 1,
         "sortCriteria": [],
+        "pageSize": 7,
+        "filteringProps": {
+            "byGender": [],
+            "byGrade" : [],
+        },
+        "filteringCriteria": [],
     },
-    "searchingText": '',
     "selectedJobDescIndex": null,
     "selectedIndex": null,
     "viewMode": true

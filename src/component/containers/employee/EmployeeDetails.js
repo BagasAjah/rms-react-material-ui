@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../action/EmployeeActions';
 
 const mapStateToProps = (state) => ({
-    fetchingEmployee: state.fetchingEmployee
+    fetchingEmployee: state.fetchingEmployee,
+    pageDetail: state.pageDetail
 })
 
 const mapDispatchToProps = (dispatch) => (

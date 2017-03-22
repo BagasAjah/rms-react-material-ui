@@ -1,23 +1,16 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import EmployeeSearch from "../../employee/EmployeeSearch"
-import { changeOpenDialogValue, setFilteringParam, changePageDetailValue, loadEmployeeData } from "../../action/EmployeeActions"
+import { changeOpenDialogValue, changePageDetailValue, loadEmployeeData } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({
-    allEmployee: state.allEmployee,
     employees: state.employees,
     openDialog: state.openDialog,
     pageDetail: state.pageDetail,
-    searchingText: state.searchingText
 })
 
 
 const mapDispatchToProps = (dispatch) => ({
-	setFilteringProps(searchingText, allEmployee){
-	    dispatch(
-            setFilteringParam(searchingText, allEmployee)
-        )
-	},
 	handleOpenDialogChanged(type, value){
         dispatch(
             changeOpenDialogValue(type, value)
@@ -28,9 +21,9 @@ const mapDispatchToProps = (dispatch) => ({
 	        changePageDetailValue(fieldName, value)
         )
 	},
-	loadEmployees(page,sort){
+	loadEmployees(pageDetail){
         dispatch(
-            loadEmployeeData(page,sort)
+            loadEmployeeData(pageDetail)
         )
 	},
 })

@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import update from 'react-addons-update';
 
 import {List, ListItem} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
@@ -15,7 +16,7 @@ import SimplePagination from "../common/SimplePagination"
 
 import C from '../../constants'
 
-import { generateSortCriteria } from  "../../lib/employee/employeeHelper"
+import { generatePageDetailParam } from  "../../lib/employee/employeeHelper"
 
 class EmployeeList extends Component {
 
@@ -25,9 +26,14 @@ class EmployeeList extends Component {
     }
 
     onPageChangeFromPagination(newPage) {
-        var sortCriteria = generateSortCriteria(this.props.pageDetail.sortCriteria);
-        this.props.loadEmployeeData(newPage-1, sortCriteria);
         this.props.changePageDetailValue("currentPage", newPage);
+        var nextState = update(this.props.pageDetail, {
+            currentPage : {
+                $set: newPage
+            }
+        });
+        var criteria = generatePageDetailParam(nextState);
+        this.props.loadEmployeeData(criteria);
     }
 
     render = () => {
@@ -64,7 +70,10 @@ class EmployeeList extends Component {
 }
 
 EmployeeList.propTypes = {
-    employees: PropTypes.array
+    employees: PropTypes.array,
+    pageDetail: PropTypes.object,
+    loadEmployeeData: PropTypes.func,
+    changePageDetailValue: PropTypes.func
 }
 
 export default EmployeeList;

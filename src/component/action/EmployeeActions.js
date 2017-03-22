@@ -1,5 +1,6 @@
 import C from '../../constants'
 import fetch from 'isomorphic-fetch'
+import { generatePageDetailParam } from  "../../lib/employee/employeeHelper"
 
 export const changeEditEmployees = (currentEmployee) => ({
     type: C.CHANGE_EDIT_EMPLOYEE,
@@ -49,12 +50,6 @@ export const changeOpenValidationMessage = (fieldName, value) => ({
     value: value
 })
 
-export const setFilteringParam = (searchText, allEmployee) => ({
-    type: C.FILTERING,
-    searchText: searchText,
-    allEmployee: allEmployee
-})
-
 export const fetchEmployee = value => ({
     type: C.FECTHING_EMPLOYEE,
     value
@@ -66,11 +61,8 @@ export const changePageDetailValue = (fieldName, value) => ({
     value: value
 })
 
-const fetchingEmployee = (page, sort) => {
-    let fetchURL = C.BASE_URL + "/employees?page=" + page + "&size=" + C.PAGE_DATA_SIZE;
-    if (sort != null) {
-        fetchURL = fetchURL + sort;
-    }
+const fetchingEmployee = (pageDetail) => {
+    let fetchURL = C.BASE_URL + "/employees?" + pageDetail;
     return fetch(fetchURL)
 }
 
@@ -109,11 +101,11 @@ const fetchLookupByType = lookupType => {
 }
 
 const loadData = () => dispatch => (
-    fetchingEmployee(0, '')
+    fetchingEmployee(generatePageDetailParam(1,'','',''))
         .then(response => response.json())
         .then(response => {
             let employees = response.result;
-            let total = response.total;
+            let total = response.total == 0 ? 1 : response.total;
             dispatch({
                 type : C.LOAD_EMLOYEE_DATA,
                 employees
@@ -131,13 +123,13 @@ const loadData = () => dispatch => (
         })
 )
 
-export const loadEmployeeData = (page, sort) => dispatch => {
+export const loadEmployeeData = (pageDetail) => dispatch => {
     dispatch(fetchEmployee(true));
-    return fetchingEmployee(page,sort)
+    return fetchingEmployee(pageDetail)
     .then(response => response.json())
     .then(response => {
         let employees = response.result;
-        let total = response.total;
+        let total = response.total == 0 ? 1 : response.total;
         dispatch({
             type : C.LOAD_AND_SET_EMLOYEE_DATA,
             employees
@@ -171,7 +163,7 @@ export const deleteCurrentEmployee = employeeGuid => dispatch => {
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
-        dispatch(loadEmployeeData(0));
+        dispatch(loadEmployeeData(generatePageDetailParam(1,'','','')));
     })
     .then(() => (
         dispatch({

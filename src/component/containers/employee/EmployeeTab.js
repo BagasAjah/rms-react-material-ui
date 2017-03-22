@@ -5,7 +5,6 @@ import { handleStateChanged } from "../../../lib/employee/employeeHelper";
 import { changeOpenValidationMessage, changeViewModeValue, changePathValue, deleteCurrentEmployee, updateCurrentEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state) => ({
-    allEmployee: state.allEmployee,
     currentEmployee: state.currentEmployee,
     currentTabLocation: state.currentTabLocation,
     editedEmployee: state.editedEmployee,

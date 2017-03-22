@@ -14,28 +14,51 @@ import ContentSort from 'material-ui/svg-icons/content/sort';
 
 import {white} from 'material-ui/styles/colors';
 
+import EmployeeFilteringDialog from "../containers/employee/EmployeeFilteringDialog"
 import EmployeeSortingDialog from "../containers/employee/EmployeeSortingDialog"
 import Constants from "../styles/Constants";
 
-import { generateSortCriteria } from  "../../lib/employee/employeeHelper"
+import { generatePageDetailParam } from  "../../lib/employee/employeeHelper"
 
 class EmployeeSearch extends Component {
 
     constructor(props) {
         super(props);
-        this.setFilteringProps = this.setFilteringProps.bind(this);
+        this.handleSearchingClick = this.handleSearchingClick.bind(this);
         this.handleFilteringClick = this.handleFilteringClick.bind(this);
+        this.handleOpenFilteringDialog = this.handleOpenFilteringDialog.bind(this);
         this.handleOpenSortingDialog = this.handleOpenSortingDialog.bind(this);
+        this.handleCloseFilteringDialog = this.handleCloseFilteringDialog.bind(this);
         this.handleCloseSortingDialog = this.handleCloseSortingDialog.bind(this);
+        this.handleSearchingProcess = this.handleSearchingProcess.bind(this);
         this.handleSortingClick = this.handleSortingClick.bind(this);
     }
 
-    setFilteringProps = () => {
-        this.props.setFilteringProps(this.filterTextInput.input.value, this.props.allEmployee);
+    handleSearchingClick = () => {
+        var criteria = generatePageDetailParam(this.props.pageDetail);
+    }
+
+    handleSearchingProcess = (e) =>{
+        if (e.keyCode == 13) {
+            var criteria = generatePageDetailParam(this.props.pageDetail);
+            this.props.loadEmployees(criteria);
+        } else {
+            this.props.changePageDetailValue("searchText", this.filterTextInput.input.value);
+        }
     }
 
     handleFilteringClick = () => {
-        console.dir('asdad');
+        var criteria = generatePageDetailParam(this.props.pageDetail);
+        this.props.loadEmployees(criteria);
+        this.props.handleOpenDialogChanged("filteringDialog", false);
+    }
+
+    handleOpenFilteringDialog = () => {
+        this.props.handleOpenDialogChanged("filteringDialog", true);
+    }
+
+    handleCloseFilteringDialog = () => {
+        this.props.handleOpenDialogChanged("filteringDialog", false);
     }
 
     handleOpenSortingDialog = () => {
@@ -51,12 +74,19 @@ class EmployeeSearch extends Component {
     }
 
     handleSortingClick = () => {
-        var sortCriteria = generateSortCriteria(this.props.pageDetail.sortCriteria);
-        this.props.loadEmployees(0,sortCriteria);
+        var criteria = generatePageDetailParam(this.props.pageDetail);
+        this.props.loadEmployees(criteria);
         this.props.handleOpenDialogChanged("sortingDialog", false);
     }
 
     render = () => {
+        const actionsFilteringBtn = [
+            <RaisedButton
+                label="Ok"
+                secondary={true}
+                onTouchTap={this.handleFilteringClick.bind(this)}
+            />
+        ];
         const actionsSortingBtn = [
             <RaisedButton
                 label="Ok"
@@ -67,12 +97,13 @@ class EmployeeSearch extends Component {
         return(
             <ToolbarGroup className="toolbar-search-group">
                 <IconButton style={Constants.small}>
-                    <ActionSearch color={white} onClick={this.setFilteringProps}/>
+                    <ActionSearch color={white} onClick={this.handleSearchingClick}/>
                 </IconButton>
                 <TextField
                     ref={(input) => this.filterTextInput = input}
-                    onChange={this.setFilteringProps}
-                    value={this.props.searchingText}
+                    onChange = {(e) => this.handleSearchingProcess(e)}
+                    onKeyDown={(e) => this.handleSearchingProcess(e)}
+                    value={this.props.pageDetail.searchText}
                     hintText="Search"
                     underlineStyle={{display: 'none'}}
                     style ={{width: '40%', float:'right'}}
@@ -82,7 +113,7 @@ class EmployeeSearch extends Component {
                     <ContentSort color={white} onClick={this.handleOpenSortingDialog}/>
                 </IconButton>
                 <IconButton tooltip="Filtering">
-                    <ContentFilterList color={white} onClick={this.handleFilteringClick}/>
+                    <ContentFilterList color={white} onClick={this.handleOpenFilteringDialog}/>
                 </IconButton>
                 <Chip>{this.props.employees.length}</Chip>
                 <ToolbarSeparator />
@@ -95,16 +126,28 @@ class EmployeeSearch extends Component {
                     contentStyle={{minWidth: "320px", maxWidth: "450px"}}>
                         <EmployeeSortingDialog />
                 </Dialog>
+                <Dialog
+                    title="Filtering Option"
+                    open={this.props.openDialog.filteringDialog}
+                    autoScrollBodyContent={false}
+                    actions={actionsFilteringBtn}
+                    onRequestClose={this.handleCloseFilteringDialog}
+                    contentStyle={{minWidth: "320px", maxWidth: "450px"}}>
+                        <EmployeeFilteringDialog />
+                </Dialog>
             </ToolbarGroup>
         )
     }
 }
 
 EmployeeSearch.propTypes = {
-    allEmployee: PropTypes.array,
     employees: PropTypes.array,
-    searchingText: PropTypes.string,
-    setFilteringProps: PropTypes.func
+    openDialog: PropTypes.object,
+    pageDetail: PropTypes.object,
+    setFilteringProps: PropTypes.func,
+    handleOpenDialogChanged: PropTypes.func,
+    changePageDetailValue: PropTypes.func,
+    loadEmployees: PropTypes.func
 }
 
 export default EmployeeSearch;

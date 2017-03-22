@@ -138,6 +138,9 @@ class EmployeeSortingDialog extends Component {
 
     }
 }
-
+EmployeeSortingDialog.propTypes = {
+    pageDetail: PropTypes.object,
+    changePageDetailValue: PropTypes.func
+}
 
 export default EmployeeSortingDialog;
