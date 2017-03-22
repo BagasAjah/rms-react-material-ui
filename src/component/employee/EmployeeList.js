@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import update from 'react-addons-update';
 
 import {List, ListItem} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
@@ -11,11 +12,28 @@ import Constants from "../styles/Constants"
 
 import EmployeeListDetail from "../containers/employee/EmployeeListDetail"
 import NewEmployeeDialog from "../containers/employee//NewEmployeeDialog"
+import SimplePagination from "../common/SimplePagination"
+
+import C from '../../constants'
+
+import { generatePageDetailParam } from  "../../lib/employee/employeeHelper"
 
 class EmployeeList extends Component {
 
     constructor(props){
         super(props);
+        this.onPageChangeFromPagination = this.onPageChangeFromPagination.bind(this);
+    }
+
+    onPageChangeFromPagination(newPage) {
+        this.props.changePageDetailValue("currentPage", newPage);
+        var nextState = update(this.props.pageDetail, {
+            currentPage : {
+                $set: newPage
+            }
+        });
+        var criteria = generatePageDetailParam(nextState);
+        this.props.loadEmployeeData(criteria);
     }
 
     render = () => {
@@ -38,6 +56,12 @@ class EmployeeList extends Component {
                             <span>We couldn't find what you were looking for</span>
                         </div>)
                     }
+                    <SimplePagination
+                        currentPage={this.props.pageDetail.currentPage}
+                        totalPages={Math.ceil(this.props.pageDetail.totalEmployees/C.PAGE_DATA_SIZE)}
+                        boundaryPagesRange={1}
+                        siblingPagesRange={1}
+                        onChange={this.onPageChangeFromPagination}/>
                     <NewEmployeeDialog pageMode={'NEW'} />
                 </div>
             </MuiThemeProvider>
@@ -46,7 +70,10 @@ class EmployeeList extends Component {
 }
 
 EmployeeList.propTypes = {
-    employees: PropTypes.array
+    employees: PropTypes.array,
+    pageDetail: PropTypes.object,
+    loadEmployeeData: PropTypes.func,
+    changePageDetailValue: PropTypes.func
 }
 
 export default EmployeeList;

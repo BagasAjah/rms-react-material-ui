@@ -6,7 +6,8 @@ import { setEmployees } from "../../action/EmployeeActions"
 const mapStateToProps = (state, props) => ({
     key: props.key,
     index: props.index,
-    employee: props.employee
+    employee: props.employee,
+    lookUpData : state.lookUpData
 })
 
 const mapDispatchToProps = (dispatch) => ({

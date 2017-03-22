@@ -18,6 +18,8 @@ import EmployeeTabHistory from "../containers/employee/EmployeeTabHistory"
 import EmployeeTabAddress from "./EmployeeTabAddress"
 import EmployeeTabLocation from "../containers/employee/EmployeeTabLocation"
 
+import { handleDataBeforeSaveOrUpdate, validateEmployeeDetails } from  "../../lib/employee/employeeHelper"
+
 class EmployeeTab extends Component {
 
     constructor(props) {
@@ -39,9 +41,15 @@ class EmployeeTab extends Component {
     }
 
     updateButtonClick = () => {
-        this.props.handleStateChanged('viewMode', true);
-        this.props.handleStateChanged('selectedIndex', null);
-        this.props.updateCurrentEmployee(this.props.editedEmployee);
+        if (validateEmployeeDetails(this.props.editedEmployee)) {
+            this.props.handleOpenValidationMessage('detailValidation', true);
+            this.props.handleStateChanged('currentTabLocation', 'details');
+        } else {
+            this.props.handleStateChanged('viewMode', true);
+            this.props.handleStateChanged('selectedIndex', null);
+            this.props.handleOpenValidationMessage('detailValidation', false);
+            this.props.updateCurrentEmployee(handleDataBeforeSaveOrUpdate(this.props.editedEmployee));
+        }
     }
 
     editButtonClick = () => {
@@ -50,7 +58,7 @@ class EmployeeTab extends Component {
 
     deleteButtonClick = () => {
         this.props.handleStateChanged('viewMode', true);
-        this.props.deleteCurrentEmployee(this.props.editedEmployee);
+        this.props.deleteCurrentEmployee(this.props.editedEmployee.employeeGuid);
     }
 
     cancelButtonClick = () => {
@@ -146,7 +154,6 @@ class EmployeeTab extends Component {
 }
 
 EmployeeTab.propTypes = {
-    allEmployee: PropTypes.array,
     currentEmployee: PropTypes.object,
     editedEmployee: PropTypes.object,
     currentTabLocation: PropTypes.string.isRequired,

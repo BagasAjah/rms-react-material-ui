@@ -8,8 +8,10 @@ import {List} from 'material-ui/List';
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import EmployeeLocationDetail from "./EmployeeLocationDetail"
+import EmployeeLocationDetail from "../containers/employee/EmployeeLocationDetail"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
+
+import { handleDataBeforeSaveOrUpdate, setDefaultEmployee, validateEmployeeLocation } from "../../lib/employee/employeeHelper";
 
 class EmployeeTabLocation extends Component {
     constructor(props) {
@@ -17,34 +19,10 @@ class EmployeeTabLocation extends Component {
         this.addOfficeLocationClick = this.addOfficeLocationClick.bind(this);
         this.openDialogClick = this.openDialogClick.bind(this);
         this.closeDialogClick = this.closeDialogClick.bind(this);
-        this.handleDataChange = this.handleDataChange.bind(this);
-        this.updateClick = this.updateClick.bind(this);
-        this.deleteClick = this.deleteClick.bind(this);
-    }
-
-    handleDataChange = (index, value, type) => {
-        var updatedEmployee = update(this.props.currentEmployee, {
-            'location': {
-                [index]: {
-                    [type]: {$set: value}
-                }
-            }
-        });
-        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     openDialogClick = () => {
-        var updatedEmployee = update(this.props.newEmployee, {
-            'location': {
-                0: {
-                    'officeStartDate':  {$set: null},
-                    'officeEndDate': {$set: new Object},
-                    'officeLocation': {$set: ''},
-                    'officeAddress': {$set: ''}
-                }
-            }
-        });
-        this.props.handleStateChanged('newEmployee', updatedEmployee);
+        this.props.handleStateChanged('newEmployee', setDefaultEmployee());
         this.props.handleStateChanged('selectedIndex', null);
         this.props.handleOpenDialogChanged('locationDialog', true);
         this.props.handleOpenValidationMessage('locationValidation', false);
@@ -56,7 +34,7 @@ class EmployeeTabLocation extends Component {
 
     addOfficeLocationClick = () => {
         var location = this.props.newEmployee.location[0];
-        if(location.officeAddress == '' || location.officeLocation =='' || location.officeStartDate == null) {
+        if(validateEmployeeLocation(location) && this.props.enableToggle.enableLocationToggle) {
             this.props.handleOpenValidationMessage('locationValidation', true);
         } else {
             var currentEmployee = this.props.currentEmployee;
@@ -68,18 +46,9 @@ class EmployeeTabLocation extends Component {
                     officeAddress: location.officeAddress
                 }]
             }});
-            this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+            this.props.setSavedEmployee(handleDataBeforeSaveOrUpdate(updatedEmployee), this.props.pageMode);
             this.closeDialogClick();
         }
-    }
-
-    updateClick = (index) => {
-        this.props.handleStateChanged('selectedIndex', index);
-    }
-
-    deleteClick = (index) => {
-        var updatedEmployee = update(this.props.currentEmployee, {'location': {$splice: [[index,1]]}});
-        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     render = () => {
@@ -96,13 +65,10 @@ class EmployeeTabLocation extends Component {
             employeeLocationDetail = locationList.map((locationList, locationIndex) => (
                 <EmployeeLocationDetail
                     key={locationIndex}
-                    index={locationIndex}
-                    location={locationList}
-                    viewMode={this.props.viewMode}
-                    selectedIndex={this.props.selectedIndex}
-                    handleDataChange={this.handleDataChange.bind(this)}
-                    deleteClick={this.deleteClick.bind(this)}
-                    updateClick={this.updateClick.bind(this)}/>
+                    locationIndex={locationIndex}
+                    locationList={locationList}
+                    currentEmployee={this.props.currentEmployee}
+                    pageMode={this.props.pageMode}/>
             ));
 
         }

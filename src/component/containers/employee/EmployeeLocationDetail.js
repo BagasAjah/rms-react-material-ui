@@ -1,16 +1,18 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import EmployeeGradeDialog from "../../employee/EmployeeGradeDialog"
+import EmployeeLocationDetail from "../../employee/EmployeeLocationDetail"
 import { handleStateChanged } from "../../../lib/employee/employeeHelper";
-import { changeEditEmployees, changeNewEmployee, changeToggleValue } from "../../action/EmployeeActions"
+import { changeEditEmployees, changeNewEmployee } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
-    enableToggle : state.enableToggle,
+    key: props.key,
+    index: props.locationIndex,
     currentEmployee: props.currentEmployee,
+    location: props.locationList,
     lookUpData : state.lookUpData,
-    newEmployee: state.newEmployee,
-    openValidationMessage: state.openValidationMessage,
-    pageMode: props.pageMode
+    selectedIndex: state.selectedIndex,
+    pageMode: props.pageMode,
+    viewMode: state.viewMode
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -29,13 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(
             handleStateChanged(type, value)
         )
-    },
-    handleToggleChanged(fieldName, value){
-        dispatch(
-            changeToggleValue(fieldName, value)
-        )
     }
 })
 
-const employeeGradeDialog = connect(mapStateToProps, mapDispatchToProps)(EmployeeGradeDialog);
-export default withRouter(employeeGradeDialog)
+const employeeLocationDetail = connect(mapStateToProps, mapDispatchToProps)(EmployeeLocationDetail);
+export default withRouter(employeeLocationDetail)

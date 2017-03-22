@@ -5,6 +5,7 @@ import { handleStateChanged } from "../../../lib/employee/employeeHelper";
 import { changeEditEmployees, changeNewEmployee, changeOpenDialogValue, changeOpenValidationMessage } from "../../action/EmployeeActions"
 
 const mapStateToProps = (state, props) => ({
+    enableToggle: state.enableToggle,
     currentEmployee: props.currentEmployee,
     newEmployee: state.newEmployee,
     openDialog: state.openDialog,

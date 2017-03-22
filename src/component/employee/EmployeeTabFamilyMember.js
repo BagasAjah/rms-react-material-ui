@@ -15,17 +15,13 @@ import ContentUpdate from 'material-ui/svg-icons/content/create';
 
 import {grey500} from 'material-ui/styles/colors';
 
-import { parseStringToDate } from  "../../lib/employee/employeeHelper"
-
-import lookupData from "../../dummy_data/lookupData"
+import { parseStringToDate, showErrorMessage, validateEmployeeFamily } from  "../../lib/employee/employeeHelper"
 
 const style = {
     headerStyle:{
         font: "bold"
     }
 }
-
-const validationErrorMessage = "This field is required!";
 
 class EmployeeTabFamilyMember extends Component {
 
@@ -96,18 +92,27 @@ class EmployeeTabFamilyMember extends Component {
 
     addFamilyMemberClick = () => {
         var currentEmployee = this.props.currentEmployee;
+        var familyMember = currentEmployee.familyMember;
+        for (var i=0; i < familyMember.length; i++) {
+            if(validateEmployeeFamily(familyMember[i])){
+                this.props.handleOpenValidationMessage('familyValidation', true);
+                return;
+            }
+        }
         var updatedEmployee = update(currentEmployee, {
             familyMember: {
                 $push: [{
-                    familyName: this.props.newEmployee.familyMember[0].familyName,
-                    familyGender: this.props.newEmployee.familyMember[0].familyGender,
-                    familyDob: this.props.newEmployee.familyMember[0].familyDob,
-                    familyType: this.props.newEmployee.familyMember[0].familyType,
-                    isActive: this.props.newEmployee.familyMember[0].isActive
+                    familyName: '',
+                    familyGender: '',
+                    familyDob: null,
+                    familyType: '',
+                    isActive: false
                 }]
             }
         });
         this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
+        this.props.handleStateChanged('selectedIndex', null);
+        this.props.handleOpenValidationMessage('familyValidation', false);
     }
 
     updateClick = (index) => {
@@ -135,16 +140,19 @@ class EmployeeTabFamilyMember extends Component {
                 </TableRowColumn>
             </TableRow>
         ];
-        var lookupGenderMenuItem = lookupData.gender.map(lookupGender =>
-            <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
-        );
-        var lookupTypeMenuItem = lookupData.familyType.map(lookupType =>
-            <MenuItem key= {lookupType.lookupCode} value={lookupType.lookupCode} primaryText={lookupType.lookupValue} />
-        );
+        if (this.props.lookUpData.gender.length >0 ) {
+            var lookupGenderMenuItem = this.props.lookUpData.gender.map(lookupGender =>
+                <MenuItem key= {lookupGender.lookupCode} value={lookupGender.lookupCode} primaryText={lookupGender.lookupValue} />
+            );
+        }
+        if (this.props.lookUpData.familyType.length >0 ) {
+            var lookupTypeMenuItem = this.props.lookUpData.familyType.map(lookupType =>
+                <MenuItem key= {lookupType.lookupCode} value={lookupType.lookupCode} primaryText={lookupType.lookupValue} />
+            );
+        }
         var employeeNotFound = true;
         if (this.props.currentEmployee) {
             var familyMember = this.props.currentEmployee.familyMember;
-            var familyDob = parseStringToDate(familyMember.familyDob);
             var familyMemberListDetail = familyMember.map( (familyMember, familyIndex) =>
                 (<TableRow key={familyIndex}>
                     <TableRowColumn width={"25%"}>
@@ -152,6 +160,9 @@ class EmployeeTabFamilyMember extends Component {
                             id={"family-name-"+familyMember.familyId}
                             value={familyMember.familyName}
                             disabled={familyIndex==this.props.selectedIndex?false:true}
+                            errorText={showErrorMessage(
+                                this.props.openValidationMessage.familyValidation, familyMember.familyName, true
+                            )}
                             onChange={(event, value) =>  this.handleFamilyNameChanged(event, value, familyIndex)}
                             underlineShow={false}/>
                     </TableRowColumn>
@@ -169,7 +180,7 @@ class EmployeeTabFamilyMember extends Component {
                     <TableRowColumn width={"25%"}>
                         <DatePicker
                             id={"family-dob-"+familyMember.familyId}
-                            value={familyDob}
+                            value={parseStringToDate(familyMember.familyDob)}
                             autoOk={true}
                             disabled={familyIndex==this.props.selectedIndex?false:true}
                             onChange={(event, value) =>  this.handleFamilyDobChanged(event, value, familyIndex)}
@@ -182,6 +193,9 @@ class EmployeeTabFamilyMember extends Component {
                             maxHeight={200}
                             value={familyMember.familyType}
                             disabled={familyIndex==this.props.selectedIndex?false:true}
+                            errorText={showErrorMessage(
+                                this.props.openValidationMessage.familyValidation, familyMember.familyType, true
+                            )}
                             onChange={(event, index, value) =>  this.handleFamilyTypeChanged(event, index, value, familyIndex)}
                             underlineShow={false}>
                             {lookupTypeMenuItem}
@@ -224,7 +238,7 @@ class EmployeeTabFamilyMember extends Component {
                 </Table>
                 }
                 <FloatingActionButton className="btn-add-tab-position"
-                    backgroundColor={grey500}
+                    secondary={true}
                     onClick={this.addFamilyMemberClick}
                     disabled={this.props.viewMode}>
                     <ContentAdd />
@@ -236,6 +250,7 @@ class EmployeeTabFamilyMember extends Component {
 
 EmployeeTabFamilyMember.propTypes = {
     currentEmployee: PropTypes.object,
+    lookUpData : PropTypes.object,
     newEmployee: PropTypes.object,
     openDialog: PropTypes.object,
     openValidationMessage: PropTypes.object,

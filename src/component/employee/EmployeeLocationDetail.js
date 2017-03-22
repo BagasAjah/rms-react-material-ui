@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component,PropTypes} from 'react';
 import moment from 'moment';
+import update from 'react-addons-update';
 
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
@@ -10,38 +11,48 @@ import ContentUpdate from 'material-ui/svg-icons/content/create';
 
 import {indigo900} from 'material-ui/styles/colors';
 
-import lookupData from "../../dummy_data/lookupData"
-
 class EmployeeLocationDetail extends Component {
     constructor(props) {
         super(props);
-        this.state ={
-            lookupLocation : lookupData.location
-        };
+        this.handleDataChange = this.handleDataChange.bind(this);
         this.handleOfficeLocationChange = this.handleOfficeLocationChange.bind(this);
         this.handleOfficeAddressChange = this.handleOfficeAddressChange.bind(this);
     }
 
     handleOfficeLocationChange(e, index, value, locationIndex){
-        this.props.handleDataChange(locationIndex, value, 'officeLocation');
+        this.handleDataChange(locationIndex, value, 'officeLocation');
     }
 
     handleOfficeAddressChange(e, value, index){
-        this.props.handleDataChange(index, value, 'officeAddress');
+        this.handleDataChange(index, value, 'officeAddress');
     }
 
-    updateClick(index){
-        this.props.updateClick(index);
+    handleDataChange = (index, value, type) => {
+        var updatedEmployee = update(this.props.currentEmployee, {
+            'location': {
+                [index]: {
+                    [type]: {$set: value}
+                }
+            }
+        });
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
-    deleteClick(index){
-        this.props.deleteClick(index);
+    updateClick = (index) => {
+        this.props.handleStateChanged('selectedIndex', index);
+    }
+
+    deleteClick = (index) => {
+        var updatedEmployee = update(this.props.currentEmployee, {'location': {$splice: [[index,1]]}});
+        this.props.setSavedEmployee(updatedEmployee, this.props.pageMode);
     }
 
     render() {
-        var lookupLocationMenuItem = this.state.lookupLocation.map(lookupLocation =>
-            <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
-        );
+        if (this.props.lookUpData.location.length >0 ) {
+            var lookupLocationMenuItem = this.props.lookUpData.location.map(lookupLocation =>
+                <MenuItem key= {lookupLocation.lookupCode} value={lookupLocation.lookupCode} primaryText={lookupLocation.lookupValue} />
+            );
+        }
         var officeStartMonth = moment(this.props.location.officeStartDate).format("MMMM").toString();
         var officeStartYear = moment(this.props.location.officeStartDate).format("YYYY").toString();
         var officeEndMonth = moment(this.props.location.officeEndDate).format("MMMM").toString();
@@ -95,5 +106,15 @@ class EmployeeLocationDetail extends Component {
         )
     }
 }
-
+EmployeeLocationDetail.propTypes = {
+    index: PropTypes.number.isRequired,
+    location: PropTypes.object,
+    lookUpData : PropTypes.object,
+    currentEmployee: PropTypes.object,
+    pageMode: PropTypes.oneOf(['EDIT', 'NEW']),
+    viewMode: PropTypes.bool,
+    selectedIndex: PropTypes.number,
+    setSavedEmployee: PropTypes.func,
+    handleStateChanged: PropTypes.func
+}
 export default EmployeeLocationDetail;

@@ -3,17 +3,6 @@ import * as actions from '../../../src/component/action/EmployeeActions'
 import { setDefaultEmployee } from "../../../src/lib/employee/employeeHelper"
 
 describe('actions', () => {
-  it('should create an action to create employee value', () => {
-    const employeeData = setDefaultEmployee()
-    const expectedAction = {
-      type: C.ADD_NEW_EMPLOYEE,
-      employeeData
-    }
-    expect(actions.addEmployee(setDefaultEmployee())).toEqual(expectedAction)
-  })
-})
-
-describe('actions', () => {
   it('should create an action to change several employee value', () => {
     const currentEmployee = setDefaultEmployee()
     const expectedAction = {
@@ -112,17 +101,6 @@ describe('actions', () => {
 })
 
 describe('actions', () => {
-  it('should create an action to delete current employee value', () => {
-    const employeeData = setDefaultEmployee()
-    const expectedAction = {
-      type: C.DELETE_CURRENT_EMPLOYEE,
-      employeeData
-    }
-    expect(actions.deleteCurrentEmployee(setDefaultEmployee())).toEqual(expectedAction)
-  })
-})
-
-describe('actions', () => {
   it('should create an action to update current employee value', () => {
     const employeeData = setDefaultEmployee()
     const expectedAction = {
@@ -130,18 +108,5 @@ describe('actions', () => {
       employeeData
     }
     expect(actions.updateCurrentEmployee(setDefaultEmployee())).toEqual(expectedAction)
-  })
-})
-
-describe('actions', () => {
-  it('should create an action to set filtering parameter value', () => {
-    const allEmployee = setDefaultEmployee()
-    const text = 'Test'
-    const expectedAction = {
-      type: C.FILTERING,
-      searchText: text,
-      allEmployee
-    }
-    expect(actions.setFilteringParam(text, setDefaultEmployee())).toEqual(expectedAction)
   })
 })

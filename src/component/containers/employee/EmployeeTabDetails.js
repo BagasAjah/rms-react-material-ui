@@ -5,6 +5,8 @@ import { setEmployee, changeEditEmployees, changeNewEmployee } from "../../actio
 
 const mapStateToProps = (state, props) => ({
     currentEmployee: props.currentEmployee,
+    lookUpData : state.lookUpData,
+    openValidationMessage: state.openValidationMessage,
     pageMode: props.pageMode,
     viewMode: props.viewMode
 })

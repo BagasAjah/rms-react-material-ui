@@ -145,6 +145,9 @@ body {
     padding-left: 10px;
     padding-top: 10px;
 }
+.toggle-position{
+    text-align: right;
+}
 .footer-content{
     width: 100%;
     background: #5c6bc0;
@@ -157,4 +160,24 @@ body {
 .footer-button{
     float: right;
     margin: 5px;
+}
+.content-min-container {
+    display:block;
+    min-height: 350px;
+    height: 350px;
+    overflow: auto;
+}
+.content-min {
+    float: left;
+    min-width: 150px;
+    margin: 5px;
+}
+.content-x {
+    float: left;
+    margin: 5px;
+}
+.sort-criteria-add {
+    position: absolute;
+    right: 5%;
+    bottom: 20%;
 }

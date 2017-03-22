@@ -22,7 +22,7 @@ class EmployeeListDetail extends Component {
     }
 
     actionClick = () => {
-        this.props.setCurrentEmployee(this.props.employee.id)
+        this.props.setCurrentEmployee(this.props.employee.employeeGuid)
     }
 
     render = () => {

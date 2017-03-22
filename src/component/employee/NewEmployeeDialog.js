@@ -18,7 +18,9 @@ import EmployeeGradeDialog from "../containers/employee/EmployeeGradeDialog"
 import EmployeeTabFamilyMember from "../containers/employee/EmployeeTabFamilyMember"
 import EmployeeLocationDetailDialog from "../containers/employee/EmployeeLocationDetailDialog"
 
-import { setDefaultEmployee } from "../../lib/employee/employeeHelper";
+import { handleDataBeforeSaveOrUpdate, setDefaultEmployee,
+    validateEmployeeDetails, validateEmployeeHistory,
+    validateEmployeeGrade, validateEmployeeFamily } from "../../lib/employee/employeeHelper";
 
 class NewEmployeeDialog extends Component {
     constructor(props) {
@@ -31,6 +33,15 @@ class NewEmployeeDialog extends Component {
         this.closeDialogClick = this.closeDialogClick.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
+    }
+
+    componentDidMount = () => {
+        this.addNewEmployee = this.addNewEmployee.bind(this);
+    }
+
+
+    addNewEmployee = (employeeData) => {
+        this.props.addCurrentEmployee(handleDataBeforeSaveOrUpdate(employeeData));
     }
 
     setSavedEmployee = (employee) => {
@@ -52,23 +63,53 @@ class NewEmployeeDialog extends Component {
 
     handleNext = () => {
         const {stepIndex} = this.state;
+        if (stepIndex == 0) {
+            if (validateEmployeeDetails(this.props.newEmployee)) {
+                this.props.handleOpenValidationMessage('detailValidation', true);
+                return;
+            }
+            this.props.handleOpenValidationMessage('detailValidation', false);
+            this.props.handleOpenValidationMessage('historyValidation', false);
+        } else if (stepIndex == 1) {
+            if (validateEmployeeHistory(this.props.newEmployee.history[0]) && this.props.enableToggle.enableHistoryToggle) {
+                this.props.handleOpenValidationMessage('historyValidation', true);
+                return;
+            }
+            this.props.handleOpenValidationMessage('historyValidation', false);
+            this.props.handleOpenValidationMessage('gradeValidation', false);
+        } else if (stepIndex == 2) {
+            if (validateEmployeeGrade(this.props.newEmployee.gradeHistory[0]) && this.props.enableToggle.enableGradeToggle) {
+                this.props.handleOpenValidationMessage('gradeValidation', true);
+                return;
+            }
+            this.props.handleOpenValidationMessage('gradeValidation', false);
+            this.props.handleOpenValidationMessage('familyValidation', false);
+        } else if (stepIndex == 3) {
+            var familyMember = this.props.newEmployee.familyMember;
+            for (var i=0; i < familyMember.length; i++) {
+                if(validateEmployeeFamily(familyMember[i])){
+                    this.props.handleOpenValidationMessage('familyValidation', true);
+                    return;
+                }
+            }
+            this.props.handleOpenValidationMessage('familyValidation', false);
+        }
         this.setState({
           stepIndex: stepIndex + 1,
           finished: stepIndex >= 5,
         });
         if(stepIndex > 5){
-            this.props.addCurrentEmployee(this.props.newEmployee);
-            this.props.handleOpenDialogChanged('newEmployeeDialog', false);
+            this.addNewEmployee(this.props.newEmployee);
         }
     }
 
     handlePrev = () => {
         const {stepIndex} = this.state;
         if (stepIndex > 0) {
-          this.setState({
-            stepIndex: stepIndex - 1,
-            finished: false
-          });
+            this.setState({
+                stepIndex: stepIndex - 1,
+                finished: false
+            });
         }
     }
 
@@ -106,13 +147,8 @@ class NewEmployeeDialog extends Component {
                     <h2>Employee Address</h2>
                 </div>);
           case 5:
-            return (
-                <div>
-                    <h2>Employee Location Details</h2>
-                    <EmployeeLocationDetailDialog
-                        pageMode={'NEW'} />
-                </div>);
           case 6:
+          case 7:
             return (
                 <div>
                     <h2>Employee Location Details</h2>

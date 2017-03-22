@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import EmployeeDetails from "./component/containers/employee/EmployeeDetails"
-import EmployeeToolbar from "./component/employee/EmployeeToolbar"
+import EmployeeToolbar from "./component/containers/employee/EmployeeToolbar"
 import EmployeeTab from "./component/containers/employee/EmployeeTab"
 import EmployeeTabDetails from "./component/containers/employee/EmployeeTabDetails"
 import EmployeeTabFamilyMember from "./component/containers/employee/EmployeeTabFamilyMember"
