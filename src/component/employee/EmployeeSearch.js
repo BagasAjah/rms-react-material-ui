@@ -40,7 +40,17 @@ class EmployeeSearch extends Component {
 
     handleSearchingProcess = (e) =>{
         if (e.keyCode == 13) {
-            var criteria = generatePageDetailParam(this.props.pageDetail);
+            var nextState = update(this.props.pageDetail, {
+                currentPage : {
+                    $set: 0
+                },
+                searchText : {
+                    $set: this.filterTextInput.input.value
+                }
+            });
+            this.props.changePageDetailValue("currentPage", 1);
+            this.props.changePageDetailValue("searchText", this.filterTextInput.input.value);
+            var criteria = generatePageDetailParam(nextState);
             this.props.loadEmployees(criteria);
         } else {
             this.props.changePageDetailValue("searchText", this.filterTextInput.input.value);

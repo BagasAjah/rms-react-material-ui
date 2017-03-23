@@ -196,6 +196,8 @@ export const generatePageDetailParam = pageDetail => {
         filterStr = filterStr + generateFilterCriteria(pageDetail.filteringProps);
         sortStr = sortStr + generateSortCriteria(pageDetail.sortCriteria);
         sizeStr = sizeStr + pageDetail.pageSize;
+    } else {
+        sizeStr = sizeStr + 7;
     }
     result = result + pageStr + searchStr + filterStr + sortStr + sizeStr;
     return result;
@@ -206,8 +208,7 @@ export const generateSearchCriteria = searchText => {
          return '';
      }
      var applyFilter = [];
-     applyFilter.push({field: "firstName", operator: "icontains", value: searchText});
-     applyFilter.push({field: "lastName", operator: "icontains", value: searchText});
+     applyFilter.push({field: "name", operator: "icontains", value: searchText});
      applyFilter = {filters: applyFilter};
      return encodeURI(JSON.stringify(applyFilter));
  }
