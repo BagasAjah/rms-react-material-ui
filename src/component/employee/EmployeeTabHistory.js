@@ -42,7 +42,7 @@ class EmployeeTabHistory extends Component {
                         historyEndDate: this.props.newEmployee.history[0].historyEndDate,
                         company: this.props.newEmployee.history[0].company,
                         position: this.props.newEmployee.history[0].position,
-                        jobDesc: this.props.newEmployee.history[0].jobDesc
+                        jobDescList: this.props.newEmployee.history[0].jobDescList
                     }]
                 }
             });

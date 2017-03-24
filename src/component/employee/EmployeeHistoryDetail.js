@@ -39,7 +39,7 @@ class EmployeeHistoryDetail extends Component {
             updatedEmployee = update(this.props.currentEmployee, {
                 'history': {
                     [index]: {
-                        "jobDesc": {
+                        "jobDescList": {
                             $splice: [[jobDescIndex,1]]
                         }
                     }
@@ -61,8 +61,10 @@ class EmployeeHistoryDetail extends Component {
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 [this.props.index]: {
-                    "jobDesc": {
-                        [jobDescIndex]: {$set: jobDescValue}
+                    "jobDescList": {
+                        [jobDescIndex]: {
+                            "jebDescName": {$set: jobDescValue}
+                        }
                     }
                 }
             }
@@ -74,8 +76,8 @@ class EmployeeHistoryDetail extends Component {
         var updatedEmployee = update(this.props.currentEmployee, {
             'history': {
                 [this.props.index]: {
-                    "jobDesc": {
-                        $push: [['']]
+                    "jobDescList": {
+                        $push: [{"jebDescName" : ''}]
                     }
                 }
             }
@@ -86,22 +88,22 @@ class EmployeeHistoryDetail extends Component {
 
     render(){
         var history = this.props.history;
-        var jobDesc = history.jobDesc;
+        var jobDesc = history.jobDescList;
         var historyStartMonth = moment(history.historyStartDate).format("MMMM").toString();
         var historyStartYear = moment(history.historyStartDate).format("YYYY").toString();
         var historyEndMonth = moment(history.historyEndDate).format("MMMM").toString();
         var historyEndYear = moment(history.historyEndDate).format("YYYY").toString();
-        var jobDesc = jobDesc.map((jobDesc, jobDescIndex) => (
-            <div key={jobDescIndex} style={{width:'100%',clear:"both", paddingTop:10}}>
+        var jobDescObj = jobDesc.map((jobDesc, jobDescIndex) => {
+            return <div key={jobDescIndex} style={{width:'100%',clear:"both", paddingTop:10}}>
                 <div style={{float: "left",paddingRight: 20}}><ListIcon/></div>
                 {(this.props.index==this.props.selectedIndex && jobDescIndex==this.props.selectedJobDescIndex) ?
                     <TextField
                         id={"history-jobDesc-" + this.props.index + "-" + jobDescIndex}
                         style={{float: "left",paddingRight: 20}}
-                        value={jobDesc}
+                        value={jobDesc.jebDescName}
                         underlineShow={true}
                         onChange={(e, jobDescValue) => this.handleJobDescChanged(jobDescValue, jobDescIndex)}/> :
-                    <div style={{width:256, height:48, float: "left",paddingRight: 20}}>{jobDesc}</div>
+                    <div style={{width:256, height:48, float: "left",paddingRight: 20}}>{jobDesc.jebDescName}</div>
                 }
                 {(!this.props.viewMode) ?
                     (<span>
@@ -116,7 +118,8 @@ class EmployeeHistoryDetail extends Component {
                     </span>) : ''
                 }
             </div>
-        ));
+
+        });
         return(
             <div className="detail-content">
                 <div className="detail-content-left">
@@ -146,7 +149,7 @@ class EmployeeHistoryDetail extends Component {
                         </div>
                     </div>
                     <div>
-                        {jobDesc}
+                        {jobDescObj}
                     </div>
                 </div>
             </div>

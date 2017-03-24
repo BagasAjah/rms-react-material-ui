@@ -30,7 +30,9 @@ export const setDefaultEmployee = () => ({
         historyEndDate: null,
         company: '',
         position: '',
-        jobDesc: []
+        jobDescList: [{
+            jebDescName: ''
+        }]
     }],
     gradeHistory: [{
         ds: '',
@@ -197,6 +199,7 @@ export const generatePageDetailParam = pageDetail => {
         sortStr = sortStr + generateSortCriteria(pageDetail.sortCriteria);
         sizeStr = sizeStr + pageDetail.pageSize;
     } else {
+        sortStr = sortStr + "firstName,asc";
         sizeStr = sizeStr + 7;
     }
     result = result + pageStr + searchStr + filterStr + sortStr + sizeStr;
@@ -252,6 +255,9 @@ export const generateSortCriteria = sortCriteria => {
     for(var i=0; i<sortCriteria.length; i++){
         var tempSortStr = '&sort=' + sortCriteria[i];
         sortStr = sortStr + tempSortStr;
+    }
+    if (sortStr ==='') {
+        sortStr= "firstName,asc";
     }
     return sortStr;
 }
