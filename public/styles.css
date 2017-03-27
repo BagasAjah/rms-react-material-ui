@@ -181,3 +181,6 @@ body {
     right: 5%;
     bottom: 20%;
 }
+input[type="file"] {
+    display: none;
+}
