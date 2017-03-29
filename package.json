@@ -5,7 +5,7 @@
   "author": "Bagas Dimas",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --progress --host 0.0.0.0",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "start-server": "node server/server.js",
     "build": "NODE_ENV=production node_modules/.bin/webpack -p --progress --colors",
     "test": "jest",
