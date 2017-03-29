@@ -5,7 +5,7 @@
   "author": "Bagas Dimas",
   "license": "MIT",
   "scripts": {
-    "postinstall": "webpack -p --config ./webpack.prod.config.js --progress"
+    "postinstall": "webpack -p --config ./webpack.prod.config.js --progress",
     "start": "node ./src/App.js",
     "start-server": "node server/server.js",
     "build": "NODE_ENV=production node_modules/.bin/webpack -p --progress --colors",
