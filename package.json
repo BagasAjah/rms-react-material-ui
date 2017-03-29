@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "start-server": "node server/server.js",
-    "build": "NODE_ENV=production node_modules/.bin/webpack -p --progress --colors",
+    "heroku-postbuild": "npm install",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
