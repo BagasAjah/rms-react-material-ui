@@ -11,7 +11,6 @@ import moment from 'moment'
 
 import {partial} from "../../lib/utils"
 
-
 class EmployeeListDetail extends Component {
     constructor(props){
         super(props);
@@ -27,6 +26,10 @@ class EmployeeListDetail extends Component {
 
     render = () => {
         var employee = this.props.employee;
+        var avatar = employee.base64Image;
+        if (employee) {
+            var avatarLetter = employee.firstName ? employee.firstName.charAt(0) : "?";
+        }
         var hireDateStr = moment(this.props.employee.hireDate).format("DD MMM YYYY").toString();
         return(
             <Paper key={this.props.index} className="employee-list-container" zDepth={1}>
@@ -48,7 +51,12 @@ class EmployeeListDetail extends Component {
 
                     }
                     secondaryTextLines={2}
-                    leftAvatar={<Avatar>A</Avatar>}
+                    leftAvatar={
+                        avatar != null ? <Avatar src={avatar}/>
+                            : <Avatar>
+                                {avatarLetter}
+                            </Avatar>
+                    }
                     onClick={this.actionClick}/>
             </Paper>
         )

@@ -41,18 +41,18 @@ class EmployeeHistoryDetailDialog extends Component {
     }
 
     handleJobDescChanged = (e, value, index) => {
-        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {
+        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDescList, {
             [index]: {
-                $set: value
+                "jebDescName": {$set: value}
             }
         });
-        var updatedEmployee = handleEmployeeDetailsInfo('history', 'jobDesc', updatedJobDesc, this.props.newEmployee);
+        var updatedEmployee = handleEmployeeDetailsInfo('history', 'jobDescList', updatedJobDesc, this.props.newEmployee);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
     addNewHistoryJobDesc = () => {
-        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDesc, {$push: ['']});
-        var updatedEmployee = handleEmployeeDetailsInfo('history', 'jobDesc', updatedJobDesc, this.props.newEmployee);
+        var updatedJobDesc = update(this.props.newEmployee.history[0].jobDescList, {$push: [{"jebDescName" : ''}]});
+        var updatedEmployee = handleEmployeeDetailsInfo('history', 'jobDescList', updatedJobDesc, this.props.newEmployee);
         this.props.handleStateChanged('newEmployee', updatedEmployee);
     }
 
@@ -61,12 +61,12 @@ class EmployeeHistoryDetailDialog extends Component {
     }
 
     render = () => {
-        var jobDescList = this.props.newEmployee.history[0].jobDesc;
+        var jobDescList = this.props.newEmployee.history[0].jobDescList;
         var jobDescListRender = jobDescList.map((jobDescList, index) => (
             <div style={{width:'100%'}} key={index}>
                 <TextField
                     floatingLabelText="Job Description"
-                    value={jobDescList}
+                    value={jobDescList.jebDescName}
                     onChange={(e, value) => this.handleJobDescChanged(e, value, index)}
                     underlineShow={true}/>
             </div>

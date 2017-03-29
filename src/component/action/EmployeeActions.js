@@ -101,7 +101,7 @@ const fetchLookupByType = lookupType => {
 }
 
 const loadData = () => dispatch => (
-    fetchingEmployee(generatePageDetailParam(1,'','',''))
+    fetchingEmployee(generatePageDetailParam(null))
         .then(response => response.json())
         .then(response => {
             let employees = response.result;
@@ -163,7 +163,7 @@ export const deleteCurrentEmployee = employeeGuid => dispatch => {
         if (response.status >= 400) {
             throw new Error("Bad response from server");
         }
-        dispatch(loadEmployeeData(generatePageDetailParam(1,'','','')));
+        dispatch(loadEmployeeData(generatePageDetailParam(null)));
     })
     .then(() => (
         dispatch({

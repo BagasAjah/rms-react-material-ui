@@ -3,20 +3,39 @@ import update from 'react-addons-update';
 
 import Avatar from 'material-ui/Avatar';
 import DatePicker from 'material-ui/DatePicker';
+import FontIcon from 'material-ui/FontIcon';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 
 import ActionAccountBox from 'material-ui/svg-icons/action/account-box';
+import CameraIcon from 'material-ui/svg-icons/action/camera-enhance';
+import { pinkA200 } from 'material-ui/styles/colors';
 
 import { parseStringToDate, showErrorMessage } from  "../../lib/employee/employeeHelper"
 
 const validationErrorMessage = "This field is required!";
 
+const avatarStyle = {
+    marginTop: 10,
+    height: 100,
+    width: 100
+}
+
+const cameraPickStyle = {
+    position: "absolute",
+    zIndex: 2,
+    marginTop: 10,
+    marginLeft: -20
+}
+
 class EmployeeTabDetails extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            avatar: '',
+        }
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handleGenderChange = this.handleGenderChange.bind(this);
@@ -108,16 +127,38 @@ class EmployeeTabDetails extends Component {
         this.props.setSavedEmployee(employee, this.props.pageMode);
     }
 
+    handleChangeAvatar = (event) => {
+        let fReader = new FileReader();
+        let file = event.target.files[0];
+        fReader.readAsDataURL(file);
+        fReader.onloadend = ((e) => {
+            let URI = encodeURI(e.target.result);
+            var employee = update(this.props.currentEmployee, {'base64Image': {$set: URI}});
+            this.setSavedEmployee(employee);
+        });
+    }
+
+    handleUploadClick = (event) => {
+        if(!this.props.viewMode){
+            this.avatarInput.click();
+        }
+    }
+
+
     render = () => {
-        var dob,hireDate,suspendDate;
+        var avatar,dob,hireDate,suspendDate;
+        var avatarLetter;
         if (this.props.currentEmployee) {
             dob = this.props.currentEmployee.dob == null ? null : parseStringToDate(this.props.currentEmployee.dob);
             hireDate = this.props.currentEmployee.hireDate == null ? null : parseStringToDate(this.props.currentEmployee.hireDate);
             suspendDate = this.props.currentEmployee.suspendDate == null ? null : parseStringToDate(this.props.currentEmployee.suspendDate);
+            avatar = this.props.currentEmployee.base64Image;
+            avatarLetter = this.props.currentEmployee.firstName ? this.props.currentEmployee.firstName.charAt(0) : "?";
         } else {
             dob = null;
             hireDate = null;
             suspendDate = null;
+            avatar = null;
         }
 
         if (this.props.lookUpData.gender.length >0 ) {
@@ -259,10 +300,16 @@ class EmployeeTabDetails extends Component {
                 /><br />
             </div>
             <div className="content">
-                <Avatar
-                  src={require("../../images/BagasDimas.jpg")}
-                  size={100}
-                />
+                <input id="input-file" ref={(input) => this.avatarInput = input } type="file" name="avatar" accept="image/*" onChange={(e) => this.handleChangeAvatar(e)} />
+                {
+                    avatar != null ? <Avatar src={avatar} style={avatarStyle} onTouchTap={(e) => this.handleUploadClick(e)} />
+                        : <Avatar style={avatarStyle} size ={100} onTouchTap={(e) => this.handleUploadClick(e)}>
+                            {avatarLetter}
+                        </Avatar>
+                }
+                {this.props.viewMode ? "" : <CameraIcon className="material-icons" style={cameraPickStyle}
+                                                                  hoverColor={pinkA200}
+                                                                  onClick={(e) => this.handleUploadClick(e)}/>}
             </div>
         </div>
         )
