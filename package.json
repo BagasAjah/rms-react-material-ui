@@ -5,7 +5,7 @@
   "author": "Bagas Dimas",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/app.js",
+    "start": "webpack-dev-server --progress",
     "start-server": "node server/server.js",
     "heroku-postbuild": "npm install",
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
