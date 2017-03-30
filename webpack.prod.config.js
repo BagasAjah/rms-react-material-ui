@@ -5,10 +5,10 @@ module.exports = {
   devtool: 'eval-source-map',
 
   entry: [
-    "/src/App.js"
+    __dirname + "/src/App.js"
   ],
   output: {
-    path: "/public",
+    path: __dirname + "/public",
     filename: "bundle.js"
   },
 

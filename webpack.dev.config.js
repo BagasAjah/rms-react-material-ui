@@ -6,10 +6,10 @@ module.exports = {
 
   entry: [
     'webpack-hot-middleware/client',
-    "/src/App.js"
+    __dirname + "/src/App.js"
   ],
   output: {
-    path: "/public",
+    path: __dirname + "/public",
     filename: "bundle.js"
   },
 
